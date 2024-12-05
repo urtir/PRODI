@@ -1,0 +1,21 @@
+<!-- courses.html (Mata Kuliah) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Mata Kuliah</h1>
+    <div class="row">
+        {% for course in courses %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ course[2] }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Kode: {{ course[1] }}</h6>
+                    <p class="card-text">{{ course[4] }}</p>
+                    <p class="text-muted">SKS: {{ course[3] }} | Semester: {{ course[5] }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

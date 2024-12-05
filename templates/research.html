@@ -1,0 +1,22 @@
+<!-- research.html (Riset) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Riset</h1>
+    <div class="row">
+        {% for project in research %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project[1] }}</h5>
+                    <p class="card-text">{{ project[2] }}</p>
+                    <p class="text-muted">Peneliti: {{ project[4] }}</p>
+                    <p class="text-muted">Tahun: {{ project[3] }}</p>
+                    <span class="badge bg-primary">{{ project[5] }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

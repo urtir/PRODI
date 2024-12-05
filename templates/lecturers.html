@@ -1,0 +1,22 @@
+<!-- lecturers.html (Pengajar) -->
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Pengajar</h1>
+    <div class="row">
+        {% for lecturer in lecturers %}
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <img src="{{ lecturer[4] }}" class="card-img-top" alt="{{ lecturer[1] }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ lecturer[1] }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ lecturer[2] }}</h6>
+                    <p class="card-text">{{ lecturer[3] }}</p>
+                    <a href="mailto:{{ lecturer[5] }}" class="btn btn-primary">Email</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

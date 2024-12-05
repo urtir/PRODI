@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Contact Us</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3>Contact Information</h3>
+                    <p><i class="bi bi-geo-alt"></i> Address: University Campus, Street Name</p>
+                    <p><i class="bi bi-envelope"></i> Email: info@informatics.edu</p>
+                    <p><i class="bi bi-telephone"></i> Phone: +1234567890</p>
+                    
+                    <h3 class="mt-4">Social Media</h3>
+                    <div class="social-links">
+                        <a href="#" class="btn btn-outline-primary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="btn btn-outline-info"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-danger"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-dark"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Send us a message</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="4" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
