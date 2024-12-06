@@ -49,53 +49,72 @@
     </div>
 </div>
 
-<!-- Recent Events Section -->
-<div class="event">
+<section class="event">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h2>Acara Terkini</h2>
-            </div>
-        </div>
-        <div class="row">
-            {% for event in events %}
-            <div class="col-md-4">
+            <!-- Featured Event -->
+            <div class="col-lg-6">
+                <h2>Kegiatan Prodi</h2>
+                {% if events %}
                 <div class="event-img">
-                    <img src="{{ url_for('static', filename='images/events/' + event[4]) if event[4] else 'images/default-event.jpg' }}" 
-                         class="img-fluid" alt="{{ event[1] }}">
-                    <div class="event-img_date">
-                        {{ event[3].strftime('%d %b %Y') }}
-                    </div>
+                    <span class="event-img_date">{{ events[0][3].strftime('%d-%b-%y') }}</span>
+                    <img src="{{ url_for('static', filename='images/events/' + events[0][4]) }}" 
+                         class="img-fluid" 
+                         alt="{{ events[0][1] }}"
+                         onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
                     <div class="event-img_title">
-                        <h3>{{ event[1] }}</h3>
-                        <p>{{ event[2][:100] + '...' if event[2]|length > 100 else event[2] }}</p>
+                        <h3>{{ events[0][1] }}</h3>
+                        <p>{{ events[0][2][:150] + '...' if events[0][2]|length > 150 else events[0][2] }}</p>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Event List -->
+            <div class="col-lg-6">
+                <h2>Tanggal penting</h2>
+                <div class="event-date-slide">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% for event in events[1:] %}
+                            <div class="event_date">
+                                <div class="event-date-wrap">
+                                    <p>{{ event[3].strftime('%d') }}</p>
+                                    <span>{{ event[3].strftime('%b.%y') }}</span>
+                                </div>
+                            </div>
+                            <div class="date-description">
+                                <h3>{{ event[1] }}</h3>
+                                <p>{{ event[2][:150] + '...' if event[2]|length > 150 else event[2] }}</p>
+                                {% if not loop.last %}
+                                <hr class="event_line">
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
         </div>
     </div>
-</div>
+</section>
 
 
-<!-- Course Section -->
-<div class="our_courses py-5">
+<!--============================= OUR COURSES =============================-->
+<section class="our_courses">
     <div class="container">
-        <div class="row mb-4">
+        <div class="row">
             <div class="col-md-12">
-                <h2 class="text-center">Mata Kuliah Unggulan</h2>
+                <h2>Mata Kuliah</h2>
             </div>
         </div>
-        
-        <div class="row">
+        <div class="row" >
             {% for course in courses %}
-            <div class="col-md-6 col-lg-3 mb-4" style="display: flex;">
-                <div class="courses_box">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+                <div class="courses_box mb-5">
                     <div class="course-img-wrap">
-                        <img src="{{ url_for('static', filename='images/courses/' + course[6]) if course[6] else 'images/default-course.jpg' }}" 
-                             class="img-fluid" alt="{{ course[2] }}"
-                             onerror="this.src='{{ url_for('static', filename='images/courses/default-course.jpg') }}'">
-                             
+                        <img src="{{ url_for('static', filename='images/courses/' + course[6]) }}" class="img-fluid" alt="{{ course[2] }}"
+                        onerror="this.src='{{ url_for('static', filename='images/courses/default-course.jpg') }}'">
                         <div class="courses_box-img">
                             <div class="courses-link-wrap">
                                 <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-link">
@@ -107,16 +126,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="course-box-content">
+                    <div class="courses_icon">
+                        <img src="{{ url_for('static', filename='images/plus-icon.png') }}" class="img-fluid close-icon" alt="plus-icon">
+                    </div>
+                    <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-box-content" >
                         <h3>{{ course[2] }}</h3>
                         <p>{{ course[4][:100] + '...' if course[4]|length > 100 else course[4] }}</p>
-                    </div>
+                    </a>
                 </div>
             </div>
             {% endfor %}
         </div>
     </div>
-</div>
+</section>
 
 
 

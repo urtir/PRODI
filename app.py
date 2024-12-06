@@ -39,7 +39,7 @@ def index():
                 c.semester,
                 COALESCE(c.image_url, 'default-course.jpg') as image_url
             FROM courses c 
-            LIMIT 3
+            LIMIT 4
         """)
         courses = cur.fetchall()
         
