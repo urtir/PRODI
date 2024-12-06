@@ -135,7 +135,8 @@
             <div class="col-md-4">
                 <div class="our-teachers-block">
                     <img src="{{ url_for('static', filename='images/lecturers/' + lecturer[4]) if lecturer[4] else 'images/default-lecturer.jpg' }}" 
-                         class="img-fluid teachers-img" alt="{{ lecturer[1] }}">
+                         class="img-fluid teachers-img" alt="{{ lecturer[1] }}"
+                         onerror="this.src='{{ url_for('static', filename='images/teachers/default-teacher.jpg') }}'">
                     <div class="teachers-description">
                         <p><span>{{ lecturer[1] }}</span></p>
                         <p>{{ lecturer[2] }}</p>
