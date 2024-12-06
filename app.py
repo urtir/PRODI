@@ -28,8 +28,19 @@ def index():
         cur.execute("SELECT * FROM events ORDER BY date DESC LIMIT 3")
         events = cur.fetchall()
         
-        # Fetch featured courses
-        cur.execute("SELECT * FROM courses LIMIT 3")
+        # Modified courses query with specific fields
+        cur.execute("""
+            SELECT 
+                c.id,
+                c.code,
+                c.name,
+                c.credits,
+                c.description,
+                c.semester,
+                COALESCE(c.image_url, 'default-course.jpg') as image_url
+            FROM courses c 
+            LIMIT 3
+        """)
         courses = cur.fetchall()
         
         # Fetch featured lecturers
@@ -121,6 +132,46 @@ def admission():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/course/<int:id>')
+def course_detail(id):
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT id, code, name, credits, description, semester, image_url
+            FROM courses 
+            WHERE id = %s
+        """, (id,))
+        course = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if course is None:
+            return "Course not found", 404
+            
+        return render_template('course_detail.html', course=course)
+    except Exception as e:
+        return f"Error: {e}", 500
+
+@app.route('/course/<int:id>/register')
+def course_registration(id):
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        cur.execute("SELECT id, code, name FROM courses WHERE id = %s", (id,))
+        course = cur.fetchone()
+        cur.close()
+        conn.close()
+        
+        if course is None:
+            return "Course not found", 404
+            
+        return render_template('course_registration.html', course=course)
+    except Exception as e:
+        return f"Error: {e}", 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
