@@ -1,21 +1,207 @@
-<!-- events.html (Acara) -->
 {% extends "base.html" %}
 {% block content %}
-<div class="container py-5">
-    <h1 class="text-center mb-5">Acara</h1>
-    <div class="row">
-        {% for event in events %}
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <img src="{{ event[4] }}" class="card-img-top" alt="{{ event[1] }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ event[1] }}</h5>
-                    <p class="card-text">{{ event[2] }}</p>
-                    <p class="text-muted">{{ event[3].strftime('%d %B %Y') }}</p>
-                </div>
+
+<!-- Events Header -->
+<div class="event">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="event-title">Acara dan Kegiatan</h2>
             </div>
         </div>
-        {% endfor %}
+
+        <div class="row">
+            {% for event in events %}
+            <div class="col-md-4 mb-4">
+                <div class="event-img">
+                    <img src="{{ url_for('static', filename='images/events/' + event[4]) }}" 
+                         class="img-fluid"
+                         alt="{{ event[1] }}"
+                         onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                    <!-- Event date overlay -->
+                    <div class="event-img_date">
+                        {{ event[3].strftime('%d %b %Y') }}
+                    </div>
+                    <!-- Event title overlay with gradient -->
+                    <div class="event-img_title">
+                        <h3>{{ event[1] }}</h3>
+                        <p>{{ event[2][:150] + '...' if event[2]|length > 150 else event[2] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Event Line Separator -->
+        <div class="event_line"></div>
+
+        <!-- Event Details -->
+        <div class="row mt-5">
+            {% for event in events %}
+            <div class="col-md-12 mb-4">
+                <div class="research-current_block">
+                    <img src="{{ url_for('static', filename='images/events/' + event[4]) if event[4] else 'images/default-event.jpg' }}" 
+                         alt="{{ event[1] }}"
+                         width="180px"
+                         height="200px"
+                         onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                         
+                    <div class="date-description">
+                        <h3>{{ event[1] }}</h3>
+                        <p>{{ event[2] }}</p>
+                        <div class="event-meta">
+                            <span class="bi bi-calendar"></span> {{ event[3].strftime('%d %B %Y') }}
+                            <a href="#" class="btn btn-warning btn-read">Baca Selengkapnya</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
+
+<style>
+/* Additional custom styles */
+.event {
+    background: #fff;
+    padding: 97px 0;
+}
+
+.event-title {
+    font-weight: 600;
+    margin: 0 0 28px;
+    color: #2d2d2d;
+}
+
+.event-img {
+    position: relative;
+    box-shadow: 0px 25px 90px 3px #c7c5c7;
+    border-radius: 5px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.event-img:hover {
+    transform: translateY(-5px);
+}
+
+.event-img img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.event-img_date {
+    position: absolute;
+    top: 28px;
+    left: 48px;
+    background: #cbb58b;
+    border-radius: 2px;
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 13px;
+}
+
+.event-img_title {
+    position: absolute;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0,0,0,0.85) 100%);
+    padding: 85px 0 20px 0;
+    width: 100%;
+}
+
+.event-img_title h3 {
+    color: #fff;
+    padding: 0 48px;
+    margin: 0;
+    font-size: 20px;
+}
+
+.event-img_title p {
+    color: #e3e3e3;
+    padding: 16px 48px 0;
+    font-size: 15px;
+    margin: 0;
+}
+
+.event_line {
+    margin: 40px 0;
+    border-bottom: 1px solid #efefef;
+}
+
+.event-meta {
+    color: #999;
+    font-size: 14px;
+}
+
+.btn-read {
+    float: right;
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #cbb58b;
+    border: none;
+    color: #fff;
+}
+
+.btn-read:hover {
+    background: #b39a6b;
+    color: #fff;
+}
+
+.research-current_block {
+    display: flex;
+    
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.research-current_block img {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.date-description {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.date-description h3 {
+    margin-bottom: 15px;
+    color: #2d2d2d;
+}
+
+.date-description p {
+    margin-bottom: 20px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.event-meta {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .research-current_block {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .research-current_block img {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+</style>
+
 {% endblock %}
