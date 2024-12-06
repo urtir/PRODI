@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flaskext.mysql import MySQL
 from config import Config
-
+#sdajdjsafojasofosajfsafsddsgdoihgdoi
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -175,3 +175,4 @@ def course_registration(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
