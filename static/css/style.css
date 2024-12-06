@@ -1502,7 +1502,7 @@ select.form-control.custom-select {
 
 .course_box {
   border: 1px solid #ececec;
-  display: block;
+  display: flex;
   color: #2d2d2d;
   position: relative;
   min-height: 260px;

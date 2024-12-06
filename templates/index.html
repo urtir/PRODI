@@ -89,7 +89,7 @@
         
         <div class="row">
             {% for course in courses %}
-            <div class="col-md-6 col-lg-3 mb-4">
+            <div class="col-md-6 col-lg-3 mb-4" style="display: flex;">
                 <div class="courses_box">
                     <div class="course-img-wrap">
                         <img src="{{ url_for('static', filename='images/courses/' + course[6]) if course[6] else 'images/default-course.jpg' }}" 
