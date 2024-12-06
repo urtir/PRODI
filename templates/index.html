@@ -60,7 +60,7 @@
         <div class="row">
             {% for event in events %}
             <div class="col-md-4">
-                <div class="event-img">
+                <div class="event-img" style="height: 253px; width: 358px;">
                     <img src="{{ url_for('static', filename='images/events/' + event[4]) if event[4] else 'images/default-event.jpg' }}" 
                          class="img-fluid" alt="{{ event[1] }}">
                     <div class="event-img_date">
