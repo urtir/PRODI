@@ -49,61 +49,6 @@
     </div>
 </div>
 
-
-<!-- About Section -->
-<div class="about">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Selamat Datang di Prodi Informatika</h2>
-                <p>Program studi yang fokus pada pengembangan teknologi informasi dan komputasi...</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Courses Section -->
-<div class="our_courses">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="text-center">Mata Kuliah Unggulan</h2>
-            </div>
-            
-        </div>
-        <div class="row">
-            {% for course in courses %}
-            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
-                <div class="courses_box">
-                    <div class="course-img-wrap">
-                        <img src="{{ url_for('static', filename='images/courses/' + course[6]) if course[6] else 'images/default-course.jpg' }}" 
-                             class="img-fluid" alt="{{ course[2] }}">
-                        <div class="courses_box-img">
-                            <div class="courses-link-wrap">
-                                <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-link">
-                                    <span>Detail Mata Kuliah</span>
-                                </a>
-                                <a href="{{ url_for('course_registration', id=course[0]) }}" class="course-link">
-                                    <span>Daftar</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="courses_icon">
-                        <img src="{{ url_for('static', filename='images/plus-icon.png') }}" 
-                             class="img-fluid close-icon" alt="plus-icon">
-                    </div>
-                    <div class="course-box-content">
-                        <h3>{{ course[2] }}</h3>
-                        <p>{{ course[4][:100] + '...' if course[4]|length > 100 else course[4] }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</div>
-
 <!-- Recent Events Section -->
 <div class="event">
     <div class="container">
@@ -131,6 +76,51 @@
         </div>
     </div>
 </div>
+
+
+<!-- Course Section -->
+<div class="our_courses py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h2 class="text-center">Mata Kuliah Unggulan</h2>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for course in courses %}
+            <div class="col-md-6 col-lg-3 mb-4">
+                <div class="courses_box">
+                    <div class="course-img-wrap">
+                        <img src="{{ url_for('static', filename='images/courses/' + course[6]) if course[6] else 'images/default-course.jpg' }}" 
+                             class="img-fluid" alt="{{ course[2] }}"
+                             onerror="this.src='{{ url_for('static', filename='images/courses/default-course.jpg') }}'">
+                             
+                        <div class="courses_box-img">
+                            <div class="courses-link-wrap">
+                                <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-link">
+                                    <span>Detail Mata Kuliah</span>
+                                </a>
+                                <a href="{{ url_for('course_registration', id=course[0]) }}" class="course-link">
+                                    <span>Daftar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-box-content">
+                        <h3>{{ course[2] }}</h3>
+                        <p>{{ course[4][:100] + '...' if course[4]|length > 100 else course[4] }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- Lecturers Section -->
 <div class="our-teachers">
