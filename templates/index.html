@@ -66,7 +66,7 @@
                     <div class="event-img_date">
                         {{ event[3].strftime('%d %b %Y') }}
                     </div>
-                    <div class="event-img_title">
+                    <div class="event-img_title" style="width: 358px;">
                         <h3>{{ event[1] }}</h3>
                         <p>{{ event[2][:100] + '...' if event[2]|length > 100 else event[2] }}</p>
                     </div>
