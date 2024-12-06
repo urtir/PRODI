@@ -25,7 +25,7 @@ def index():
         cur = conn.cursor()
         
         # Fetch recent events
-        cur.execute("SELECT * FROM events ORDER BY date DESC LIMIT 3")
+        cur.execute("SELECT * FROM events ORDER BY date DESC LIMIT 6")
         events = cur.fetchall()
         
         # Modified courses query with specific fields
