@@ -62,9 +62,9 @@
                             </div>
                             <hr>
                             <ul>
-                                {% for point in lecturer[12].split('\n') %}
+                                {% for point in lecturer[12].split('<br>') %}
                                     {% if point.strip() %}
-                                    <li><span>*</span>{{ point.strip() }}</li>
+                                    <li><span>*</span>{{ point.strip()|safe }}</li>
                                     {% endif %}
                                 {% endfor %}
                             </ul>

@@ -115,22 +115,34 @@ CREATE TABLE `lecturers` (
   `specialization` varchar(255) DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
+  `education` varchar(255) DEFAULT NULL,
+  `education_details` text DEFAULT NULL,
+  `professional_profile` text DEFAULT NULL,
+  `experience` text DEFAULT NULL,
+  `experience_years` varchar(50) DEFAULT NULL,
+  `experience_location` varchar(100) DEFAULT NULL,
+  `experience_details` text DEFAULT NULL,
+  `additional_skills` text DEFAULT NULL,
+  `social_linkedin` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `lecturers` */
 
-insert  into `lecturers`(`id`,`name`,`title`,`specialization`,`image_url`,`email`) values 
-(1,'Dr. John Smith','Professor','Artificial Intelligence','/static/images/lecturers/smith.jpg','john.smith@univ.edu'),
-(2,'Dr. Sarah Johnson','Associate Professor','Database Systems','/static/images/lecturers/johnson.jpg','sarah.j@univ.edu'),
-(3,'Dr. Michael Chen','Assistant Professor','Computer Networks','/static/images/lecturers/chen.jpg','m.chen@univ.edu'),
-(4,'Dr. Emily Brown','Professor','Software Engineering','/static/images/lecturers/brown.jpg','e.brown@univ.edu'),
-(5,'Dr. David Wilson','Associate Professor','Cybersecurity','/static/images/lecturers/wilson.jpg','d.wilson@univ.edu'),
-(6,'Dr. Lisa Anderson','Professor','Machine Learning','/static/images/lecturers/anderson.jpg','l.anderson@univ.edu'),
-(7,'Dr. Robert Taylor','Assistant Professor','Mobile Computing','/static/images/lecturers/taylor.jpg','r.taylor@univ.edu'),
-(8,'Dr. Maria Garcia','Associate Professor','Data Science','/static/images/lecturers/garcia.jpg','m.garcia@univ.edu'),
-(9,'Dr. James Lee','Professor','Cloud Computing','/static/images/lecturers/lee.jpg','j.lee@univ.edu'),
-(10,'Dr. Anna White','Assistant Professor','Web Technologies','/static/images/lecturers/white.jpg','a.white@univ.edu');
+insert  into `lecturers`(`id`,`name`,`title`,`specialization`,`image_url`,`email`,`education`,`education_details`,`professional_profile`,`experience`,`experience_years`,`experience_location`,`experience_details`,`additional_skills`,`social_linkedin`) values 
+(1,'Dr. John Smith','Professor','Artificial Intelligence','smith.jpg','john.smith@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(2,'Dr. Sarah Johnson','Associate Professor','Database Systems','johnson.jpg','sarah.j@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(3,'Dr. Michael Chen','Assistant Professor','Computer Networks','chen.jpg','m.chen@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(4,'Dr. Emily Brown','Professor','Software Engineering','brown.jpg','e.brown@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(5,'Dr. David Wilson','Associate Professor','Cybersecurity','wilson.jpg','d.wilson@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(6,'Dr. Lisa Anderson','Professor','Machine Learning','anderson.jpg','l.anderson@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(7,'Dr. Robert Taylor','Assistant Professor','Mobile Computing','taylor.jpg','r.taylor@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(8,'Dr. Maria Garcia','Associate Professor','Data Science','garcia.jpg','m.garcia@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(9,'Dr. James Lee','Professor','Cloud Computing','lee.jpg','j.lee@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,'Dr. Anna White','Assistant Professor','Web Technologies','white.jpg','a.white@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(11,'Dr. John Smith','Professor of Computer Science','Artificial Intelligence and Machine Learning','john-smith.jpg','john.smith@university.edu','Ph.D. in Computer Science','Ph.D. in Computer Science, MIT (2010)<br>M.S. in Computer Science, Stanford University (2006)<br>B.S. in Computer Engineering, UC Berkeley (2004)','Distinguished researcher in artificial intelligence and machine learning with over 15 years of experience in academic and industry research. Published over 50 papers in top-tier conferences and journals.','Research and Teaching','15+ Years Experience','Silicon Valley & Academia',' Lead AI Research Scientist at Google (2010-2015)<br> Senior Machine Learning Engineer at Microsoft (2015-2018)<br> Professor of Computer Science (2018-present)<br> Published researcher with 50+ peer-reviewed papers','Python, TensorFlow, PyTorch, Deep Learning, Natural Language Processing, Computer Vision, Research Methods, Project Management','https://linkedin.com/in/johnsmith'),
+(12,'Dr. Sarah Johnson','Associate Professor','Data Science and Big Data Analytics','sarah-johnson.jpg','sarah.j@university.edu','Ph.D. in Data Science','Ph.D. in Data Science, Harvard University (2012)<br>M.S. in Statistics, Yale University (2008)<br>B.S. in Mathematics, Princeton University (2006)','Expert in big data analytics and statistical modeling with extensive experience in both academic research and industry applications.','Data Science and Analytics','12+ Years Experience','Boston & New York',' Data Scientist at Amazon (2012-2016)<br> Lead Data Analyst at IBM (2016-2019)<br> Associate Professor (2019-present)<br> Author of \"Big Data Analytics in Practice\"','R, Python, Hadoop, Spark, Statistical Analysis, Machine Learning, Data Visualization, SQL, Big Data Technologies','https://linkedin.com/in/sarahjohnson'),
+(13,'Prof. Michael Chen','Assistant Professor','Cybersecurity and Network Systems','michael-chen.jpg','m.chen@university.edu','Ph.D. in Computer Security','Ph.D. in Computer Security, Carnegie Mellon University (2015)<br>M.S. in Computer Networks, USC (2011)<br>B.S. in Computer Science, Georgia Tech (2009)','Specialized in network security and cryptography with focus on developing secure systems for enterprise applications.','Security Research','10+ Years Experience','Global Security Research',' Security Engineer at Cisco (2015-2018)<br> Senior Security Researcher at FireEye (2018-2020)<br> Assistant Professor (2020-present)<br> Multiple security patents holder','Network Security, Cryptography, Penetration Testing, Security Auditing, C++, Python, Java, Security Tools Development','https://linkedin.com/in/michaelchen');
 
 /*Table structure for table `research` */
 
