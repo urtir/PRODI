@@ -1,22 +1,63 @@
 <!-- research.html (Riset) -->
 {% extends "base.html" %}
 {% block content %}
+
 <div class="container py-5">
     <h1 class="text-center mb-5">Riset</h1>
     <div class="row">
-        {% for project in research %}
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ project[1] }}</h5>
-                    <p class="card-text">{{ project[2] }}</p>
-                    <p class="text-muted">Peneliti: {{ project[4] }}</p>
-                    <p class="text-muted">Tahun: {{ project[3] }}</p>
-                    <span class="badge bg-primary">{{ project[5] }}</span>
+        <!-- Current Research (Left Side) -->
+        <div class="col-md-7 mb-4">
+            <section class="research">
+                <div class="container">
+                    <h2>Riset Terkini</h2>
+                    <div class="research-current_block mb-4">
+                        <img src="" >
+                        <h4>Riset pendalaman LAN</h4>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry...</p>
+                    </div>
+                    <div class="research-current_block mb-4">
+                        <img src="" >
+                        <h4>Centers and Institutes</h4>
+                        <p>Desktop publishing packages and web page editors now use Lorem Ipsum...</p>
+                        <ul class="research-list">
+                            <li>Aenean ullamcorper</li>
+                            <li>Morbi finibus dolor vitae enim</li>
+                            <li>Nullam non nibh sed magna</li>
+                        </ul>
+                    </div>
+                    <div class="research-current_block research-current_last mb-4">
+                        <img src="{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                        <h4>For Corporate Partners</h4>
+                        <p>It has survived not only five centuries, but also the leap into electronic typesetting...</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Research News (Right Side) -->
+        <div class="col-md-4 mb-4">
+            <h3>Berita Riset</h3>
+            <div class="research-posts">
+                <div class="research-news_block mb-4">
+                    <span>16- 01- 17</span>
+                    <p>bla bla bla bla</p>
+                </div>
+                <div class="research-news_block mb-4">
+                    <span>20- 01- 17</span>
+                    <p>Phasellus porttitor tortor eu ipsum condimentum, non dictum quam</p>
+                </div>
+                <div class="research-news_block mb-4">
+                    <span>20- 01- 17</span>
+                    <p>Quisque id lacus ut tellus faucibus pharetra tortor eu ipsum condimentum...</p>
                 </div>
             </div>
+            <!-- Video Embed -->
+            <div class="embed-responsive embed-responsive-16by9 mb-7">
+                <iframe class="embed-responsive-item" src="//www.youtube.com/embed/l9jVZB6gQ5U?rel=0" allowfullscreen></iframe>
+            </div>
         </div>
-        {% endfor %}
     </div>
+  
 </div>
+
 {% endblock %}
