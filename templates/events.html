@@ -142,21 +142,33 @@ $(document).ready(function() {
         events: [
             {% for event in events %}
             {
+                id: {{ event[0] }},
                 title: '{{ event[1] }}',
                 start: '{{ event[3].strftime("%Y-%m-%d") }}',
                 description: '{{ event[2] }}',
-                url: '#collapse{{ event[0] }}'
+                url: '#collapse{{ event[0] }}'  // Link to collapse element
             }{% if not loop.last %},{% endif %}
             {% endfor %}
         ],
-        eventClick: function(event) {
-            if (event.url) {
-                $(event.url).collapse('show');
+        eventClick: function(calEvent, jsEvent, view) {
+            // Switch to list view tab
+            $('#list-tab').tab('show');
+            
+            // Wait for tab transition
+            setTimeout(function() {
+                // Find and open the corresponding collapse
+                $(calEvent.url).collapse('show');
+                
+                // Scroll to the event
                 $('html, body').animate({
-                    scrollTop: $(event.url).offset().top - 100
+                    scrollTop: $(calEvent.url).offset().top - 100
                 }, 500);
-                return false;
-            }
+            }, 150);  // Small delay to ensure tab switch completes
+            
+            return false; // Prevent URL navigation
+        },
+        eventRender: function(event, element) {
+         element.attr('title', event.description);
         }
     });
 });
