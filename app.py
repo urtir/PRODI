@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 from flaskext.mysql import MySQL
 from config import Config
+from datetime import datetime
+
 #sdajdjsafojasofosajfsafsddsgdoihgdoi
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -24,9 +26,26 @@ def index():
             
         cur = conn.cursor()
         
-        # Fetch recent events
-        cur.execute("SELECT * FROM events ORDER BY date DESC LIMIT 6")
-        events = cur.fetchall()
+        # Fetch recent events with DATE_FORMAT
+        cur.execute("""
+            SELECT 
+                id,
+                title,
+                description,
+                DATE_FORMAT(date, '%Y-%m-%d') as formatted_date,
+                image_url
+            FROM events 
+            ORDER BY date DESC 
+            LIMIT 6
+        """)
+        events_raw = cur.fetchall()
+        
+        # Convert string dates to datetime objects
+        events = []
+        for event in events_raw:
+            event_list = list(event)
+            event_list[3] = datetime.strptime(event[3], '%Y-%m-%d')
+            events.append(tuple(event_list))
         
         # Modified courses query with specific fields
         cur.execute("""
@@ -43,7 +62,6 @@ def index():
         """)
         courses = cur.fetchall()
         
-        # Fetch featured lecturers
         cur.execute("SELECT * FROM lecturers LIMIT 3")
         lecturers = cur.fetchall()
         
@@ -64,8 +82,28 @@ def events():
     try:
         conn = get_db()
         cur = conn.cursor()
-        cur.execute("SELECT * FROM events ORDER BY date DESC")
-        events = cur.fetchall()
+        cur.execute("""
+            SELECT 
+                id, 
+                title, 
+                description, 
+                DATE_FORMAT(date, '%Y-%m-%d') as formatted_date,
+                image_url,
+                long_description,
+                image_url2,
+                image_url3
+            FROM events 
+            ORDER BY date DESC
+        """)
+        events_raw = cur.fetchall()
+        
+        # Convert dates
+        events = []
+        for event in events_raw:
+            event_list = list(event)
+            event_list[3] = datetime.strptime(event[3], '%Y-%m-%d')
+            events.append(tuple(event_list))
+            
         cur.close()
         conn.close()
         return render_template('events.html', events=events)

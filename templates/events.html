@@ -1,260 +1,188 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% for event in events %}
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="event-date">
-                <h4>{{ event[3].strftime('%d') }}</h4>
-                <span>{{ event[3].strftime('%b %Y') }}</span>
-            </div>
-            <span class="event-time">{{ event[3].strftime('%I:%M %p') }}</span>
-        </div>
-        <div class="col-md-10">
-            <div class="event-heading">
-                <h3>{{ event[1] }}</h3>
-                <p>{{ event[2] }}</p>
-            </div>
-            <div id="collapse{{ event[0] }}" class="panel-collapse collapse in show">
-                <div class="panel-body">
-                    <div class="event-hilights">
-                        <h5>Event Highlights Photos</h5>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img src="{{ url_for('static', filename='images/events/' + event[4]) }}" 
-                                 class="img-fluid" 
-                                 alt="{{ event[1] }}"
-                                 onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="event-highlight-discription">
-                                <p>{{ event[2] }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" class="event-toggle" data-parent="#accordion" href="#collapse{{ event[0] }}">Hide Details</a>
-                </h4>
-            </div>
-        </div>
-    </div>
-    <hr class="event-underline">
-</div>
-{% endfor %}
+<!-- Calendar Dependencies -->
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
 
-<!-- Events Header -->
-<div class="event">
+<!--============================= EVENTS =============================-->
+<section class="events">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2 class="event-title">Acara dan Kegiatan</h2>
+                
+                <!-- Tab Navigation -->
+                <ul class="nav nav-tabs mt-4" id="eventTabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="list-tab" data-toggle="tab" href="#list-view" role="tab">List View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="calendar-tab" data-toggle="tab" href="#calendar-view" role="tab">Calendar View</a>
+                    </li>
+                </ul>
             </div>
         </div>
 
-        <div class="row">
-            {% for event in events %}
-            <div class="col-md-4 mb-4">
-                <div class="event-img">
-                    <img src="{{ url_for('static', filename='images/events/' + event[4]) }}" 
-                         class="img-fluid"
-                         alt="{{ event[1] }}"
-                         onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
-                    <!-- Event date overlay -->
-                    <div class="event-img_date">
-                        {{ event[3].strftime('%d %b %Y') }}
-                    </div>
-                    <!-- Event title overlay with gradient -->
-                    <div class="event-img_title">
-                        <h3>{{ event[1] }}</h3>
-                        <p>{{ event[2][:150] + '...' if event[2]|length > 150 else event[2] }}</p>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+        <!-- Tab Content -->
+        <div class="tab-content" id="eventTabsContent">
+            <!-- List View -->
+            <div class="tab-pane fade show active" id="list-view" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div id="eventAccordion">
+                            {% for event in events %}
+                            <div class="event-panel mb-4">
+                                <div class="row">
+                                    <!-- Event Date -->
+                                    <div class="col-md-2">
+                                        <div class="event-date">
+                                            <h4>{{ event[3].strftime('%d') }}</h4>
+                                            <span>{{ event[3].strftime('%b %Y') }}</span>
+                                        </div>
+                                        <span class="event-time">{{ event[3].strftime('%I:%M %p') }}</span>
+                                    </div>
+                                    
+                                    <!-- Event Content -->
+                                    <div class="col-md-10">
+                                        <div class="event-heading">
+                                            <h3>{{ event[1] }}</h3>
+                                            <p>{{ event[2] }}</p>
+                                        </div>
+                                        
+                                        <!-- Collapsible Content -->
+                                        <div class="collapse" id="collapse{{ event[0] }}">
+                                            <div class="event-details">
+                                                <div class="event-highlights">
+                                                    <h5 class="mb-4">Event Highlights</h5>
+                                                    <div class="row">
+                                                        <!-- Event Images -->
+                                                        <div class="col-md-4">
+                                                            <img src="{{ url_for('static', filename='images/events/' + event[4]) if event[4] else 'images/events/default-event.jpg' }}" 
+                                                                 class="img-fluid mb-3" 
+                                                                 alt="Event image 1"
+                                                                 onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{ url_for('static', filename='images/events/' + event[6]) if event[6] else 'images/events/default-event.jpg' }}" 
+                                                                 class="img-fluid mb-3" 
+                                                                 alt="Event image 2"
+                                                                 onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <img src="{{ url_for('static', filename='images/events/' + event[7]) if event[7] else 'images/events/default-event.jpg' }}" 
+                                                                 class="img-fluid mb-3" 
+                                                                 alt="Event image 3"
+                                                                 onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
+                                                        </div>
+                                                    </div>
 
-        <!-- Event Line Separator -->
-        <div class="event_line"></div>
-
-        <!-- Event Details -->
-        <div class="row mt-5">
-            {% for event in events %}
-            <div class="col-md-12 mb-4">
-                <div class="research-current_block">
-                    <img src="{{ url_for('static', filename='images/events/' + event[4]) if event[4] else 'images/default-event.jpg' }}" 
-                         alt="{{ event[1] }}"
-                         width="180px"
-                         height="200px"
-                         onerror="this.src='{{ url_for('static', filename='images/events/default-event.jpg') }}'">
-                         
-                    <div class="date-description">
-                        <h3>{{ event[1] }}</h3>
-                        <p>{{ event[2] }}</p>
-                        <div class="event-meta">
-                            <span class="bi bi-calendar"></span> {{ event[3].strftime('%d %B %Y') }}
-                            <a href="#" class="btn btn-warning btn-read">Baca Selengkapnya</a>
+                                                    <div class="row mt-3">
+                                                        <div class="col-md-12">
+                                                            <div class="event-description">
+                                                                {{ event[5]|safe }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Toggle Button -->
+                                        <div class="event-toggle-wrap">
+                                            <a href="#collapse{{ event[0] }}"
+                                               class="event-toggle collapsed"
+                                               data-toggle="collapse" 
+                                               data-target="#collapse{{ event[0] }}" 
+                                               aria-expanded="false">
+                                                Show Details
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+
+            <!-- Calendar View -->
+            <div class="tab-pane fade" id="calendar-view" role="tabpanel">
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div id="calendar"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- Calendar Scripts -->
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+
+<script>
+$(document).ready(function() {
+    // Toggle button text
+    $('.event-toggle').click(function() {
+        $(this).text(function(i, text) {
+            return text === "Show Details" ? "Hide Details" : "Show Details";
+        });
+    });
+
+    // Initialize calendar
+    $('#calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        events: [
+            {% for event in events %}
+            {
+                title: '{{ event[1] }}',
+                start: '{{ event[3].strftime("%Y-%m-%d") }}',
+                description: '{{ event[2] }}',
+                url: '#collapse{{ event[0] }}'
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        eventClick: function(event) {
+            if (event.url) {
+                $(event.url).collapse('show');
+                $('html, body').animate({
+                    scrollTop: $(event.url).offset().top - 100
+                }, 500);
+                return false;
+            }
+        }
+    });
+});
+</script>
 
 <style>
-/* Additional custom styles */
-.event {
-    background: #fff;
-    padding: 97px 0;
-}
-
-.event-title {
-    font-weight: 600;
-    margin: 0 0 28px;
-    color: #2d2d2d;
-}
-
-.event-img {
-    position: relative;
-    box-shadow: 0px 25px 90px 3px #c7c5c7;
-    border-radius: 5px;
-    overflow: hidden;
-    transition: all 0.3s ease;
-    width: 400px;
-    height: 200PX;
-}
-
-.event-img:hover {
-    transform: translateY(-5px);
-}
-
-.event-img img {
-    width: 400px;
-    height: 200PX;
-    object-fit: cover;
-    border-radius: 5px;
-    flex-shrink: 0;
-}
-
-.event-img_date {
-    position: absolute;
-    top: 28px;
-    left: 48px;
-    background: #cbb58b;
-    border-radius: 2px;
-    padding: 8px 12px;
-    color: #fff;
-    font-size: 13px;
-}
-
-.event-img_title {
-    position: absolute;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, rgba(0,0,0,0.85) 100%);
-    padding: 85px 0 20px 0;
-    width: 100%;
-}
-
-.event-img_title h3 {
-    color: #fff;
-    padding: 0 48px;
-    margin: 0;
-    font-size: 20px;
-}
-
-.event-img_title p {
-    color: #e3e3e3;
-    padding: 16px 48px 0;
-    font-size: 15px;
-    margin: 0;
-}
-
-.event_line {
-    margin: 40px 0;
-    border-bottom: 1px solid #efefef;
-}
-
-.event-meta {
-    color: #999;
-    font-size: 14px;
-}
-
-.btn-read {
-    float: right;
-    padding: 10px 20px;
-    font-size: 14px;
-    background: #cbb58b;
-    border: none;
-    color: #fff;
-}
-
-.btn-read:hover {
-    background: #b39a6b;
-    color: #fff;
-}
-
-.research-current_block {
-    display: flex;
-    
-    margin-bottom: 30px;
+#calendar {
+    max-width: 900px;
+    margin: 0 auto;
     padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
-.research-current_block img {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 5px;
-    flex-shrink: 0;
+.fc-event {
+    cursor: pointer;
+    background-color: #3366CC;
+    border: 1px solid #2952a3;
 }
 
-.date-description {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
+.fc-today {
+    background: #f7f7f7 !important;
 }
 
-.date-description h3 {
-    margin-bottom: 15px;
-    color: #2d2d2d;
-}
-
-.date-description p {
-    margin-bottom: 20px;
-    color: #666;
+.event-description {
+    white-space: pre-line;
     line-height: 1.6;
 }
-
-.event-meta {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-@media (max-width: 768px) {
-    .research-current_block {
-        flex-direction: column;
-        gap: 20px;
-    }
-    
-    .research-current_block img {
-        width: 100%;
-        height: 200px;
-    }
-}
-
 </style>
 
 {% endblock %}

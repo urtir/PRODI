@@ -8,7 +8,23 @@
     <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('.event-toggle').click(function() {
+            $(this).text(function(i, text) {
+                return text === "Show Details" ? "Hide Details" : "Show Details";
+            });
+        });
+        
+        // Prevent collapse from closing when clicking inside
+        $('.event-details').click(function(e) {
+            e.stopPropagation();
+        });
+    });
+    </script>   
     <style>
     * {
         font-family: 'Poppins', sans-serif;
@@ -37,6 +53,46 @@
     .btn {
         font-family: 'Poppins', sans-serif;
         font-weight: 500;
+    }
+    .event-description {
+    white-space: pre-line;  /* This preserves newlines without needing <br> tags */
+    line-height: 1.6;
+    }
+
+    .event-toggle {
+    color: #3366CC;
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    }
+
+    .event-toggle:hover {
+        color: #254B99;
+        text-decoration: none;
+    }
+
+    .event-toggle:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    .event-toggle.collapsed {
+        color: #3366CC;
+    }
+
+    .event-toggle-wrap {
+        margin-top: 15px;
+    }
+
+    .event-panel {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     </style>
     
