@@ -209,6 +209,30 @@ def course_registration(id):
     except Exception as e:
         return f"Error: {e}", 500
 
+@app.route('/lecturer/<int:id>')
+def lecturer_detail(id):
+    try:
+        conn = get_db()
+        if conn is None:
+            return "Database connection failed", 500
+            
+        cur = conn.cursor()
+        cur.execute("""
+            SELECT * FROM lecturers WHERE id = %s
+        """, (id,))
+        
+        lecturer = cur.fetchone()
+        if lecturer is None:
+            return "Lecturer not found", 404
+            
+        cur.close()
+        conn.close()
+        
+        return render_template('teachers-single.html', lecturer=lecturer)
+    except Exception as e:
+        print(f"Error: {e}")
+        return "An error occurred", 500
+
 
 
 if __name__ == '__main__':

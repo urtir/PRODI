@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!--============================= Teachers Single =============================-->
+<div class="teachers-single">
+    <div class="container">
+        <div class="row">
+            <!-- Teacher Image and Info -->
+            <div class="col-md-4">
+                <div class="teachers-img_block">
+                    <img src="{{ url_for('static', filename='images/lecturers/' + lecturer[4]) if lecturer[4] else 'images/lecturers/default-lecturer.jpg' }}" 
+                         class="img-fluid" 
+                         alt="{{ lecturer[1] }}"
+                         onerror="this.src='{{ url_for('static', filename='images/lecturers/default-lecturer.jpg') }}'">
+                    <div class="teachers-title_block">
+                        <h4><strong>{{ lecturer[1] }}</strong></h4>
+                        <h6>{{ lecturer[2] }}</h6>
+                        <ul>
+                            <li><a href="#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></li>
+                            <li><a href="{{ lecturer[14] }}"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Details -->
+            <div class="col-md-8">
+                <!-- Professional Profile -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="teacher-profile_block qualification_detaile">
+                            <h4>Professional Profile</h4>
+                            <ul>
+                                {% for point in lecturer[8].split('\n') %}
+                                    {% if point.strip() %}
+                                    <li><span>*</span>{{ point.strip() }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Experience -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="teacher-profile_block qualification_detaile">
+                            <h4 class="mt-4">Professional Experience</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="personal">
+                                        <h6><strong>{{ lecturer[9] }}</strong></h6>
+                                        <h6><i>{{ lecturer[10] }}</i></h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="experiance">
+                                        <h6><strong>{{ lecturer[11] }}</strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <ul>
+                                {% for point in lecturer[12].split('\n') %}
+                                    {% if point.strip() %}
+                                    <li><span>*</span>{{ point.strip() }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="teacher-profile_block qualification_detaile">
+                            <h4 class="mt-4">Education</h4>
+                            <div class="personal">
+                                <h6><strong>{{ lecturer[6] }}</strong></h6>
+                                <hr>
+                                <ul>
+                                    {% for edu in lecturer[7].split('<br>') %}
+                                        {% if edu.strip() %}
+                                        <li><span>*</span>{{ edu.strip()|safe }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Skills -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="teacher-profile_block qualification_detaile">
+                            <h4 class="mt-4">Additional Skills</h4>
+                            <div class="personal">
+                                <ul>
+                                    {% for skill in lecturer[13].split(',') %}
+                                        {% if skill.strip() %}
+                                        <li><span>*</span>{{ skill.strip() }}</li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+* {
+    font-family: 'Poppins', sans-serif !important;
+}
+</style>
+
+{% endblock %}
