@@ -259,7 +259,7 @@ html {
   -webkit-font-smoothing: antialiased; }
 
 body {
-  font-family: "Lora", serif; }
+  font-family: "Poppins", serif; }
 
 h1 {
   font-size: 54px; }
@@ -286,7 +286,7 @@ a {
     color: #2d2d2d; }
 
 .btn {
-  font-family: "Lora", serif;
+  font-family: "Poppins", serif;
   cursor: pointer; }
 
 /* ==============================================================
@@ -1036,7 +1036,7 @@ footer {
       margin: 10px 0 15px; } }
 
 .signup_form {
-  font-family: "Lora", serif;
+  font-family: "Poppins", serif;
   background: #3f3f3f;
   font-size: 17px;
   border: none;

@@ -102,55 +102,42 @@
 <body>
 
     <!-- Main Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white" data-spy="affix" data-offset-top="50">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" data-bs-spy="scroll" data-bs-target="#navbarNav">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="60">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">
-                            Beranda
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item me-4">
+                        <a class="navbar-brand" href="/">
+                            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" height="70" class="img-fluid"> <!-- Increased from 60 to 70 -->
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'events' %}active{% endif %}" href="/events">
-                            Acara
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}" href="/">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'courses' %}active{% endif %}" href="/courses">
-                            Kuliah
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'events' %}active{% endif %}" href="/events">Acara</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'lecturers' %}active{% endif %}" href="/lecturers">
-                            Pengajar
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'courses' %}active{% endif %}" href="/courses">Kuliah</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'research' %}active{% endif %}" href="/research">
-                            Riset
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'lecturers' %}active{% endif %}" href="/lecturers">Pengajar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'awards' %}active{% endif %}" href="/awards">
-                            Penghargaan
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'research' %}active{% endif %}" href="/research">Riset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'admission' %}active{% endif %}" href="/admission">
-                            Penerimaan
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'awards' %}active{% endif %}" href="/awards">Penghargaan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="/contact">
-                            Hubungi
-                        </a>
+                        <a class="nav-link {% if request.endpoint == 'admission' %}active{% endif %}" href="/admission">Penerimaan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}" href="/contact">Hubungi</a>
                     </li>
                 </ul>
             </div>
@@ -159,7 +146,7 @@
 
     <!-- Content -->
     {% block content %}{% endblock %}
-
+    
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
         <div class="container">
@@ -195,27 +182,59 @@
     <style>
         .navbar {
             background-color: #152340 !important;
-            min-height: 70px;
-            padding: 0 20px;
+            height: fit-content; /* Reduced from 45px */
+            padding: 2px 15px; /* Reduced vertical padding */
         }
-        
-        .navbar-nav {
-            gap: 12px;
+
+        .container {
+            padding: 2px 0; /* Reduced padding */
         }
-        
+
+        .navbar-brand img {
+            min-height: 35px; /* Reduced from 40px */
+            min-width: 35px;
+            width: auto;
+        }
+
         .navbar-nav .nav-link {
-            color: #ffffff !important;
-            padding: 10px 20px !important;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            padding: 4px 12px !important;
+            font-size: 13px; /* Slightly smaller font */
         }
-        
-        .navbar-nav .nav-link:hover,
-        .navbar-nav .nav-link.active {
-            color: #e3f2fd !important;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
+
+        @media (max-width: 991.98px) {
+            .navbar {
+                min-height: 35px;
+            }
+            
+            .navbar-brand img {
+                min-height: 30px;
+                min-width: 30px;
+            }
+            
+            .navbar-nav .nav-link {
+                padding: 3px 10px !important;
+                color: #ffffff !important; /* White text */
+            }
+
+            /* Toggler icon color */
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+            }
+
+            .navbar-toggler {
+                border-color: rgba(255,255,255,0.5) !important;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.2);
+            }
+
+            /* Active and hover states */
+            .navbar-nav .nav-link:hover,
+            .navbar-nav .nav-link.active {
+                color: #e3f2fd !important;
+                background: rgba(255,255,255,0.1);
+            }
         }
         </style>
     

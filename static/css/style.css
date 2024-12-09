@@ -259,7 +259,7 @@ html {
   -webkit-font-smoothing: antialiased; }
 
 body {
-  font-family: "Lora", serif; }
+  font-family: "Poppins", serif; }
 
 h1 {
   font-size: 54px; }
@@ -286,100 +286,121 @@ a {
     color: #2d2d2d; }
 
 .btn {
-  font-family: "Lora", serif;
+  font-family: "Poppins", serif;
   cursor: pointer; }
 
 /* ==============================================================
    HEADER
    ============================================================== */
-.slider_img {
-  width: 100%;
-  
-  background: #000; }
-  .slider_img img {
-    min-width: 100%;
-    max-height: 700px;
-    -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: 50% 50%;
-    object-position: 50% 50%; }
-    @media (max-width: 500px) {
-      .slider_img img {
-        max-height: 730px; } }
-
-.carousel-caption {
-  -webkit-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  top: 50%; }
-  @media (min-width: 992px) {
-    .carousel-caption {
-      -webkit-transform: translateY(-57%);
-      -ms-transform: translateY(-57%);
-      transform: translateY(-57%);
-      top: 57%; }
-      .layout_two .carousel-caption {
-        -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        transform: translateY(-50%);
-        top: 50%; } }
-  @media (max-width: 500px) {
-    .carousel-caption {
-      top: 45%; } }
-
-.slider_title h1 {
-  text-align: center;
-  color: #fff;
-  margin-bottom: 40px;
-  font-weight: 700; }
-  @media (max-width: 576px) {
-    .slider_title h1 {
-      margin-bottom: 18px; } }
-
-.slider_title h4 {
-  color: #fff;
-  text-align: center;
-  line-height: 1.8; }
-
-.slider-btn {
-  text-align: center;
-  margin: 42px 0 0; }
-
-.carousel-indicators .active {
-  background: #3366CC; }
-
-.fa-slider {
-  padding: 14px 14px;
-  border: 2px solid #fff;
-  font-size: 29px;
-  border-radius: 2px; }
-
-@media (max-width: 768px) {
-  .slider_title h1 {
-    font-size: 42px; }
-  .slider_title h4 {
-    font-size: 19px;
-    line-height: 1.5; }
-  .btn-default {
-    width: 50%;
-    margin-bottom: 10px;
-    font-size: 13px; } }
-
-@media (max-width: 480px) {
-  .slider_title {
-    margin: 0 0 80px; }
-    .slider_title h1 {
-      font-size: 32px; }
-    .slider_title h4 {
-      font-size: 18px;
-      line-height: 1.5; }
-  .btn-default {
+   .slider_img {
     width: 100%;
-    margin-bottom: 10px;
-    font-size: 18px; }
-  .fa-slider {
-    border: none;
-    padding: 0; } }
+    position: relative;
+    background: #000;
+  }
+  
+  .slider_img img {
+    width: 100%;
+    height: auto; /* Responsive height */
+    object-fit: cover;
+    object-position: center;
+    opacity: 0.8; /* Slight overlay for better text visibility */
+  }
+  
+  .carousel-caption {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 0 15px;
+  }
+  
+  .slider_title h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-weight: 700;
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  }
+  
+  .slider_title h4 {
+    color: #fff;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 1.5rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  }
+  
+  .slider-btn {
+    text-align: center;
+    margin: 30px 0 0;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 992px) {
+    .slider_img img {
+      height: 70vh;
+    }
+    
+    .slider_title h1 {
+      font-size: 2.8rem;
+    }
+    
+    .slider_title h4 {
+      font-size: 1.3rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .slider_img img {
+      height: 60vh;
+    }
+    
+    .slider_title h1 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+    }
+    
+    .slider_title h4 {
+      font-size: 1.1rem;
+    }
+    
+    .slider-btn {
+      margin: 20px 0 0;
+    }
+    
+    .btn-default {
+      padding: 10px 20px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .slider_img img {
+      height: 50vh;
+    }
+    
+    .slider_title h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+    
+    .slider_title h4 {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    
+    .slider-btn {
+      margin: 15px 0 0;
+    }
+    
+    .btn-default {
+      padding: 8px 16px;
+      font-size: 0.8rem;
+    }
+  }
 
 /* ==============================================================
    ABOUT
@@ -1039,7 +1060,7 @@ footer {
       margin: 10px 0 15px; } }
 
 .signup_form {
-  font-family: "Lora", serif;
+  font-family: "Poppins", serif;
   background: #3f3f3f;
   font-size: 17px;
   border: none;
