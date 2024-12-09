@@ -133,14 +133,43 @@ def events():
 def courses():
     try:
         conn = get_db()
+        if conn is None:
+            return "Database connection failed", 500
+            
         cur = conn.cursor()
-        cur.execute("SELECT * FROM courses ORDER BY semester")
-        courses = cur.fetchall()
+        cur.execute("""
+            SELECT 
+                id,
+                code,
+                name,
+                credits,
+                description,
+                semester,
+                COALESCE(image_url, 'default-course.jpg') as image_url
+            FROM courses 
+            ORDER BY semester, code
+        """)
+        
+        courses = [
+            {
+                'id': row[0],
+                'code': row[1],
+                'name': row[2],
+                'credits': row[3],
+                'description': row[4],
+                'semester': row[5],
+                'image_url': row[6]
+            }
+            for row in cur.fetchall()
+        ]
+        
         cur.close()
         conn.close()
+        
         return render_template('courses.html', courses=courses)
     except Exception as e:
-        return f"Error: {e}", 500
+        print(f"Error: {e}")
+        return "An error occurred", 500
 
 @app.route('/api/events')
 def get_events_json():
