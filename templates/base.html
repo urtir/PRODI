@@ -33,7 +33,49 @@
     body {
         font-family: 'Poppins', sans-serif;
         font-weight: 400;
+        padding-top: 100px; /* Equal to navbar height */
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
     }
+
+    main {
+    flex: 1 0 auto;
+    }
+
+    /* Base template structure */
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Content block spacing */
+.content-wrapper {
+    flex: 1 0 auto;
+    width: 100%;
+    padding-top: 100px;
+    background: transparent; /* Match navbar height */
+}
+
+/* Footer positioning */
+footer {
+    flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+    body {
+        padding-top: 70px;
+    }
+    
+    .content-wrapper {
+        padding-top: 70px;
+    }
+}
+</style>
+<style>
+
 
     h1, h2, h3, h4, h5, h6 {
         font-family: 'Poppins', sans-serif;
@@ -97,13 +139,12 @@
     </style>
     
 
-
 </head>
 <body>
-
+    <div class="page-wrapper">
     <!-- Main Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" data-bs-spy="scroll" data-bs-target="#navbarNav">
-        <div class="container">
+        <div class="container-navbar">
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -145,7 +186,9 @@
     </nav>
 
     <!-- Content -->
-    {% block content %}{% endblock %}
+    
+        {% block content %}{% endblock %}
+    
     
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
@@ -177,59 +220,141 @@
             </div>
         </div>
     </footer>
+</div>
 
     <!-- Update navbar class and add custom style -->
     <style>
+        /* Base Navbar */
         .navbar {
+            height: 100px;
             background-color: #152340 !important;
-            height: fit-content; /* Reduced from 45px */
-            padding: 2px 15px; /* Reduced vertical padding */
+            padding: 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1030;
+            top: 0;
         }
-
-        .container {
-            padding: 2px 0; /* Reduced padding */
+        
+        /* Main Container */
+        .container-navbar {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+            width: 100%;
         }
-
+        
+        /* Logo Styling */
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            padding: 10px 0;
+            margin: 0;
+            z-index: 2;
+        }
+        
         .navbar-brand img {
-            min-height: 35px; /* Reduced from 40px */
-            min-width: 35px;
+            height: 60px;
             width: auto;
+            object-fit: contain;
         }
-
+        
+        /* Navigation Container */
+        .navbar-collapse {
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+        
+        /* Navigation Items */
+        .navbar-nav {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+        
         .navbar-nav .nav-link {
             padding: 4px 12px !important;
-            font-size: 13px; /* Slightly smaller font */
+            font-size: 13px;
+            color: #ffffff !important;
         }
-
+        
+        /* Desktop Styles */
+        @media (min-width: 992px) {
+            .container-navbar {
+                position: relative;
+            }
+        
+            .navbar-collapse {
+                position: static;
+                flex: 1;
+                display: flex !important;
+                justify-content: center !important;
+            }
+        
+            .navbar-nav {
+                width: auto;
+            }
+        
+            .navbar-brand {
+                margin-right: 40px;
+            }
+        }
+        
+        /* Mobile Styles */
         @media (max-width: 991.98px) {
             .navbar {
-                min-height: 35px;
+                min-height: 70px;
             }
-            
+        
+            .container-navbar {
+                justify-content: space-between;
+            }
+        
             .navbar-brand img {
-                min-height: 30px;
-                min-width: 30px;
+                height: 50px;
             }
-            
+        
+            .navbar-collapse {
+                position: absolute;
+                top: 100%;
+                background: #152340;
+                width: 100%;
+                padding: 10px 0;
+            }
+        
+            .navbar-nav {
+                flex-direction: column;
+                width: 100%;
+            }
+        
             .navbar-nav .nav-link {
-                padding: 3px 10px !important;
-                color: #ffffff !important; /* White text */
+                padding: 10px 15px !important;
+                width: 100%;
+                text-align: center;
             }
-
-            /* Toggler icon color */
+        
+            .navbar-toggler {
+                padding: 4px 8px;
+                margin-left: auto;
+                border-color: rgba(255,255,255,0.5) !important;
+            }
+        
             .navbar-toggler-icon {
                 background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
             }
-
-            .navbar-toggler {
-                border-color: rgba(255,255,255,0.5) !important;
-            }
-
+        
             .navbar-toggler:focus {
                 box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.2);
             }
-
-            /* Active and hover states */
+        
             .navbar-nav .nav-link:hover,
             .navbar-nav .nav-link.active {
                 color: #e3f2fd !important;
@@ -238,8 +363,6 @@
         }
         </style>
     
-    <!-- Update navbar class -->
-    <nav class="navbar navbar-expand-lg navbar-dark" data-spy="affix" data-offset-top="50">
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -254,8 +377,6 @@
             });
         });
     </script>
-
-
 
 </body>
 </html>

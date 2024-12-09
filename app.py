@@ -3,7 +3,6 @@ from flaskext.mysql import MySQL
 from config import Config
 from datetime import datetime
 
-#sdajdjsafojasofosajfsafsddsgdoihgdoi
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -26,13 +25,13 @@ def index():
             
         cur = conn.cursor()
         
-        # Fetch recent events with DATE_FORMAT
+        # Fetch events without DATE_FORMAT
         cur.execute("""
             SELECT 
                 id,
                 title,
                 description,
-                DATE_FORMAT(date, '%Y-%m-%d') as formatted_date,
+                date,
                 image_url
             FROM events 
             ORDER BY date DESC 
@@ -40,14 +39,18 @@ def index():
         """)
         events_raw = cur.fetchall()
         
-        # Convert string dates to datetime objects
+        # Convert to list of dictionaries
         events = []
         for event in events_raw:
-            event_list = list(event)
-            event_list[3] = datetime.strptime(event[3], '%Y-%m-%d')
-            events.append(tuple(event_list))
+            events.append({
+                'id': event[0],
+                'title': event[1],
+                'description': event[2],
+                'date': event[3],  # Already a datetime object
+                'image_url': event[4]
+            })
         
-        # Modified courses query with specific fields
+        # Fetch courses
         cur.execute("""
             SELECT 
                 c.id,
@@ -62,6 +65,7 @@ def index():
         """)
         courses = cur.fetchall()
         
+        # Fetch lecturers
         cur.execute("SELECT * FROM lecturers LIMIT 3")
         lecturers = cur.fetchall()
         
@@ -76,39 +80,54 @@ def index():
         print(f"Error: {e}")
         return "An error occurred", 500
 
-# Dynamic content routes
+# In app.py - Update events route with better error handling
 @app.route('/events')
 def events():
     try:
         conn = get_db()
+        if conn is None:
+            return "Database connection failed", 500
+            
         cur = conn.cursor()
+        
+        # Fetch all events with complete details
         cur.execute("""
             SELECT 
-                id, 
-                title, 
-                description, 
-                DATE_FORMAT(date, '%Y-%m-%d') as formatted_date,
+                id,
+                title,
+                description,
+                date,
                 image_url,
                 long_description,
                 image_url2,
-                image_url3
+                image_url3,
+                created_at
             FROM events 
             ORDER BY date DESC
         """)
-        events_raw = cur.fetchall()
+        events = cur.fetchall()
         
-        # Convert dates
-        events = []
-        for event in events_raw:
-            event_list = list(event)
-            event_list[3] = datetime.strptime(event[3], '%Y-%m-%d')
-            events.append(tuple(event_list))
-            
         cur.close()
         conn.close()
-        return render_template('events.html', events=events)
+        
+        # Add required JS/CSS for calendar
+        calendar_dependencies = {
+            'css': [
+                'fullcalendar/main.min.css'
+            ],
+            'js': [
+                'fullcalendar/main.min.js',
+                'moment/moment.min.js'
+            ]
+        }
+        
+        return render_template('events.html', 
+                             events=events,
+                             calendar_deps=calendar_dependencies)
+                             
     except Exception as e:
-        return f"Error: {e}", 500
+        print(f"Error in events route: {e}")
+        return f"An error occurred: {e}", 500
 
 @app.route('/courses')
 def courses():
@@ -122,6 +141,34 @@ def courses():
         return render_template('courses.html', courses=courses)
     except Exception as e:
         return f"Error: {e}", 500
+
+@app.route('/api/events')
+def get_events_json():
+    try:
+        conn = get_db()
+        cur = conn.cursor()
+        
+        cur.execute("""
+            SELECT id, title, description, date 
+            FROM events
+            ORDER BY date ASC
+        """)
+        
+        events = cur.fetchall()
+        
+        # Format for FullCalendar
+        calendar_events = [{
+            'id': event[0],
+            'title': event[1],
+            'description': event[2],
+            'start': event[3].isoformat(),
+            'url': f'/events#{event[0]}'
+        } for event in events]
+        
+        return jsonify(calendar_events)
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/lecturers')
 def lecturers():

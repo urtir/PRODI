@@ -45,7 +45,6 @@ Author:
 /* ==============================================================
    NAV
    ============================================================== */
-
 .nav-menu {
   position: absolute;
   z-index: 1;
@@ -260,8 +259,7 @@ html {
   -webkit-font-smoothing: antialiased; }
 
 body {
-  font-family: "Poppins", serif;
-  padding-top: 100px; }
+  font-family: "Poppins", serif; }
 
 h1 {
   font-size: 54px; }
