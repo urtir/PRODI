@@ -277,7 +277,7 @@ Author:
     font-size: 17px; }
   
   a {
-    color: #cbb58b;
+    color: #3366CC;
     -webkit-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease; }
@@ -576,7 +576,7 @@ Author:
   -o-transition: all 0.5s;
   transition: all 0.5s;
   opacity: 0;
-  background: rgba(203, 181, 139, 0.82);
+  background: rgba(139, 161, 203, 0.82);
   width: 100%;
   position: absolute;
   top: 0;
@@ -638,7 +638,7 @@ Author:
     position: absolute;
     top: 28px;
     left: 48px;
-    background: #cbb58b;
+    background: #3366CC;
     border-radius: 2px;
     padding: 8px 12px;
     color: #fff;
@@ -689,7 +689,7 @@ Author:
   
   .event_date {
     width: 82px;
-    background: #665c7c;
+    background: #3366CC;
     float: left;
     text-align: center;
     border-radius: 2px; }
@@ -720,7 +720,7 @@ Author:
       .date-description h3:after {
         height: 2px;
         width: 21px;
-        background: #cbb58b;
+        background: #3366CC;
         content: "";
         position: absolute;
         left: 0;
@@ -1512,13 +1512,13 @@ select.form-control.custom-select {
   text-transform: uppercase;
   border: none;
   color: #fff;
-  background: #d8c299;
+  background: #99a7d8;
   -webkit-box-shadow: 0px 1px 1px 0px rgba(3, 3, 3, 0.35);
   -moz-box-shadow: 0px 1px 1px 0px rgba(3, 3, 3, 0.35);
   box-shadow: 0px 1px 1px 0px rgba(3, 3, 3, 0.35); }
 
 .btn-admission:hover {
-  background: #e0c795;
+  background: #95b4e0;
   color: #fff; }
 
 .course_box {

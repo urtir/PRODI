@@ -180,7 +180,7 @@
     font-family: 'slick';
     font-size: 22px;
     line-height: 14px;
-    border: 2px solid #cbb58b;
+    border: 2px solid #3366CC;
     border-radius: 50%;
     position: absolute;
     top: 0;
@@ -193,7 +193,7 @@
     text-align: center;
 
     opacity: 10;
-    /*  color: #cbb58b;*/
+    /*  color: #3366CC;*/
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -201,5 +201,5 @@
 .slick-dots li.slick-active button:before
 {
     opacity: 10;
-    color: #cbb58b;
+    color: #3366CC;
 }
