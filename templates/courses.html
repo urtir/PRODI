@@ -45,22 +45,22 @@
                              <div class="couse-desc-wrap">
                                 <h4>{{ course.name }}</h4>
                                 <p>{{ course.description[:150] + '...' if course.description|length > 150 else course.description }}</p>
-                                
-                                    <ul style="display: flex; justify-content: space-between; width: 100%; margin-top: 15px; padding: 0; list-style: none;">
-                                        <li style="flex: 1; text-align: center; border-right: 1px solid rgba(0,0,0,0.1);">
-                                            <p style="margin-bottom: 5px; font-size: 14px; color: #666;">Semester</p>
-                                            <span style="font-weight: 600;">{{ course.semester }}</span>
+                                <div class="course_duration mt-3">
+                                    <ul class="course-meta" style="display: flex;">
+                                        <li>
+                                            <p>Semester</p>
+                                            <span>{{ course.semester }}</span>
                                         </li>
-                                        <li style="flex: 1; text-align: center; border-right: 1px solid rgba(0,0,0,0.1);">
-                                            <p style="margin-bottom: 5px; font-size: 14px; color: #666;">SKS</p>
-                                            <span style="font-weight: 600;">{{ course.credits }}</span>
+                                        <li>
+                                            <p>SKS</p>
+                                            <span>{{ course.credits }}</span>
                                         </li>
-                                        <li style="flex: 1; text-align: center;">
-                                            <p style="margin-bottom: 5px; font-size: 14px; color: #666;">Kode</p>
-                                            <span style="font-weight: 600;">{{ course.code }}</span>
+                                        <li>
+                                            <p>Kode</p>
+                                            <span>{{ course.code }}</span>
                                         </li>
                                     </ul>
-                                
+                                </div>
                             </div>
                     </a>
                 </div>
