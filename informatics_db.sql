@@ -218,6 +218,24 @@ CREATE TABLE `resources` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+INSERT INTO `research_news` (`DATE`, `TEXT`) VALUES
+('2024-12-10', 'New research on AI advancements in healthcare has been published.'),
+('2024-11-05', 'Climate change research shows alarming trends in global temperature rise.'),
+('2024-10-01', 'New findings in the field of quantum computing reveal breakthrough technologies.'),
+('2024-09-15', 'The latest study on renewable energy sources suggests a bright future for solar power.');
+
+INSERT INTO `researches` (`title`, `description`, `image_url`, `details`) VALUES
+('AI in Healthcare', 'Exploring the applications of AI in improving healthcare systems.', 'research-img_02.jpg', 'This research focuses on the role of Artificial Intelligence in diagnosing diseases, optimizing hospital operations, and improving patient care.'),
+('Climate Change Impact', 'The effects of climate change on global ecosystems and human societies.', 'research-img_02.jpg', 'This study examines the rising sea levels, extreme weather events, and the economic consequences of climate change.'),
+('Quantum Computing Breakthrough', 'New developments in quantum computing could revolutionize various industries.', 'research-img_02.jpg', 'Research highlights the potential of quantum computing in solving complex problems in fields like cryptography, AI, and material science.'),
+('Renewable Energy Sources', 'The future of energy: solar, wind, and other renewable sources.', 'research-img_02.jpg', 'This research covers the advancements in renewable energy technologies and their potential to replace fossil fuels in the global energy mix.');
+
+INSERT INTO `resources` (`title`, `description`, `image_url`) VALUES
+('Research Paper on AI', 'A comprehensive paper on the application of AI in various industries.', 'research-img_02.jpg'),
+('Global Warming Data', 'A set of global warming data, including temperature changes and CO2 levels.', 'research-img_02.jpg'),
+('Quantum Computing Journal', 'A journal featuring the latest research and breakthroughs in quantum computing.', 'research-img_02.jpg');
+
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
