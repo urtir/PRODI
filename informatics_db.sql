@@ -180,6 +180,44 @@ insert  into `research`(`id`,`title`,`description`,`year`,`researchers`,`status`
 (9,'AR/VR Education','Immersive learning systems',2024,'Dr. Brown, Dr. Taylor','Ongoing'),
 (10,'Machine Learning Ethics','Ethical AI development',2023,'Dr. Anderson, Dr. Chen','Completed');
 
+
+DROP TABLE IF EXISTS `research_news`;
+
+CREATE TABLE `research_news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `DATE` date NOT NULL,
+  `TEXT` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Table structure for table `researches` */
+
+DROP TABLE IF EXISTS `researches`;
+
+CREATE TABLE `researches` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `details` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Table structure for table `resources` */
+
+DROP TABLE IF EXISTS `resources`;
+
+CREATE TABLE `resources` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
