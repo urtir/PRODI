@@ -35,8 +35,7 @@
 
     body {
         font-family: 'Poppins', sans-serif;
-        font-weight: 400;
-        padding-top: 100px; /* Equal to navbar height */
+        font-weight: 400; 
         display: flex;
         flex-direction: column;
         min-height: 100vh;
@@ -351,7 +350,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-            <ul class="navbar-nav w-100 justify-content-center align-items-center">
+            <ul class="navbar-nav justify-content-center align-items-center sticky-top">
                 <li class="nav-item">
                         <a class="navbar-brand" href="/">
                             <img src="../static/images/logo.png" alt="Logo" height="70" class="img-fluid"> <!-- Increased from 60 to 70 -->

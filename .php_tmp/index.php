@@ -1,5 +1,33 @@
-{% extends "base.html" %}
-{% block content %}
+<?php 
+include 'header.php'; 
+
+// Database connection
+$conn = new mysqli("localhost", "root", "", "informatics_db");
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetch events
+$events_query = "SELECT * FROM events ORDER BY date DESC";
+$events_result = $conn->query($events_query);
+$events = $events_result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch lecturers
+$lecturers_query = "SELECT * FROM lecturers";
+$lecturers_result = $conn->query($lecturers_query);
+$lecturers = $lecturers_result->fetch_all();
+
+// Fetch courses
+$courses_query = "SELECT * FROM courses";
+$courses_result = $conn->query($courses_query);
+$courses = $courses_result->fetch_all();
+
+$conn->close();
+
+
+?>
 
 <head>
     <!-- Required meta tags -->
@@ -78,7 +106,7 @@
         
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{{ url_for('static', filename='images/slider1.jpg') }}" class="d-block w-100" alt="...">
+                <img src="../static/images/slider1.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption slider_title">
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
@@ -88,7 +116,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ url_for('static', filename='images/slider2.jpg') }}" class="d-block w-100" alt="...">
+                <img src="../static/images/slider2.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption slider_title">
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
@@ -98,7 +126,7 @@
                 </div>
             </div>
             <div class="carousel-item">
-                <img src="{{ url_for('static', filename='images/slider3.jpg') }}" class="d-block w-100" alt="...">
+                <img src="../static/images/slider3.jpg" class="d-block w-100" alt="...">
                 <div class="carousel-caption slider_title">
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
@@ -126,45 +154,56 @@
             <!-- Upcoming Events (Left Column) -->
             <div class="col-lg-6 offset-xl-0">
                 <h2>Upcoming Events</h2>
-                {% if events %}
-                {% set featured_event = events[0] %}
+                <?php if (!empty($events)): ?>
+                <?php $featured_event = $events[0]; ?>
                 <div class="event-img">
-                    <span class="event-img_date">{{ featured_event.date.strftime('%d-%b-%y') }}</span>
-                    <img src="{{ url_for('static', filename='images/' + featured_event.image_url) }}" class="img-fluid" alt="event-img"
-                    onerror="this.src='{{ url_for('static', filename='images/upcoming-event-img.jpg') }}'">
+                    <span class="event-img_date"><?php echo date('d-M-y', strtotime($featured_event['date'])); ?></span>
+                    <img src="../static/images/<?php echo $featured_event['image_url']; ?>" class="img-fluid" alt="event-img"
+                    onerror="this.src='../static/images/upcoming-event-img.jpg'">
                     <div class="event-img_title">
-                        <h3>{{ featured_event.title }}</h3>
-                        <p>{{ featured_event.description[:100] }}{% if featured_event.description|length > 100 %}...{% endif %}</p>
+                        <h3><?php echo $featured_event['title']; ?></h3>
+                        <p><?php 
+                            $description = $featured_event['description'];
+                            echo strlen($description) > 100 ? substr($description, 0, 100) . '...' : $description;
+                        ?></p>
                     </div>
                 </div>
-                {% endif %}
+                <?php endif; ?>
             </div>
 
             <!-- Important Dates (Right Column) -->
             <div class="col-lg-6">
                 <h2>Important Dates</h2>
                 <div class="event-date-slide">
-                    {% for chunk in events[1:]|batch(2) %}
+                    <?php 
+                    // Skip first event and chunk remaining events into pairs
+                    $remaining_events = array_slice($events, 1);
+                    $chunks = array_chunk($remaining_events, 2);
+                    
+                    foreach ($chunks as $chunk): ?>
                     <div class="row">
                         <div class="col-md-12">
-                            {% for event in chunk %}
+                            <?php foreach ($chunk as $index => $event): ?>
                             <div class="event_date">
                                 <div class="event-date-wrap">
-                                    <p>{{ event.date.strftime('%d') }}</p>
-                                    <span>{{ event.date.strftime('%b.%y') }}</span>
+                                    <p><?php echo date('d', strtotime($event['date'])); ?></p>
+                                    <span><?php echo date('M.y', strtotime($event['date'])); ?></span>
                                 </div>
                             </div>
                             <div class="date-description">
-                                <h3>{{ event.title }}</h3>
-                                <p>{{ event.description[:100] }}{% if event.description|length > 100 %}...{% endif %}</p>
-                                {% if not loop.last %}
+                                <h3><?php echo $event['title']; ?></h3>
+                                <p><?php 
+                                    $description = $event['description'];
+                                    echo strlen($description) > 100 ? substr($description, 0, 100) . '...' : $description;
+                                ?></p>
+                                <?php if ($index < count($chunk) - 1): ?>
                                 <hr class="event_line">
-                                {% endif %}
+                                <?php endif; ?>
                             </div>
-                            {% endfor %}
+                            <?php endforeach; ?>
                         </div>
                     </div>
-                    {% endfor %}
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -182,33 +221,36 @@
             </div>
         </div>
         <div class="row" >
-            {% for course in courses %}
+            <?php 
+            $top_courses = array_slice($courses, 0, 4); // Get only first 4 courses
+            foreach ($top_courses as $course): 
+            ?>
             <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
                 <div class="courses_box ">
                     <div class="course-img-wrap">
-                        <img src="{{ url_for('static', filename='images/courses/' + course[6]) }}" class="img-fluid" alt="{{ course[2] }}"
-                        onerror="this.src='{{ url_for('static', filename='images/courses/default-course.jpg') }}'">
+                        <img src="../static/images/courses/<?php echo $course[6]; ?>" class="img-fluid" alt="<?php echo $course[2]; ?>"
+                        onerror="this.src='../static/images/courses/default-course.jpg'">
                         <div class="courses_box-img">
                             <div class="courses-link-wrap">
-                                <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-link">
+                                <a href="course_detail.php?id=<?php echo $course[0]; ?>" class="course-link">
                                     <span>Detail Mata Kuliah</span>
                                 </a>
-                                <a href="{{ url_for('course_registration', id=course[0]) }}" class="course-link">
+                                <a href="course_registration.php?id=<?php echo $course[0]; ?>" class="course-link">
                                     <span>Daftar</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="courses_icon">
-                        <img src="{{ url_for('static', filename='images/plus-icon.png') }}" class="img-fluid close-icon" alt="plus-icon">
+                        <img src="../static/images/plus-icon.png" class="img-fluid close-icon" alt="plus-icon">
                     </div>
-                    <a href="{{ url_for('course_detail', id=course[0]) }}" class="course-box-content" style="height: 180px;;" >
-                        <h3>{{ course[2] }}</h3>
-                        <p>{{ course[4][:100] + '...' if course[4]|length > 100 else course[4] }}</p>
+                    <a href="course_detail.php?id=<?php echo $course[0]; ?>" class="course-box-content" style="height: 180px;" >
+                        <h3><?php echo $course[2]; ?></h3>
+                        <p><?php echo (strlen($course[4]) > 100) ? substr($course[4], 0, 100) . '...' : $course[4]; ?></p>
                     </a>
                 </div>
             </div>
-            {% endfor %}
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -226,32 +268,28 @@
             </div>
         </div>
         <div class="row">
-            {% for lecturer in lecturers %}
+        <?php 
+            $top_lecturers = array_slice($lecturers, 0, 3); // Get only first 3 lecturers
+            foreach ($top_lecturers as $lecturer): ?>
             <div class="col-md-4">
                 <div class="our-teachers-block">
-                    <img src="{{ url_for('static', filename='images/lecturers/' + lecturer[4]) if lecturer[4] else 'images/default-lecturer.jpg' }}" 
-                         class="img-fluid teachers-img" alt="{{ lecturer[1] }}"
-                         onerror="this.src='{{ url_for('static', filename='images/teachers/default-teacher.jpg') }}'">
+                    <img src="../static/images/lecturers/<?php echo !empty($lecturer[4]) ? $lecturer[4] : 'default-lecturer.jpg'; ?>" 
+                         class="img-fluid teachers-img" alt="<?php echo $lecturer[1]; ?>"
+                         onerror="this.src='../static/images/teachers/default-teacher.jpg'">
                     <div class="teachers-description">
-                        <p><span>{{ lecturer[1] }}</span></p>
-                        <p>{{ lecturer[2] }}</p>
-                        <p>{{ lecturer[3] }}</p>
-                    </div>
-                    <div class="social-icons">
-                        <ul>
-                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="mailto:{{ lecturer[5] }}"><i class="fas fa-envelope"></i></a></li>
-                        </ul>
+                        <p><span><?php echo $lecturer[1]; ?></span></p>
+                        <p><?php echo $lecturer[2]; ?></p>
+                        <p><?php echo $lecturer[3]; ?></p>
                     </div>
                 </div>
             </div>
-            {% endfor %}
+            <?php endforeach; ?>
         </div>
     </div>
 </div>
+<!--//END Lecturers Section -->
 
-<script src="../static/js/jquery.min.js"></script>
+            <script src="../static/js/jquery.min.js"></script>
             <script src="../static/js/tether.min.js"></script>
             <script src="../static/js/bootstrap.min.js"></script>
             <!-- Plugins -->
@@ -266,8 +304,8 @@
             <script src="../static/js/subscribe.js"></script>
             <!-- Script JS -->
             <script src="../static/js/script.js"></script>
-
-
-
+            
         </body>
-            {% endblock %}
+
+ <?php       include 'footer.php';
+?>
