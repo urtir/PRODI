@@ -56,21 +56,21 @@ $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
                 <h4><?php echo htmlspecialchars($course['name']); ?></h4>
                 <p><?php echo (strlen($course['description']) > 150) ? substr(htmlspecialchars($course['description']), 0, 150) . '...' : htmlspecialchars($course['description']); ?></p>
                 <div class="course_duration mt-3">
-                    <ul class="course-meta" style="display: flex;">
-                        <li>
-                            <p>Semester</p>
-                            <span><?php echo htmlspecialchars($course['semester']); ?></span>
-                        </li>
-                        <li>
-                            <p>SKS</p>
-                            <span><?php echo htmlspecialchars($course['credits']); ?></span>
-                        </li>
-                        <li>
-                            <p>Kode</p>
-                            <span><?php echo htmlspecialchars($course['code']); ?></span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="course-meta" style="display: flex; justify-content: space-between; width: 100%; padding: 0;">
+                    <li style="text-align: center;">
+                        <p>Semester</p>
+                        <span><?php echo htmlspecialchars($course['semester']); ?></span>
+                    </li>
+                    <li style=" text-align: center;">
+                        <p>SKS</p>
+                        <span><?php echo htmlspecialchars($course['credits']); ?></span>
+                    </li>
+                    <li style="text-align: center;">
+                        <p>Kode</p>
+                        <span><?php echo htmlspecialchars($course['code']); ?></span>
+                    </li>
+                </ul>
+            </div>
             </div>
         </a>
     </div>

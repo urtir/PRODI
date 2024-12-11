@@ -362,41 +362,43 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 <body>
     
     <!-- Main Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <img src="../static/images/logo.png" alt="Logo" height="70">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top" data-bs-spy="scroll" data-bs-target="#navbarNav">
+        <div class="container-navbar">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'index') ? 'active' : ''; ?>" href="index.php">Home</a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav justify-content-center align-items-center sticky-top">
+                <li class="nav-item">
+                        <a class="navbar-brand" href="/">
+                            <img src="../static/images/logo.png" alt="Logo" height="70" class="img-fluid"> <!-- Increased from 60 to 70 -->
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'courses') ? 'active' : ''; ?>" href="courses.php">Courses</a>
+                        <a class="nav-link" href="/templates/index">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'lecturers') ? 'active' : ''; ?>" href="lecturers.php">Lecturers</a>
+                        <a class="nav-link" href="/templates/events">Acara</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'events') ? 'active' : ''; ?>" href="events.php">Events</a>
+                        <a class="nav-link" href="/templates/courses">Kuliah</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'reasearch') ? 'active' : ''; ?>" href="research.php">Riset</a>
+                        <a class="nav-link" href="/templates/lecturers">Pengajar</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'awards') ? 'active' : ''; ?>" href="awards.php">Penghargaan</a>
+                        <a class="nav-link" href="/templates/research">Riset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'admission') ? 'active' : ''; ?>" href="admission.php">Penerimaan</a>
+                        <a class="nav-link" href="/templates/awards">Penghargaan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
+                        <a class="nav-link" href="/templates/admission">Penerimaan</a>
                     </li>
-
+                    <li class="nav-item">
+                        <a class="nav-link" href="/templates/contact">Hubungi</a>
+                    </li>
                 </ul>
             </div>
         </div>
