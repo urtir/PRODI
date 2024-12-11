@@ -63,14 +63,24 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
                     // Tentukan gambar besar dan kecil, jika ada di database
                     $image_besar = !empty($award['id_image_besar']) ? $award['id_image_besar'] : 'default_besar.jpg';
                     $image_kecil = !empty($award['id_image_kecil']) ? $award['id_image_kecil'] : 'default_kecil.jpg';
+                    
+                     // Periksa apakah gambar besar atau kecil adalah NULL atau kosong, dan gantikan dengan gambar default
+                     if (empty($award['id_image_besar'])) {
+                        $image_besar = 'default_besar.jpg';
+                    }
+                    if (empty($award['id_image_kecil'])) {
+                        $image_kecil = 'default_kecil.jpg';
+                    }
                     ?>
+                    
+                    
                     <a href="../static/images/award/<?php echo htmlspecialchars($image_kecil); ?>" class="grid image-link">
                         <figure class="effect-bubba gallery-img-wrap">
                             <img src="../static/images/award/<?php echo htmlspecialchars($image_besar); ?>" 
                              class="img-fluid" 
                              alt="<?php echo htmlspecialchars($award['title']); ?>">
                         <figcaption>
-                            <h3><?php echo htmlspecialchars($award['title']); ?></h3>
+                            <h3 class="hover-effect"><?php echo htmlspecialchars($award['title']); ?></h3>
                             <p><?php echo htmlspecialchars($award['recipient']); ?> (<?php echo $award['year']; ?>)<br>
                                <?php echo htmlspecialchars(substr($award['description'], 0, 100)) . '...'; ?></p>
                         </figcaption>
