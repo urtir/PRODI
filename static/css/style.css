@@ -1571,7 +1571,6 @@ select.form-control.custom-select {
     .course_duration ul li {
       list-style: none;
       display: inline-block;
-      margin-left: 20px;
       padding: 9px 0 9px; }
       .course_duration ul li p {
         padding: 0;

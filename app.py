@@ -215,17 +215,31 @@ def lecturers():
         return f"Error: {e}", 500
 
 @app.route('/research')
-def research():
-    try:
-        conn = get_db()
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM research ORDER BY year DESC")
-        research = cur.fetchall()
-        cur.close()
-        conn.close()
-        return render_template('research.html', research=research)
-    except Exception as e:
-        return f"Error: {e}", 500
+def research_page():
+    conn = get_db()
+    if not conn:
+        return "Database connection failed", 500
+    
+    cursor = conn.cursor()
+    
+    # Mengambil data penelitian
+    cursor.execute("SELECT * FROM researches")
+    researches = cursor.fetchall()
+    
+    # Mengambil data research news
+    cursor.execute("SELECT * FROM research_news")
+    research_news = cursor.fetchall()
+    
+    # Mengambil data resources
+    cursor.execute("SELECT * FROM resources")
+    resources = cursor.fetchall()
+
+    # Menutup koneksi
+    cursor.close()
+    conn.close()
+
+    # Render halaman dengan data dari database
+    return render_template('research.html', researches=researches, research_news=research_news, resources=resources)
 
 @app.route('/awards')
 def awards():
@@ -315,4 +329,5 @@ def lecturer_detail(id):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
 
