@@ -59,9 +59,14 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
         <div class="row">
             <?php foreach ($awards as $award): ?>
             <div class="col-md-4">
-                <a href="../static/images/award/<?php echo !empty($award['image_url']) ? htmlspecialchars($award['id_image_besar']) : 'default_kecil.jpg'; ?>" class="grid image-link">
-                    <figure class="effect-bubba gallery-img-wrap">
-                        <img src="../static/images/award/<?php echo !empty($award['image_url']) ? htmlspecialchars($award['id_image_kecil']) : 'default_kecil.jpg'; ?>" 
+                <?php
+                    // Tentukan gambar besar dan kecil, jika ada di database
+                    $image_besar = !empty($award['id_image_besar']) ? $award['id_image_besar'] : 'default_besar.jpg';
+                    $image_kecil = !empty($award['id_image_kecil']) ? $award['id_image_kecil'] : 'default_kecil.jpg';
+                    ?>
+                    <a href="../static/images/award/<?php echo htmlspecialchars($image_kecil); ?>" class="grid image-link">
+                        <figure class="effect-bubba gallery-img-wrap">
+                            <img src="../static/images/award/<?php echo htmlspecialchars($image_besar); ?>" 
                              class="img-fluid" 
                              alt="<?php echo htmlspecialchars($award['title']); ?>">
                         <figcaption>
@@ -76,8 +81,6 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 </div>
-
-
 
 </body>
 
@@ -110,3 +113,7 @@ $conn->close();
  <!-- Script JS -->
  <script src="../static/js/script.js"></script>
 </html>
+
+
+
+
