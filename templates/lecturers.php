@@ -37,56 +37,27 @@ $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
     <!-- Main CSS -->
     <link href="../static/css/style.css" rel="stylesheet">
+
+    <style>
+        .admission_insruction img {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .admission_insruction img:hover {
+            transform: scale(1.1); /* Memperbesar gambar 10% */
+            opacity: 0.9; /* Sedikit transparan saat hover */
+        }
+    </style>   
 </head>
 
 <body>
     
-
 <section class="our-teachers">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="mb-5">Style One</h2>
-            </div>
-        </div>
-        <div class="row">
-            <?php foreach ($lecturers as $lecturer): ?>
-            <div class="col-xs-12 col-sm-6 col-md-6">
-                <div class="our-teachers-block">
-                    <img src="../static/images/lecturers/<?php echo !empty($lecturer['image_url']) ? htmlspecialchars($lecturer['image_url']) : 'default-lecturer.jpg'; ?>" 
-                         class="img-fluid teachers-img" 
-                         alt="#"
-                         onerror="this.src='../static/images/lecturers/default-lecturer.jpg'">
-                    <div class="teachers-description">
-                        <p><strong><?php echo htmlspecialchars($lecturer['name']); ?></strong>
-                            <br> <?php echo htmlspecialchars($lecturer['education']); ?>
-                        </p>
-                        <hr>
-                        <p>Syllabus : <span><?php echo htmlspecialchars($lecturer['specialization']); ?></span></p>
-                        <div class="social-icons">
-                            <ul>
-                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                                <?php if (!empty($lecturer['social_linkedin'])): ?>
-                                <li><a href="<?php echo htmlspecialchars($lecturer['social_linkedin']); ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                                <?php endif; ?>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-        <!-- End row -->
-    </div>
-</section>
-
-
-<section class="our-teachers">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="mb-5">Style Two</h2>
+                <h2 class="mb-5">Daftar Dosen</h2>
             </div>
         </div>
         <div class="row">

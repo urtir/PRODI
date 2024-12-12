@@ -22,6 +22,10 @@ Author:
     13. ABOUT OUR TEACHERS
 
     14. ADMISSION COURCES
+
+
+
+    
     15. ADMISSION DETAILS COURCES
 
     16. ADMISSION FORM RULES 
@@ -251,9 +255,21 @@ Author:
     -ms-flex-align: center;
     align-items: center; } }
 
+  .admission_insruction img {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+  }
+  
+  .admission_insruction img:hover {
+      transform: scale(1.1); /* Memperbesar gambar 10% */
+      opacity: 0.9; /* Sedikit transparan saat hover */
+  }
+
 /* ==============================================================
    GLOBAL STYLES
    ============================================================== */
+
+   
    html {
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased; }
