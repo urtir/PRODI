@@ -22,6 +22,10 @@ Author:
     13. ABOUT OUR TEACHERS
 
     14. ADMISSION COURCES
+
+
+
+    
     15. ADMISSION DETAILS COURCES
 
     16. ADMISSION FORM RULES 
@@ -251,9 +255,21 @@ Author:
     -ms-flex-align: center;
     align-items: center; } }
 
+  .admission_insruction img {
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 1;
+  }
+  
+  .admission_insruction img:hover {
+      transform: scale(1.1); /* Memperbesar gambar 10% */
+      opacity: 0.9; /* Sedikit transparan saat hover */
+  }
+
 /* ==============================================================
    GLOBAL STYLES
    ============================================================== */
+
+   
    html {
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased; }
@@ -1872,6 +1888,43 @@ select.form-control.custom-select {
   .admission-form_respons {
     margin: 0; } }
 
+
+/* ==============================================================
+   BUBA TEXT HOVER
+   ============================================================== */
+
+/* CSS untuk efek tulisan */
+.effect-bubba h3 {
+  position: relative;
+  font-size: 1.5em; /* Ukuran font untuk judul */
+  font-weight: bold;
+  color: #fff; /* Warna teks default */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.effect-bubba p {
+  color: rgba(255, 255, 255, 0.7); /* Warna teks untuk deskripsi dan info lainnya */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efek saat hover di seluruh figcaption */
+.effect-bubba:hover h3, 
+.effect-bubba:hover p {
+  color: #FFD700; /* Warna teks saat hover (misalnya gold) */
+  transform: translateY(-5px); /* Efek gerakan saat hover */
+}
+
+/* Efek untuk elemen h3 (judul) saat pointer menuju ke area */
+.effect-bubba h3.hover-effect:hover {
+  color: #FFD700; /* Ganti warna judul saat hover */
+  transform: translateY(-5px); /* Pindahkan sedikit saat hover */
+}
+
+/* Efek gambar pada hover */
+.effect-bubba:hover img {
+  filter: brightness(70%); /* Gambar menjadi lebih gelap saat hover */
+}
+
 /*
  * CAMPUS LIFE
  ********************************/
@@ -1886,7 +1939,36 @@ select.form-control.custom-select {
   .campus p {
     line-height: 1.8;
     margin: 21px 0 58px; }
+.effect-bubba h3 {
+    position: relative;
+    font-size: 1.5em; /* Ukuran font untuk judul */
+    font-weight: bold;
+    color: #fff; /* Warna teks default */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
 
+.effect-bubba p {
+    color: rgba(255, 255, 255, 0.7); /* Warna teks untuk deskripsi dan info lainnya */
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Efek saat hover di seluruh figcaption */
+.effect-bubba:hover h3, 
+.effect-bubba:hover p {
+    color: #FFD700; /* Warna teks saat hover (misalnya gold) */
+    transform: translateY(-5px); /* Efek gerakan saat hover */
+}
+
+/* Efek untuk elemen h3 (judul) saat pointer menuju ke area */
+.effect-bubba h3.hover-effect:hover {
+    color: #FFD700; /* Ganti warna judul saat hover */
+    transform: translateY(-5px); /* Pindahkan sedikit saat hover */
+}
+
+/* Efek gambar pada hover */
+.effect-bubba:hover img {
+    filter: brightness(70%); /* Gambar menjadi lebih gelap saat hover */
+}
 .campus-img_block {
   position: relative; }
   .campus-img_block .campus-title-block {

@@ -59,13 +59,28 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
         <div class="row">
             <?php foreach ($awards as $award): ?>
             <div class="col-md-4">
-                <a href="#" class="grid image-link">
-                    <figure class="effect-bubba gallery-img-wrap">
-                        <img src="../static/images/award/<?php echo !empty($award['image_url']) ? htmlspecialchars($award['image_url']) : 'default_besar.jpg'; ?>" 
+                <?php
+                    // Tentukan gambar besar dan kecil, jika ada di database
+                    $image_besar = !empty($award['id_image_besar']) ? $award['id_image_besar'] : 'default_besar.jpg';
+                    $image_kecil = !empty($award['id_image_kecil']) ? $award['id_image_kecil'] : 'default_kecil.jpg';
+                    
+                     // Periksa apakah gambar besar atau kecil adalah NULL atau kosong, dan gantikan dengan gambar default
+                     if (empty($award['id_image_besar'])) {
+                        $image_besar = 'default_besar.jpg';
+                    }
+                    if (empty($award['id_image_kecil'])) {
+                        $image_kecil = 'default_kecil.jpg';
+                    }
+                    ?>
+                    
+                    
+                    <a href="../static/images/award/<?php echo htmlspecialchars($image_kecil); ?>" class="grid image-link">
+                        <figure class="effect-bubba gallery-img-wrap">
+                            <img src="../static/images/award/<?php echo htmlspecialchars($image_besar); ?>" 
                              class="img-fluid" 
                              alt="<?php echo htmlspecialchars($award['title']); ?>">
                         <figcaption>
-                            <h3><?php echo htmlspecialchars($award['title']); ?></h3>
+                            <h3 class="hover-effect"><?php echo htmlspecialchars($award['title']); ?></h3>
                             <p><?php echo htmlspecialchars($award['recipient']); ?> (<?php echo $award['year']; ?>)<br>
                                <?php echo htmlspecialchars(substr($award['description'], 0, 100)) . '...'; ?></p>
                         </figcaption>
@@ -76,8 +91,6 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
         </div>
     </div>
 </div>
-
-
 
 </body>
 
@@ -110,3 +123,7 @@ $conn->close();
  <!-- Script JS -->
  <script src="../static/js/script.js"></script>
 </html>
+
+
+
+
