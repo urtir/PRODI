@@ -61,13 +61,15 @@ $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
             </div>
         </div>
         <div class="row">
-            <?php foreach ($lecturers as $lecturer): ?>
+        <?php foreach ($lecturers as $lecturer): ?>
             <div class="col-xs-12 col-sm-6 col-md-3">
                 <div class="admission_insruction">
-                    <img src="../static/images/lecturers/<?php echo !empty($lecturer['image_url']) ? htmlspecialchars($lecturer['image_url']) : 'default-lecturer.jpg'; ?>" 
-                         class="img-fluid" 
-                         alt="#"
-                         onerror="this.src='../static/images/lecturers/default-lecturer.jpg'">
+                    <a href="single-lecturer.php?id=<?php echo htmlspecialchars($lecturer['id']); ?>">
+                        <img src="../static/images/lecturers/<?php echo !empty($lecturer['image_url']) ? htmlspecialchars($lecturer['image_url']) : 'default-lecturer.jpg'; ?>" 
+                             class="img-fluid" 
+                             alt="#"
+                             onerror="this.src='../static/images/lecturers/default-lecturer.jpg'">
+                    </a>
                     <p class="text-center mt-3">
                         <span><?php echo htmlspecialchars($lecturer['name']); ?></span>
                         <br>

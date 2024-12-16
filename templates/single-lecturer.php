@@ -1,4 +1,5 @@
 <?php
+include 'header.php'; 
 // Database connection
 $conn = new mysqli('localhost', 'root', '', 'informatics_db');
 if ($conn->connect_error) {
@@ -27,15 +28,38 @@ if (!$lecturer) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($lecturer['name']); ?> - Lecturer Profile</title>
-    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>About - Unisco - Education Website Template for University, College, School</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- Simple Line Font -->
+    <link rel="stylesheet" href="../static/css/simple-line-icons.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="../static/css/slick.css">
+    <link rel="stylesheet" href="../static/css/slick-theme.css">
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+    <!-- Main CSS -->
     <link href="../static/css/style.css" rel="stylesheet">
+
+    <style>
+        .admission_insruction img {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .admission_insruction img:hover {
+            transform: scale(1.1); /* Memperbesar gambar 10% */
+            opacity: 0.9; /* Sedikit transparan saat hover */
+        }
+    </style>   
 </head>
 <body>
-    <?php include 'header.php'; ?>
-
     <div class="container mt-5">
         <!-- Back Button -->
         <div class="row mb-4">
@@ -121,7 +145,12 @@ if (!$lecturer) {
         <?php endif; ?>
     </div>
 
-    <?php include 'footer.php'; ?>
+    
+    <?php 
+$conn->close();
+include 'footer.php'; 
+?>   
     <script src="../static/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 </html>
