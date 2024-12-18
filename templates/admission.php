@@ -43,42 +43,96 @@ $conn->close();
     <!-- FullCalendar CSS -->
     <link rel="stylesheet" href="../static/css/fullcalendar.min.css" />
 </head>
-
 <div class="container py-5">
-    <h1 class="text-center mb-5">Admission Information</h1>
+    <h1 class="text-center mb-5">Buletin Terkini</h1>
     <div class="row">
         <div class="col-md-8 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h3>Application Requirements</h3>
-                    <ul class="list-group list-group-flush mb-4">
-                        <li class="list-group-item">High School Diploma or equivalent</li>
-                        <li class="list-group-item">Mathematics and Science background</li>
-                        <li class="list-group-item">English language proficiency</li>
-                    </ul>
-                    
-                    <h3>Application Process</h3>
-                    <div class="timeline mb-4">
-                        <div class="step">
-                            <p>1. Submit online application</p>
-                        </div>
-                        <div class="step">
-                            <p>2. Submit required documents</p>
-                        </div>
-                        <div class="step">
-                            <p>3. Entrance examination</p>
-                        </div>
-                        <div class="step">
-                            <p>4. Interview</p>
+
+                    <h2 class="text-center my-5">Informasi Pertanyaan Pengguna</h2>
+                    <div class="row">
+                        <div class="col-md-8 mx-auto">
+                            <!-- QA 1 -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>User</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Apa saja kegiatan yang dilakukan dalam proyek akhir di prodi Informatika?</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <strong>Admin</strong>
+                                    <p>Kegiatan proyek akhir meliputi analisis kebutuhan sistem, perancangan aplikasi, pengembangan perangkat lunak, dan pengujian hasil untuk memastikan kualitas aplikasi.</p>
+                                </div>
+                            </div>
+
+                            <!-- QA 2 -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>User</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Bagaimana cara mahasiswa memilih topik proyek?</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <strong>Admin</strong>
+                                    <p>Mahasiswa dapat memilih topik berdasarkan minat pribadi, saran dari dosen pembimbing, atau melalui kolaborasi dengan industri untuk proyek berbasis kebutuhan nyata.</p>
+                                </div>
+                            </div>
+
+                            <!-- QA 3 -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>User</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Apakah ada batas waktu untuk menyelesaikan proyek akhir?</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <strong>Admin</strong>
+                                    <p>Ya, biasanya proyek akhir harus diselesaikan dalam satu semester dengan batas waktu yang ditentukan oleh kalender akademik.</p>
+                                </div>
+                            </div>
+
+                            <!-- QA 4 -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>User</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Apakah proyek akhir dikerjakan secara individu atau kelompok?</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <strong>Admin</strong>
+                                    <p>Proyek akhir dapat dikerjakan secara individu atau kelompok tergantung pada kebijakan prodi dan kompleksitas topik yang dipilih.</p>
+                                </div>
+                            </div>
+
+                            <!-- QA 5 -->
+                            <div class="card mb-4">
+                                <div class="card-header bg-primary text-white">
+                                    <strong>User</strong>
+                                </div>
+                                <div class="card-body">
+                                    <p>Bagaimana cara mempresentasikan hasil proyek akhir?</p>
+                                </div>
+                                <div class="card-footer bg-light">
+                                    <strong>Admin</strong>
+                                    <p>Hasil proyek akhir dipresentasikan dalam seminar akhir yang melibatkan dosen penguji dan mahasiswa lain sebagai audiens untuk memberikan masukan dan penilaian.</p>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-                    
-                    <a href="#" class="btn btn-primary">Apply Now</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <?php include 'footer.php'; ?>
 <!--//END FOOTER -->

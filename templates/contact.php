@@ -42,15 +42,15 @@ $conn->close();
 </head>
 
 <div class="container py-5">
-    <h1 class="text-center mb-5">Contact Us</h1>
+    <h1 class="text-center mb-5">Hubungi Kami</h1>
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h3>Contact Information</h3>
-                    <p><i class="bi bi-geo-alt"></i> Address: University Campus, Street Name</p>
+                    <h3>Informasi Kontak</h3>
+                    <p><i class="bi bi-geo-alt"></i> Alamat: Universitas Pertahanan, Kawasan IPSC Sentul, Sukahati Kec. Citeureup, Kabupaten Bogor, Jawa Barat</p>
                     <p><i class="bi bi-envelope"></i> Email: info@informatics.edu</p>
-                    <p><i class="bi bi-telephone"></i> Phone: +1234567890</p>
+                    <p><i class="bi bi-telephone"></i> No. Telepon: +1234567890</p>
                     
                     <h3 class="mt-4">Social Media</h3>
                     <div class="social-links">
@@ -66,21 +66,14 @@ $conn->close();
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3>Send us a message</h3>
+                    <h3>Silahkan Masukkan Pertanyaan Anda</h3>
                     <form>
+                    
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
-                            <input type="text" class="form-control" id="name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Message</label>
+                            <label for="message" class="form-label">Pesan</label>
                             <textarea class="form-control" id="message" rows="4" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <button type="submit" class="btn btn-primary">Kirim</button>
                     </form>
                 </div>
             </div>

@@ -235,6 +235,15 @@ INSERT INTO `resources` (`title`, `description`, `image_url`) VALUES
 ('Global Warming Data', 'A set of global warming data, including temperature changes and CO2 levels.', 'research-img_02.jpg'),
 ('Quantum Computing Journal', 'A journal featuring the latest research and breakthroughs in quantum computing.', 'research-img_02.jpg');
 
+DROP TABLE IF EXISTS `contact_messages`; 
+CREATE TABLE contact_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
