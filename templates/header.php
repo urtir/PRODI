@@ -396,6 +396,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
                     </li>
+                    <li class="nav-item ms-3"> <!-- ms-3 adds margin to separate it from other items -->
+                        <a class="btn btn-outline-light" href="login.php">
+                            <i class="fa fa-user me-2"></i>Login
+                        </a>
+                    </li>
 
                 </ul>
             </div>
