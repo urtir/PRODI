@@ -346,6 +346,71 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                 background: rgba(255,255,255,0.1);
             }
         }
+
+        /* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .navbar {
+        height: 70px;  /* Smaller height on mobile */
+    }
+    
+    .navbar-brand img {
+        height: 40px;  /* Smaller logo on mobile */
+    }
+    
+    .navbar-collapse {
+        max-height: calc(100vh - 70px);  /* Prevent overflow */
+        overflow-y: auto;
+    }
+    
+    .navbar-nav .nav-link {
+        font-size: 16px;  /* Smaller font on mobile */
+        padding: 12px 15px !important;  /* More touch-friendly padding */
+    }
+    
+    .dropdown-menu {
+        background: #1a2b4d;  /* Darker background for dropdown */
+        border: none;
+        margin: 0;
+    }
+    
+    .dropdown-item {
+        color: #fff;
+        padding: 10px 15px;
+    }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 575.98px) {
+        .navbar-brand {
+            max-width: 200px;  /* Limit logo width */
+        }
+        
+        .navbar-nav .nav-link {
+            font-size: 15px;
+            padding: 10px 12px !important;
+        }
+    }
+
+    /* Fix transition issues */
+    .navbar-collapse {
+        transition: height 0.3s ease;
+    }
+
+    /* Improve dropdown visibility */
+    .dropdown-menu {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        margin-top: 0;
+    }
+
+    /* Smoother transitions */
+    .navbar-nav .nav-link,
+    .dropdown-item {
+        transition: all 0.2s ease-in-out;
+    }
+
+
+
         </style>
     
 
@@ -390,13 +455,13 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <a class="nav-link <?php echo ($current_page == 'events') ? 'active' : ''; ?>" href="events.php">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'reasearch') ? 'active' : ''; ?>" href="research.php">Riset</a>
+                        <a class="nav-link <?php echo ($current_page == 'research') ? 'active' : ''; ?>" href="research.php">Riset</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'awards') ? 'active' : ''; ?>" href="awards.php">Penghargaan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'admission') ? 'active' : ''; ?>" href="admission.php">Buletin</a>
+                        <a class="nav-link <?php echo ($current_page == 'buletin') ? 'active' : ''; ?>" href="buletin.php">Buletin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>

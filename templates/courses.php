@@ -44,7 +44,7 @@ $courses = $courses_result->fetch_all(MYSQLI_ASSOC);
                     <p>Program Studi Informatika menawarkan berbagai mata kuliah yang dirancang untuk mempersiapkan mahasiswa menghadapi dunia teknologi informasi.</p>
                 </div>
             </div>
-            <div class="row">
+        <div class="row">
     <?php foreach ($courses as $course): ?>
     <div class="col-md-6">
         <a href="course_detail.php?id=<?php echo $course['id']; ?>" class="course_box">
