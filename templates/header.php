@@ -1,4 +1,9 @@
 <?php
+session_start();
+ob_start(); // Add output buffering
+?>
+<!DOCTYPE html>
+<?php
 // Get current page name
 $current_page = basename($_SERVER['PHP_SELF'], '.php');
 ?>
@@ -396,11 +401,23 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
                     </li>
-                    <li class="nav-item ms-3"> <!-- ms-3 adds margin to separate it from other items -->
-                        <a class="btn btn-outline-light" href="login.php">
-                            <i class="fa fa-user me-2"></i>Login
-                        </a>
-                    </li>
+                    <!-- Replace the login button section with this -->
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item dropdown ms-3">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="fa fa-user me-2"></i><?php echo htmlspecialchars($_SESSION['firstname']); ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                            </ul>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item ms-3">
+                            <a class="btn btn-outline-light" href="login.php">
+                                <i class="fa fa-user me-2"></i>Login
+                            </a>
+                        </li>
+                    <?php endif; ?>
 
                 </ul>
             </div>

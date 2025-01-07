@@ -1,24 +1,31 @@
-
 <?php 
-include 'header.php'; 
+include 'header.php';
+session_start();
 
 // Database connection
 $conn = new mysqli("localhost", "root", "", "informatics_db");
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch events
-$events_query = "SELECT * FROM events ORDER BY date DESC";
-$events_result = $conn->query($events_query);
-$events = $events_result->fetch_all(MYSQLI_ASSOC);
+// Handle new question submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['user_id'])) {
+    $question = $conn->real_escape_string($_POST['question']);
+    $user_id = $_SESSION['user_id'];
+    
+    $sql = "INSERT INTO faqs (user_id, question) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $user_id, $question);
+    $stmt->execute();
+}
 
-// Close connection 
-$conn->close();
+// Fetch FAQs
+$faqs_query = "SELECT f.*, u.username FROM faqs f 
+               LEFT JOIN users u ON f.user_id = u.id 
+               ORDER BY f.created_at DESC";
+$faqs_result = $conn->query($faqs_query);
 ?>
-
 
 <html>
 <head>
@@ -43,96 +50,56 @@ $conn->close();
     <!-- FullCalendar CSS -->
     <link rel="stylesheet" href="../static/css/fullcalendar.min.css" />
 </head>
-<div class="container py-5">
-    <h1 class="text-center mb-5">Buletin Terkini</h1>
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div class="card">
-                <div class="card-body">
 
-                    <h2 class="text-center my-5">Informasi Pertanyaan Pengguna</h2>
-                    <div class="row">
-                        <div class="col-md-8 mx-auto">
-                            <!-- QA 1 -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <strong>User</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p>Apa saja kegiatan yang dilakukan dalam proyek akhir di prodi Informatika?</p>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>Admin</strong>
-                                    <p>Kegiatan proyek akhir meliputi analisis kebutuhan sistem, perancangan aplikasi, pengembangan perangkat lunak, dan pengujian hasil untuk memastikan kualitas aplikasi.</p>
-                                </div>
-                            </div>
-
-                            <!-- QA 2 -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <strong>User</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p>Bagaimana cara mahasiswa memilih topik proyek?</p>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>Admin</strong>
-                                    <p>Mahasiswa dapat memilih topik berdasarkan minat pribadi, saran dari dosen pembimbing, atau melalui kolaborasi dengan industri untuk proyek berbasis kebutuhan nyata.</p>
-                                </div>
-                            </div>
-
-                            <!-- QA 3 -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <strong>User</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p>Apakah ada batas waktu untuk menyelesaikan proyek akhir?</p>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>Admin</strong>
-                                    <p>Ya, biasanya proyek akhir harus diselesaikan dalam satu semester dengan batas waktu yang ditentukan oleh kalender akademik.</p>
-                                </div>
-                            </div>
-
-                            <!-- QA 4 -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <strong>User</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p>Apakah proyek akhir dikerjakan secara individu atau kelompok?</p>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>Admin</strong>
-                                    <p>Proyek akhir dapat dikerjakan secara individu atau kelompok tergantung pada kebijakan prodi dan kompleksitas topik yang dipilih.</p>
-                                </div>
-                            </div>
-
-                            <!-- QA 5 -->
-                            <div class="card mb-4">
-                                <div class="card-header bg-primary text-white">
-                                    <strong>User</strong>
-                                </div>
-                                <div class="card-body">
-                                    <p>Bagaimana cara mempresentasikan hasil proyek akhir?</p>
-                                </div>
-                                <div class="card-footer bg-light">
-                                    <strong>Admin</strong>
-                                    <p>Hasil proyek akhir dipresentasikan dalam seminar akhir yang melibatkan dosen penguji dan mahasiswa lain sebagai audiens untuk memberikan masukan dan penilaian.</p>
-                                </div>
-                            </div>
-
-                        </div>
+<div class="container mt-5 pt-5">
+    <h2 class="mb-4">FAQ Bulletin Board</h2>
+    
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <!-- Question Form for logged-in users -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">Ask a Question</h5>
+                <form method="POST">
+                    <div class="form-group">
+                        <textarea class="form-control" name="question" rows="3" required></textarea>
                     </div>
-                </div>
+                    <button type="submit" class="btn btn-primary mt-2">Submit Question</button>
+                </form>
             </div>
         </div>
+    <?php else: ?>
+        <div class="alert alert-info">
+            Please <a href="login.php">login</a> or <a href="register.php">register</a> to ask questions.
+        </div>
+    <?php endif; ?>
+
+    <!-- Display FAQs -->
+    <div class="faq-list">
+        <?php while ($faq = $faqs_result->fetch_assoc()): ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Asked by: <?php echo htmlspecialchars($faq['username']); ?> 
+                        on <?php echo date('M d, Y', strtotime($faq['created_at'])); ?>
+                    </h6>
+                    <p class="card-text"><?php echo htmlspecialchars($faq['question']); ?></p>
+                    <?php if ($faq['answer']): ?>
+                        <div class="answer mt-2 p-3 bg-light">
+                            <strong>Answer:</strong><br>
+                            <?php echo htmlspecialchars($faq['answer']); ?>
+                        </div>
+                    <?php else: ?>
+                        <span class="badge bg-warning">Pending Answer</span>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endwhile; ?>
     </div>
 </div>
 
-
-
+<?php
+$conn->close();
+?>
 
 <?php include 'footer.php'; ?>
 <!--//END FOOTER -->
