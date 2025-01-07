@@ -16,7 +16,7 @@
                     <ul class="list-unstyled">
                         <li><a href="/courses">Mata Kuliah</a></li>
                         <li><a href="/events">Acara</a></li>
-                        <li><a href="/admission">Pendaftaran</a></li>
+                        <li><a href="/admission">Buletin</a></li>
                         <li><a href="/contact">Kontak</a></li>
                     </ul>
                 </div>
