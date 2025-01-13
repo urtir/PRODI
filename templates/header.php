@@ -441,16 +441,28 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 <body>
     
     <!-- Main Navigation -->
+<<<<<<< HEAD
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="index.php">
                 <img src="../static/images/logo.png" alt="Logo">
+=======
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container h-100 d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.php">
+                <img src="../static/images/logo.png" alt="Logo" height="70">
+>>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+<<<<<<< HEAD
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
+=======
+            <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto d-flex align-items-center">
+>>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'index') ? 'active' : ''; ?>" href="index.php">Home</a>
                     </li>
@@ -475,6 +487,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
                     </li>
+<<<<<<< HEAD
                     <!-- Replace the login button section with this -->
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <li class="nav-item dropdown ms-3">
@@ -500,7 +513,36 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             <span class="navbar-toggler-icon"></span>
                         </button>
                     </li>
+=======
+
+                    <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page == 'admin') ? 'active' : ''; ?>" href="admin.php">Console</a>
+                    </li>
+                    <?php endif; ?>
+
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item me-3 d-flex align-items-center">
+                            <a class="nav-link px-2" href="messages.php">Messages</a>
+                        </li>
+                        <li class="nav-item dropdown d-flex align-items-center">
+                            <a class="nav-link dropdown-toggle px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <?php echo htmlspecialchars($_SESSION['firstname']); ?>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
+                        </li>
+                    <?php endif; ?>
+>>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
                 </ul>
+
+                
+
             </div>
         </div>
     </nav>
