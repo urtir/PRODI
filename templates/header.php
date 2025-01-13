@@ -51,7 +51,25 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         });
     });
     </script>   
-
+    <style>
+        .navbar {
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 80px;
+        }
+        
+        .main-content {
+            padding-top: 2rem;
+        }
+        
+        body {
+            padding-top: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
     <style>
     * {
         font-family: 'Poppins', sans-serif;
