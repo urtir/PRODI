@@ -22,11 +22,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../static/js/jquery.min.js"></script>
     <script src="../static/js/bootstrap.bundle.min.js"></script>
-    <script src="../static/js/main.js"></script>
-    <script src="js/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <script src="../static/js/main.js"></script>
+    <script src="js/jquery.min.js"></script>
         <script src="js/tether.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- Plugins -->
@@ -62,10 +62,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 
     body {
         font-family: 'Poppins', sans-serif;
-        font-weight: 400; 
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
     }
 
     main {

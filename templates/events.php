@@ -72,12 +72,6 @@ $conn->close();
         <div class="row">
             <!-- Tab panes -->
             <div class="tab-content">
-<<<<<<< HEAD
-                <div class="tab-pane active" id="upcoming-events" role="tabpanel">
-                    <div id="eventAccordion">
-                        <?php foreach ($events as $event): ?>
-                        <div class="col-md-12">
-=======
             <div class="tab-pane active" id="upcoming-events" role="tabpanel">
                 <div id="eventAccordion">
                     <?php foreach ($events as $event): ?>
@@ -107,73 +101,8 @@ $conn->close();
                             <div class="event-hilights">
                                 <h5>Event Highlights Photos</h5>
                             </div>
->>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
                             <div class="row">
                                 <!-- Event Date -->
-                                <div class="col-md-2">
-                                    <div class="event-date">
-                                        <h4><?php echo date('d', strtotime($event['date'])); ?></h4>
-                                        <span><?php echo date('M Y', strtotime($event['date'])); ?></span>
-                                    </div>
-                                    <span class="event-time"><?php echo htmlspecialchars($event['time'] ?? ''); ?></span>
-                                </div>
-<<<<<<< HEAD
-                                <!-- Event Content -->
-                                <div class="col-md-10">
-                                    <div class="event-heading">
-                                        <h3><?php echo htmlspecialchars($event['title']); ?></h3>
-                                        <p><?php echo htmlspecialchars($event['description']); ?></p>
-                                    </div>
-                                    <!-- Collapsible Details -->
-                                    <div id="collapse<?php echo $event['id']; ?>" class="panel-collapse collapse">
-                                        <div class="panel-body">
-                                            <div class="event-hilights">
-                                                <h5>Event Highlights Photos</h5>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <img src="../static/images/events/<?php echo htmlspecialchars($event['image_url'] ?? 'default-event.jpg'); ?>" class="img-fluid" alt="event-img" onerror="this.src='../static/images/upcoming-event-img.jpg'">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <img src="../static/images/events/<?php echo htmlspecialchars($event['image_url2'] ?? 'default-event.jpg'); ?>" class="img-fluid" alt="event-img" onerror="this.src='../static/images/upcoming-event-img.jpg'">
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <img src="../static/images/events/<?php echo htmlspecialchars($event['image_url3'] ?? 'default-event.jpg'); ?>" class="img-fluid" alt="event-img" onerror="this.src='../static/images/upcoming-event-img.jpg'">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="event-highlight-discription">
-                                                        <p><?php echo nl2br(htmlspecialchars($event['long_description'] ?? '')); ?></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Toggle Button -->
-                                    <div class="panel-heading">
-                                        <h4 class="panel-title">
-                                            <a class="event-toggle collapsed" 
-                                               data-toggle="collapse" 
-                                               data-parent="#eventAccordion" 
-                                               href="#collapse<?php echo $event['id']; ?>"
-                                               aria-expanded="false">
-                                                Show Details
-                                            </a>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr class="event-underline">
-                        </div>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="tab-pane" id="calendar-view" role="tabpanel">
-                    <!-- Calendar will be rendered here -->
-                    <div id='calendar'></div>
-                </div>
-=======
                                 <div class="col-md-4">
                                     <img src="../static/images/events/<?php echo htmlspecialchars($event['image_url2'] ?? 'default-event.jpg'); ?>" class="img-fluid" alt="event-img" onerror="this.src='../static/images/upcoming-event-img.jpg'">
                                 </div>
@@ -216,7 +145,6 @@ $conn->close();
         <div class="row">
             <div class="col-md-12">
                 <div id='calendar'></div>
->>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
             </div>
         </div>
     </div>
