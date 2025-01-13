@@ -1,5 +1,4 @@
 <?php
-
 include 'header.php'; 
 
 // Database connection
@@ -10,8 +9,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch awards
-$awards_query = "SELECT * FROM awards ORDER BY year DESC";
+// Pagination
+$awards_per_page = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$start = ($page - 1) * $awards_per_page;
+
+// Count total awards for pagination
+$total_awards = $conn->query("SELECT COUNT(*) as count FROM awards")->fetch_assoc()['count'];
+$total_pages = ceil($total_awards / $awards_per_page);
+
+// Fetch awards with pagination
+$awards_query = "SELECT * FROM awards ORDER BY year DESC LIMIT $start, $awards_per_page";
 $awards_result = $conn->query($awards_query);
 $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -37,16 +45,10 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
   <!-- Image Hover CSS -->
   <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
   <link rel="stylesheet" type="text/css" href="../static/css/set2.css" />
-
-  <!-- Masonry Gallery -->
-  <!-- <link href="css/style3.css" rel="stylesheet" type="text/css" /> -->
-  <link href="../static/css/animated-masonry-gallery.css" rel="stylesheet" type="text/css" />
   <!-- Main CSS -->
   <link href="../static/css/style.css" rel="stylesheet">
-  
 </head>
 
-<!-- (Penghargaan) -->
 <body>
   
 <div class="gallery-wrap">
@@ -93,7 +95,32 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
     </div>
 </div>
 
-</body>
+<!-- Pagination -->
+<div class="row">
+    <div class="col-md-12">
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <?php if ($page > 1): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?php echo ($page-1); ?>">Previous</a>
+                    </li>
+                <?php endif; ?>
+                
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                
+                <?php if ($page < $total_pages): ?>
+                    <li class="page-item">
+                        <a class="page-link" href="?page=<?php echo ($page+1); ?>">Next</a>
+                    </li>
+                <?php endif; ?>
+            </ul>
+        </nav>
+    </div>
+</div>
 
 <?php 
 $conn->close();
@@ -115,14 +142,9 @@ $conn->close();
  <script src="../static/js/tweetie.min.js"></script>
  <!-- Subscribe -->
  <script src="../static/js/subscribe.js"></script>
-
- <script src="../static/js/jquery-ui-1.10.4.min.js"></script>
- <script src="../static/js/jquery.isotope.min.js"></script>
- <script src="../static/js/animated-masonry-gallery.js"></script>
- <!-- Magnific popup JS -->
- <script src="../static/js/jquery.magnific-popup.js"></script>
  <!-- Script JS -->
  <script src="../static/js/script.js"></script>
+</body>
 </html>
 
 

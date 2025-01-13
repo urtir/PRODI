@@ -1,5 +1,3 @@
-
-
 <?php 
 include 'header.php'; 
 
@@ -11,8 +9,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Query untuk mengambil data research
-$sql_research = "SELECT * FROM researches"; // Mengambil data dari tabel `researches`
+// Pagination
+$researches_per_page = 5;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$start = ($page - 1) * $researches_per_page;
+
+// Count total researches for pagination
+$total_researches = $conn->query("SELECT COUNT(*) as count FROM researches")->fetch_assoc()['count'];
+$total_pages = ceil($total_researches / $researches_per_page);
+
+// Query untuk mengambil data research dengan pagination
+$sql_research = "SELECT * FROM researches LIMIT $start, $researches_per_page";
 $result_research = $conn->query($sql_research);
 
 // Query untuk mengambil data research news
@@ -28,14 +35,13 @@ $researches = $result_research->fetch_all(MYSQLI_ASSOC);
 $research_news = $result_news->fetch_all(MYSQLI_ASSOC);
 $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
 
-
 ?>
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Admission - Unisco - Education Website Template for University, College, School</title>
+    <title>Research - Informatics Department</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <!-- Google Fonts -->
@@ -48,7 +54,6 @@ $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
     <!-- Main CSS -->
     <link href="../static/css/style.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -60,8 +65,8 @@ $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
                     <h2>Current Research</h2>
                     <?php foreach ($researches as $research): ?>
                     <div class="research-current_block">
-                        <img src="../static/images/research/<?php echo htmlspecialchars($research['image_url']) ? htmlspecialchars($research['image_url']) : 'research-img.jpg'; ?>" class="img-fluid" alt="research-img">
-                        <div>
+                        <img src="../static/images/research/<?php echo htmlspecialchars($research['image_url']) ? htmlspecialchars($research['image_url']) : 'research-img.jpg'; ?>" class="img-fluid research-img" alt="research-img">
+                        <div class="research-description">
                             <h4><?php echo htmlspecialchars($research['title']); ?></h4>
                             <p><?php echo strlen($research['description']) > 150 ? substr($research['description'], 0, 150) . '...' : htmlspecialchars($research['description']); ?></p>
                             <?php if ($research['details']): ?>
@@ -71,6 +76,98 @@ $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
                                 <?php endforeach; ?>
                             </ul>
                             <?php endif; ?>
+                            <!-- Admin Controls -->
+                            <?php if (isset($_SESSION['admin_id'])): ?>
+                            <div class="admin-controls">
+                                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editResearchModal<?php echo $research['id']; ?>">Edit</button>
+                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#uploadResearchModal<?php echo $research['id']; ?>">Upload</button>
+                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#removeResearchModal<?php echo $research['id']; ?>">Remove</button>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Edit Research Modal -->
+                    <div class="modal fade" id="editResearchModal<?php echo $research['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="editResearchModalLabel<?php echo $research['id']; ?>" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editResearchModalLabel<?php echo $research['id']; ?>">Edit Research</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="admin_research_action.php" enctype="multipart/form-data">
+                                        <input type="hidden" name="action" value="edit">
+                                        <input type="hidden" name="id" value="<?php echo $research['id']; ?>">
+                                        <div class="form-group">
+                                            <label>Title</label>
+                                            <input type="text" class="form-control" name="title" value="<?php echo htmlspecialchars($research['title']); ?>" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Description</label>
+                                            <textarea class="form-control" name="description" rows="3" required><?php echo htmlspecialchars($research['description']); ?></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <input type="file" class="form-control" name="image">
+                                            <small>Current Image: <?php echo htmlspecialchars($research['image_url']); ?></small>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Upload Research Modal -->
+                    <div class="modal fade" id="uploadResearchModal<?php echo $research['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="uploadResearchModalLabel<?php echo $research['id']; ?>" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="uploadResearchModalLabel<?php echo $research['id']; ?>">Upload Research</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" action="admin_research_action.php" enctype="multipart/form-data">
+                                        <input type="hidden" name="action" value="upload">
+                                        <input type="hidden" name="id" value="<?php echo $research['id']; ?>">
+                                        <div class="form-group">
+                                            <label>Image</label>
+                                            <input type="file" class="form-control" name="image" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-success">Upload</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Remove Research Modal -->
+                    <div class="modal fade" id="removeResearchModal<?php echo $research['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="removeResearchModalLabel<?php echo $research['id']; ?>" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="removeResearchModalLabel<?php echo $research['id']; ?>">Remove Research</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure you want to remove this research?
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="POST" action="admin_research_action.php">
+                                        <input type="hidden" name="action" value="remove">
+                                        <input type="hidden" name="id" value="<?php echo $research['id']; ?>">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-danger">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php endforeach; ?>
@@ -103,64 +200,32 @@ $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
         </div>
     </section>    
 
-    <section class="research-features">
-        <img src="../static/images/research/research-features_img.jpg" class="img-fluid" alt="research-features_img">
-        <div class="research-featurestext_block">
-            <h3>Research with Purpose</h3>
-            <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum...</p>
+    <!-- Pagination -->
+    <div class="row">
+        <div class="col-md-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <?php if ($page > 1): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo ($page-1); ?>">Previous</a>
+                        </li>
+                    <?php endif; ?>
+                    
+                    <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                        <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                            <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    
+                    <?php if ($page < $total_pages): ?>
+                        <li class="page-item">
+                            <a class="page-link" href="?page=<?php echo ($page+1); ?>">Next</a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </nav>
         </div>
-    </section>
-
-    <section class="resources">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="resources-title">Resources</h2>
-            </div>
-        </div>
-
-        <!-- Carousel -->
-        <div id="resourcesCarousel" class="carousel slide" data-ride="carousel" data-interval="5000">
-            <!-- Indikator Bulatan (Dots) -->
-            <ol class="carousel-indicators">
-                <?php foreach ($resources as $index => $resource): ?>
-                    <li data-target="#resourcesCarousel" data-slide-to="<?php echo $index; ?>" class="<?php echo $index == 0 ? 'active' : ''; ?>"></li>
-                <?php endforeach; ?>
-            </ol>
-
-            <div class="carousel-inner">
-                <?php foreach ($resources as $index => $resource): ?>
-                    <div class="carousel-item <?php echo $index == 0 ? 'active' : ''; ?>">
-                        <div class="resources-slick">
-                            <div class="resources-slider_wrap">
-                                <div class="research-testi_block">
-                                    <!-- Gambar -->
-                                    <img src="../static/images/research/<?php echo htmlspecialchars($resource['image_url']) ? htmlspecialchars($resource['image_url']) : 'resources-img.jpg'; ?>" class="img-fluid" alt="resources-img">
-                                    
-                                    <!-- Judul -->
-                                    <h4><?php echo htmlspecialchars($resource['title']); ?> »</h4>
-                                    
-                                    <!-- Deskripsi -->
-                                    <p><?php echo htmlspecialchars($resource['description']); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-
-                <!-- Kontrol carousel -->
-                <a class="carousel-control-prev" href="#resourcesCarousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#resourcesCarousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div>
-    </section>
+    </div>
 
 </body>
 
@@ -168,34 +233,10 @@ $resources = $result_resources->fetch_all(MYSQLI_ASSOC);
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
 <?php 
 $conn->close();
 include 'footer.php'; 
 ?>
-
-
-
-
-                    <script src="..static/js/jquery.min.js"></script>
-                    <script src="..static/js/tether.min.js"></script>
-                    <script src="..static/js/bootstrap.min.js"></script>
-<!-- Plugins -->
-                    <script src="..static/js/instafeed.min.js"></script>
-                    <script src="..static/js/owl.carousel.min.js"></script>
-                    <script src="..static/js/validate.js"></script>
-                    <script src="..static/js/tweetie.min.js"></script>
-<!-- Subscribe -->
-                    <script src="..static/js/subscribe.js"></script>
-<!-- Script JS -->
-                    <script src="..static/js/script.js"></script>
-
-
-                </body>
-                </html>
-
-
 
 <style>
 .research-posts {
@@ -240,5 +281,31 @@ include 'footer.php';
     margin-top: 10px;
     padding-left: 20px;
     list-style-type: disc;
+}
+
+.admin-controls {
+    margin-top: 10px;
+}
+
+.admin-controls .btn {
+    margin-right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .research-current_block {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .research-current_block img {
+        margin-right: 0;
+        margin-bottom: 15px;
+        max-width: 100%;
+    }
+
+    .research-description {
+        text-align: center;
+    }
 }
 </style>
