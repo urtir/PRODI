@@ -466,7 +466,13 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
                     </li>
-                    <!-- Replace the login button section with this -->
+
+                    <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo ($current_page == 'admin') ? 'active' : ''; ?>" href="admin.php">Console</a>
+                    </li>
+                    <?php endif; ?>
+
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <li class="nav-item me-3 d-flex align-items-center">
                             <a class="nav-link px-2" href="messages.php">Messages</a>

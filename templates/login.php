@@ -10,29 +10,31 @@ if(isset($_SESSION['user_id'])) {
 }
 
 // Check if form submitted
-if (isset($_POST) && !empty($_POST)) {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn = new mysqli("localhost", "root", "", "informatics_db");
     
     if ($conn->connect_error) {
         $error = "Connection failed: " . $conn->connect_error;
     } else {
-        $email = isset($_POST['email']) ? $conn->real_escape_string($_POST['email']) : '';
-        $password = isset($_POST['password']) ? $_POST['password'] : '';
+        $email = $conn->real_escape_string($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
         
         if (empty($email) || empty($password)) {
             $error = "Please fill in all fields";
         } else {
-            $stmt = $conn->prepare("SELECT id, email, password, firstname FROM users WHERE email = ?");
+            // Added role to SELECT query
+            $stmt = $conn->prepare("SELECT id, email, password, firstname, role FROM users WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $result = $stmt->get_result();
             
-        
             if ($user = $result->fetch_assoc()) {
                 if (password_verify($password, $user['password'])) {
                     $_SESSION['user_id'] = $user['id'];
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['firstname'] = $user['firstname'];
+                    $_SESSION['role'] = $user['role'];
+                    
                     header("Location: index.php");
                     exit();
                 } else {
@@ -41,6 +43,7 @@ if (isset($_POST) && !empty($_POST)) {
             } else {
                 $error = "Email not found";
             }
+            $stmt->close();
         }
         $conn->close();
     }
