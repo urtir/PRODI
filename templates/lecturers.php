@@ -10,8 +10,17 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch lecturers
-$lecturers_query = "SELECT * FROM lecturers";
+// Pagination
+$lecturers_per_page = 8;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$start = ($page - 1) * $lecturers_per_page;
+
+// Count total lecturers for pagination
+$total_lecturers = $conn->query("SELECT COUNT(*) as count FROM lecturers")->fetch_assoc()['count'];
+$total_pages = ceil($total_lecturers / $lecturers_per_page);
+
+// Fetch lecturers with pagination
+$lecturers_query = "SELECT * FROM lecturers LIMIT $start, $lecturers_per_page";
 $lecturers_result = $conn->query($lecturers_query);
 $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
 ?>
@@ -80,6 +89,33 @@ $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
             <?php endforeach; ?>
         </div>
         <!-- End row -->
+
+        <!-- Pagination -->
+        <div class="row">
+            <div class="col-md-12">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <?php if ($page > 1): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<?php echo ($page-1); ?>">Previous</a>
+                            </li>
+                        <?php endif; ?>
+                        
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+                                <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                            </li>
+                        <?php endfor; ?>
+                        
+                        <?php if ($page < $total_pages): ?>
+                            <li class="page-item">
+                                <a class="page-link" href="?page=<?php echo ($page+1); ?>">Next</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
 </section>
 <!--//End Style 2 -->
