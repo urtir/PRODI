@@ -3,12 +3,14 @@ include 'header.php';
 
 $error = '';
 
+// Prevent logged in users from accessing login page
 if(isset($_SESSION['user_id'])) {
     header("Location: index.php");
     exit();
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Check if form submitted
+if (isset($_POST) && !empty($_POST)) {
     $conn = new mysqli("localhost", "root", "", "informatics_db");
     
     if ($conn->connect_error) {
@@ -25,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
             $result = $stmt->get_result();
             
+        
             if ($user = $result->fetch_assoc()) {
                 if (password_verify($password, $user['password'])) {
                     $_SESSION['user_id'] = $user['id'];

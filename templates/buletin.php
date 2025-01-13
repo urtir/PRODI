@@ -93,12 +93,12 @@ $posts = $conn->query("
 </head>
 
 <div class="contact">
-            <div class="row text-center">
-                <div class="col-md-12">
-                    <h2>Forum Diskusi</h2>
-                    <p>Selamat datang di forum diskusi Program Studi Informatika. Di sini Anda dapat berbagi informasi, pengalaman, dan berinteraksi dengan komunitas mahasiswa informatika.</p>
-                </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+            <h2 class="event-title">Forum Buletin Diskusi</h2>
+            <p>Selamat datang di forum diskusi Program Studi Informatika. Di sini Anda dapat berbagi informasi, bertanya, dan berdiskusi dengan civitas akademika.</p>
             </div>
+        </div>
     <div class="container w-75  ">
         <?php if (isset($_SESSION['user_id'])): ?>
         <!-- Search Form -->

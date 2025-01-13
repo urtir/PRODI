@@ -41,6 +41,14 @@ $conn->close();
     <link href="../static/css/style.css" rel="stylesheet">
     <!-- FullCalendar CSS -->
     <link rel="stylesheet" href="../static/css/fullcalendar.min.css" />
+    <!-- Add to head section -->
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css' rel='stylesheet' />
+    <link href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js'></script>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
+
 </head>
 
 <body>
@@ -50,21 +58,6 @@ $conn->close();
         <div class="row">
             <div class="col-md-4">
                 <h2 class="event-title">Events</h2>
-            </div>
-            <div class="col-md-8">
-                <!-- Nav Tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li class="nav-item nav-tab1">
-                        <a class="nav-link tab-list active" data-toggle="tab" href="#upcoming-events" role="tab">
-                            Upcoming events
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link tab-list" data-toggle="tab" href="#calendar-view" role="tab">
-                            Calendar view
-                        </a>
-                    </li>
-                </ul>
             </div>
         </div>
         <br>
@@ -91,10 +84,14 @@ $conn->close();
                             <h3><?php echo htmlspecialchars($event['title']); ?></h3>
                             <p><?php echo htmlspecialchars($event['description']); ?></p>
                         </div>
+                    
+                    <!-- Toggle Button -->
+                    
+
                     <!-- Collapsible Details -->
-                    <div id="collapse<?php echo $event['id']; ?>" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <div class="event-hilights">
+                    <div id="collapse<?php echo $event['id']; ?>" class="collapse">
+                        <div class="panel-body">
+                            <div class="event-hilights">
                                 <h5>Event Highlights Photos</h5>
                             </div>
                             <div class="row">
@@ -109,27 +106,24 @@ $conn->close();
                                 </div>
                             </div>
                             <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="event-highlight-discription">
-                                                <p><?php echo nl2br(htmlspecialchars($event['long_description'] ?? '')); ?></p>
-                                            </div>
-                                        </div>
+                                <div class="col-md-6">
+                                    <div class="event-highlight-discription">
+                                        <p><?php echo nl2br(htmlspecialchars($event['long_description'] ?? '')); ?></p>
                                     </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- Toggle Button -->
                     <!-- Toggle Button -->
-                    <div class="panel-heading">
-                            <h4 class="panel-title">
-                            <a class="event-toggle collapsed" 
-                            data-toggle="collapse" 
-                            data-parent="#eventAccordion" 
-                            href="#collapse<?php echo $event['id']; ?>"
-                            aria-expanded="false">
-                                Show Details
-                            </a>
-                            </h4>
-                    </div>
+                    <button class="event-toggle" 
+                            type="button"
+                            data-bs-toggle="collapse" 
+                            data-bs-target="#collapse<?php echo $event['id']; ?>" 
+                            aria-expanded="false"
+                            aria-controls="collapse<?php echo $event['id']; ?>">
+                        Show Details
+                    </button>
                 </div>
             </div>
             <hr class="event-underline">
@@ -141,7 +135,7 @@ $conn->close();
         <div id='calendar'></div>
 </div>
 
-<div class="tab-pane" id="calander-view" role="tabpanel">
+<div class="tab-pane" id="calendar-view" role="tabpanel">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -183,6 +177,7 @@ $conn->close();
         <script src="../static/js/fullcalendar.min.js"></script>
         <!-- Bootstrap JS -->
         <script src="../static/js/bootstrap.min.js"></script>
+        <script src="../static/js/bootstrap.bundle.min.js"></script>
         
         
         <script>
@@ -243,6 +238,50 @@ $conn->close();
             });
         });
         </script>
+
+        <script>
+        document.querySelectorAll('.event-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const isCollapsed = this.getAttribute('aria-expanded') === 'false';
+                this.textContent = isCollapsed ? 'Hide Details' : 'Show Details';
+            });
+        });
+        </script>
+
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: [
+                    <?php foreach ($events as $event): ?>
+                    {
+                        title: '<?php echo addslashes($event['title']); ?>',
+                        start: '<?php echo $event['date']; ?>',
+                        url: '#event-<?php echo $event['id']; ?>',
+                        description: '<?php echo addslashes($event['description']); ?>'
+                    },
+                    <?php endforeach; ?>
+                ],
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    const eventId = info.event.url.split('#')[1];
+                    document.getElementById(eventId).scrollIntoView();
+                }
+            });
+            calendar.render();
+
+            // Tab switching
+            document.querySelectorAll('a[data-bs-toggle="tab"]').forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (e) {
+                    if (e.target.getAttribute('href') === '#calendar-view') {
+                        calendar.updateSize();
+                    }
+                });
+            });
+        });
+        </script>
+
 
 </body>
 </html>

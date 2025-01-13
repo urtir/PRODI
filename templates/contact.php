@@ -1,20 +1,40 @@
 <?php 
-include 'header.php'; 
-// Database connection
-$conn = new mysqli("localhost", "root", "", "informatics_db");
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+
+include 'header.php';
+
+$message = '';
+$error = '';
+
+// Check if form is submitted with proper method check
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $conn = new mysqli("localhost", "root", "", "informatics_db");
+    
+    if ($conn->connect_error) {
+        $error = "Connection failed: " . $conn->connect_error;
+    } else {
+        $name = $conn->real_escape_string($_POST['name'] ?? '');
+        $email = $conn->real_escape_string($_POST['email'] ?? '');
+        $subject = $conn->real_escape_string($_POST['subject'] ?? '');
+        $msg = $conn->real_escape_string($_POST['message'] ?? '');
+        
+        if (empty($name) || empty($email) || empty($subject) || empty($msg)) {
+            $error = "Please fill in all fields";
+        } else {
+            $sql = "INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssss", $name, $email, $subject, $msg);
+            
+            if ($stmt->execute()) {
+                $message = "Message sent successfully!";
+            } else {
+                $error = "Error sending message.";
+            }
+        }
+        $conn->close();
+    }
 }
 
-// Fetch events
-$events_query = "SELECT * FROM events ORDER BY date DESC";
-$events_result = $conn->query($events_query);
-$events = $events_result->fetch_all(MYSQLI_ASSOC);
-
-// Close connection 
-$conn->close();
 ?>
 
 <html>
@@ -64,16 +84,38 @@ $conn->close();
         </div>
         
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h3>Silahkan Masukkan Pertanyaan Anda</h3>
-                    <form>
-                    
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Pesan</label>
-                            <textarea class="form-control" id="message" rows="4" required></textarea>
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <h3 class="card-title mb-4">Silahkan Masukkan Pertanyaan Anda</h3>
+                    <form method="POST" action="">
+                        <?php if ($message): ?>
+                            <div class="alert alert-success"><?php echo $message; ?></div>
+                        <?php endif; ?>
+                        <?php if ($error): ?>
+                            <div class="alert alert-danger"><?php echo $error; ?></div>
+                        <?php endif; ?>
+                        
+                        <div class="form-group mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-control form-control-lg" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Kirim</button>
+
+                        <div class="form-group mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-control form-control-lg" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control form-control-lg" required>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-control form-control-lg" rows="5" required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Send Message</button>
                     </form>
                 </div>
             </div>

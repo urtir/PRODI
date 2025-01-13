@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v13.1.1 (64 bit)
-MySQL - 10.4.32-MariaDB : Database - informatics_db
+MySQL - 10.4.32-MariaDB-log : Database - informatics_db
 *********************************************************************
 */
 
@@ -42,6 +42,59 @@ insert  into `awards`(`id`,`title`,`recipient`,`year`,`description`) values
 (8,'International Recognition','Dr. Maria Garcia',2023,'Global Research Impact'),
 (9,'Department Excellence','Dr. James Lee',2024,'Department Leadership'),
 (10,'Student Choice','Dr. Anna White',2023,'Student Mentorship');
+
+/*Table structure for table `comments` */
+
+DROP TABLE IF EXISTS `comments`;
+
+CREATE TABLE `comments` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `post_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `post_id` (`post_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `posts` (`id`),
+  CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `comments` */
+
+insert  into `comments`(`id`,`post_id`,`user_id`,`content`,`created_at`) values 
+(11,1,3,'Thanks for sharing! The Python lab sessions were really helpful.','2024-12-29 21:38:59'),
+(12,1,4,'Which Python course did you take first?','2024-12-29 21:38:59'),
+(13,2,2,'I\'m interested in joining the database project team!','2024-12-30 21:38:59'),
+(14,2,4,'Count me in for the database project. I have experience with MySQL.','2024-12-30 21:38:59'),
+(15,3,2,'The React workshop sounds great! When are you planning to hold it?','2024-12-31 21:38:59'),
+(16,4,3,'Thanks for the update, admin!','2025-01-01 21:38:59'),
+(17,5,4,'Let\'s form a study group for the competition. I\'m in!','2025-01-02 21:38:59'),
+(18,6,2,'Which company did you intern at? Would love to hear more!','2025-01-04 21:38:59'),
+(19,7,3,'Will the tech talk be recorded?','2025-01-05 21:38:59'),
+(20,8,4,'Interested in the IoT project. Let\'s discuss!','2025-01-06 21:38:59'),
+(21,8,4,'halo made','2025-01-07 21:40:09'),
+(22,11,3,'gampang bang, cari sponsor aja kaya BANK DKI','2025-01-07 21:41:59');
+
+/*Table structure for table `contact_messages` */
+
+DROP TABLE IF EXISTS `contact_messages`;
+
+CREATE TABLE `contact_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('unread','read') DEFAULT 'unread',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `contact_messages` */
+
+insert  into `contact_messages`(`id`,`name`,`email`,`subject`,`message`,`created_at`,`status`) values 
+(1,'Rizqullah Aryaputra','risqullaharya16@gmail.com','halo','halo','2025-01-08 10:40:29','unread');
 
 /*Table structure for table `courses` */
 
@@ -110,6 +163,25 @@ insert  into `events`(`id`,`title`,`description`,`long_description`,`date`,`imag
 (16,'Lomba Web Development','Kompetisi pengembangan website untuk mahasiswa.','Kompetisi Web Development ini akan menguji kemampuan peserta dalam:\n\n    - Front-end development (HTML5, CSS3, JavaScript)\n    - Back-end programming\n    - Database design\n    - UI/UX design\n    - Web security implementation\n    \n    Proyek akan dinilai berdasarkan kreativitas, fungsionalitas, dan kualitas kode.','2024-04-30','web-dev.jpg','coding-contest.jpg','ui-design.jpg','2024-12-09 19:42:06'),
 (17,'Industrial Visit: Tech Company','Kunjungan industri ke perusahaan teknologi terkemuka.','Kunjungan industri ini memberikan kesempatan kepada mahasiswa untuk:\n\n    - Melihat langsung operasional perusahaan teknologi\n    - Interaksi dengan para profesional IT\n    - Understanding of industrial best practices\n    - Potential internship opportunities\n    - Networking dengan alumni yang bekerja di industri\n    \n    Termasuk sesi Q&A dan sharing session dengan tim development.','2024-05-15','industry-visit.jpg','tech-company.jpg','networking.jpg','2024-12-09 19:42:06');
 
+/*Table structure for table `faqs` */
+
+DROP TABLE IF EXISTS `faqs`;
+
+CREATE TABLE `faqs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `question` text NOT NULL,
+  `answer` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('pending','answered') DEFAULT 'pending',
+  PRIMARY KEY (`id`),
+  KEY `idx_faqs_status` (`status`),
+  KEY `idx_faqs_user` (`user_id`),
+  CONSTRAINT `faqs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `faqs` */
+
 /*Table structure for table `lecturers` */
 
 DROP TABLE IF EXISTS `lecturers`;
@@ -152,6 +224,60 @@ insert  into `lecturers`(`id`,`name`,`title`,`specialization`,`image_url`,`email
 (13,'Prof. Michael Chen','Assistant Professor','Cybersecurity and Network Systems','michael-chen.jpg','m.chen@university.edu','Ph.D. in Computer Security','Ph.D. in Computer Security, Carnegie Mellon University (2015)<br>M.S. in Computer Networks, USC (2011)<br>B.S. in Computer Science, Georgia Tech (2009)','Specialized in network security and cryptography with focus on developing secure systems for enterprise applications.','Security Research','10+ Years Experience','Global Security Research',' Security Engineer at Cisco (2015-2018)<br> Senior Security Researcher at FireEye (2018-2020)<br> Assistant Professor (2020-present)<br> Multiple security patents holder','Network Security, Cryptography, Penetration Testing, Security Auditing, C++, Python, Java, Security Tools Development','https://linkedin.com/in/michaelchen',NULL),
 (14,'Dr. John Doe','Professor of Computer Science',NULL,'johndoe.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Dr. Doe has over 20 years of experience...');
 
+/*Table structure for table `posts` */
+
+DROP TABLE IF EXISTS `posts`;
+
+CREATE TABLE `posts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `posts` */
+
+insert  into `posts`(`id`,`user_id`,`title`,`content`,`created_at`) values 
+(1,2,'Experience in Informatics Programming','Hi everyone! Just wanted to share my experience learning Python in our department. The labs are well-equipped and professors are helpful.','2024-12-28 21:38:57'),
+(2,3,'Database Project Group','Looking for team members for the upcoming database project. Need 2-3 people who are interested in MySQL and web development.','2024-12-29 21:38:57'),
+(3,4,'Web Development Workshop','Is anyone interested in joining a weekend workshop on React.js? We can share knowledge and practice together.','2024-12-30 21:38:57'),
+(4,1,'Important: New Lab Schedule','The computer lab schedule has been updated for this semester. Please check the notice board for details.','2024-12-31 21:38:57'),
+(5,2,'Programming Competition','Who is joining the upcoming coding competition? We could form study groups to prepare together.','2025-01-01 21:38:57'),
+(6,3,'Software Engineering Notes','Sharing my notes from last semester\'s Software Engineering course. Hope it helps the juniors!','2025-01-02 21:38:57'),
+(7,4,'Internship Experience','Just completed my summer internship at a local tech company. Happy to share insights with anyone interested.','2025-01-03 21:38:57'),
+(8,1,'Department Event: Tech Talk','Next week we will have industry experts talking about AI and Machine Learning. Don\'t miss it!','2025-01-04 21:38:57'),
+(9,2,'Study Resources','Found some great online resources for Data Structures. Check them out: [links removed]','2025-01-05 21:38:57'),
+(10,3,'Final Year Project Ideas','Brainstorming for final year project topics. Anyone interested in collaborating on an IoT project?','2025-01-06 21:38:57'),
+(11,2,'WOI GIMANA SIH BANG CARA MASUK INFORMATIKA???','gua pen masuk infor tapi gua gada basic mancing','2025-01-07 21:41:02');
+
+/*Table structure for table `private_messages` */
+
+DROP TABLE IF EXISTS `private_messages`;
+
+CREATE TABLE `private_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `status` enum('unread','read') DEFAULT 'unread',
+  PRIMARY KEY (`id`),
+  KEY `sender_id` (`sender_id`),
+  KEY `receiver_id` (`receiver_id`),
+  CONSTRAINT `private_messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `private_messages_ibfk_2` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `private_messages` */
+
+insert  into `private_messages`(`id`,`sender_id`,`receiver_id`,`subject`,`message`,`created_at`,`status`) values 
+(1,3,2,'halo','halo ido','2025-01-08 10:37:44','unread');
+
 /*Table structure for table `research` */
 
 DROP TABLE IF EXISTS `research`;
@@ -180,6 +306,7 @@ insert  into `research`(`id`,`title`,`description`,`year`,`researchers`,`status`
 (9,'AR/VR Education','Immersive learning systems',2024,'Dr. Brown, Dr. Taylor','Ongoing'),
 (10,'Machine Learning Ethics','Ethical AI development',2023,'Dr. Anderson, Dr. Chen','Completed');
 
+/*Table structure for table `research_news` */
 
 DROP TABLE IF EXISTS `research_news`;
 
@@ -189,7 +316,15 @@ CREATE TABLE `research_news` (
   `TEXT` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `research_news` */
+
+insert  into `research_news`(`id`,`DATE`,`TEXT`,`created_at`) values 
+(11,'2024-12-10','New research on AI advancements in healthcare has been published.','2024-12-11 09:36:15'),
+(12,'2024-11-05','Climate change research shows alarming trends in global temperature rise.','2024-12-11 09:36:15'),
+(13,'2024-10-01','New findings in the field of quantum computing reveal breakthrough technologies.','2024-12-11 09:36:15'),
+(14,'2024-09-15','The latest study on renewable energy sources suggests a bright future for solar power.','2024-12-11 09:36:15');
 
 /*Table structure for table `researches` */
 
@@ -203,7 +338,15 @@ CREATE TABLE `researches` (
   `details` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `researches` */
+
+insert  into `researches`(`id`,`title`,`description`,`image_url`,`details`,`created_at`) values 
+(11,'AI in Healthcare','Exploring the applications of AI in improving healthcare systems.','research-img_02.jpg','This research focuses on the role of Artificial Intelligence in diagnosing diseases, optimizing hospital operations, and improving patient care.','2024-12-11 09:36:15'),
+(12,'Climate Change Impact','The effects of climate change on global ecosystems and human societies.','research-img_02.jpg','This study examines the rising sea levels, extreme weather events, and the economic consequences of climate change.','2024-12-11 09:36:15'),
+(13,'Quantum Computing Breakthrough','New developments in quantum computing could revolutionize various industries.','research-img_02.jpg','Research highlights the potential of quantum computing in solving complex problems in fields like cryptography, AI, and material science.','2024-12-11 09:36:15'),
+(14,'Renewable Energy Sources','The future of energy: solar, wind, and other renewable sources.','research-img_02.jpg','This research covers the advancements in renewable energy technologies and their potential to replace fossil fuels in the global energy mix.','2024-12-11 09:36:15');
 
 /*Table structure for table `resources` */
 
@@ -216,34 +359,40 @@ CREATE TABLE `resources` (
   `image_url` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `research_news` (`DATE`, `TEXT`) VALUES
-('2024-12-10', 'New research on AI advancements in healthcare has been published.'),
-('2024-11-05', 'Climate change research shows alarming trends in global temperature rise.'),
-('2024-10-01', 'New findings in the field of quantum computing reveal breakthrough technologies.'),
-('2024-09-15', 'The latest study on renewable energy sources suggests a bright future for solar power.');
+/*Data for the table `resources` */
 
-INSERT INTO `researches` (`title`, `description`, `image_url`, `details`) VALUES
-('AI in Healthcare', 'Exploring the applications of AI in improving healthcare systems.', 'research-img_02.jpg', 'This research focuses on the role of Artificial Intelligence in diagnosing diseases, optimizing hospital operations, and improving patient care.'),
-('Climate Change Impact', 'The effects of climate change on global ecosystems and human societies.', 'research-img_02.jpg', 'This study examines the rising sea levels, extreme weather events, and the economic consequences of climate change.'),
-('Quantum Computing Breakthrough', 'New developments in quantum computing could revolutionize various industries.', 'research-img_02.jpg', 'Research highlights the potential of quantum computing in solving complex problems in fields like cryptography, AI, and material science.'),
-('Renewable Energy Sources', 'The future of energy: solar, wind, and other renewable sources.', 'research-img_02.jpg', 'This research covers the advancements in renewable energy technologies and their potential to replace fossil fuels in the global energy mix.');
+insert  into `resources`(`id`,`title`,`description`,`image_url`,`created_at`) values 
+(4,'Research Paper on AI','A comprehensive paper on the application of AI in various industries.','research-img_02.jpg','2024-12-11 09:36:15'),
+(5,'Global Warming Data','A set of global warming data, including temperature changes and CO2 levels.','research-img_02.jpg','2024-12-11 09:36:15'),
+(6,'Quantum Computing Journal','A journal featuring the latest research and breakthroughs in quantum computing.','research-img_02.jpg','2024-12-11 09:36:15');
 
-INSERT INTO `resources` (`title`, `description`, `image_url`) VALUES
-('Research Paper on AI', 'A comprehensive paper on the application of AI in various industries.', 'research-img_02.jpg'),
-('Global Warming Data', 'A set of global warming data, including temperature changes and CO2 levels.', 'research-img_02.jpg'),
-('Quantum Computing Journal', 'A journal featuring the latest research and breakthroughs in quantum computing.', 'research-img_02.jpg');
+/*Table structure for table `users` */
 
-DROP TABLE IF EXISTS `contact_messages`; 
-CREATE TABLE contact_messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+DROP TABLE IF EXISTS `users`;
 
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `firstname` varchar(100) NOT NULL,
+  `lastname` varchar(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `role` enum('user','admin') DEFAULT 'user',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+/*Data for the table `users` */
+
+insert  into `users`(`id`,`username`,`email`,`password`,`firstname`,`lastname`,`created_at`,`role`) values 
+(1,'admin','admin@example.com','admin','Admin','User','2025-01-07 20:37:43','admin'),
+(2,'idojaya@gmail.com','idojaya@gmail.com','$2y$10$5lY.UamUo35SjczdkOJsUOeU5N9ypjJ6zaG2O2FWrY2p/Tz5F1ILC','Ido','Jaya','2025-01-07 20:44:02','user'),
+(3,'jeremia@gmail.com','jeremia@gmail.com','$2y$10$HDGLUK1G6sITEVBZSx7/tuTzK4JmIg0PyPNp6niV1WZ20SZyHUI1m','Jeremia','Sinaga','2025-01-07 21:05:54','user'),
+(4,'made@gmail.com','made@gmail.com','$2y$10$t61IEXJejK7lFgCjKEpVmepbM8okUylR.N3OpX3eHxeOn5GopVJWG','made','made','2025-01-07 21:31:59','user');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

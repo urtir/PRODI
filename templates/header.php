@@ -433,15 +433,15 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     
     <!-- Main Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
+        <div class="container h-100 d-flex align-items-center">
+            <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="../static/images/logo.png" alt="Logo" height="70">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav mx-auto d-flex align-items-center">
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'index') ? 'active' : ''; ?>" href="index.php">Home</a>
                     </li>
@@ -468,23 +468,26 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                     </li>
                     <!-- Replace the login button section with this -->
                     <?php if(isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item dropdown ms-3">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="fa fa-user me-2"></i><?php echo htmlspecialchars($_SESSION['firstname']); ?>
+                        <li class="nav-item me-3 d-flex align-items-center">
+                            <a class="nav-link px-2" href="messages.php">Messages</a>
+                        </li>
+                        <li class="nav-item dropdown d-flex align-items-center">
+                            <a class="nav-link dropdown-toggle px-2" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                <?php echo htmlspecialchars($_SESSION['firstname']); ?>
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="logout.php">Logout</a>
+                            </div>
                         </li>
                     <?php else: ?>
-                        <li class="nav-item ms-3">
-                            <a class="btn btn-outline-light" href="login.php">
-                                <i class="fa fa-user me-2"></i>Login
-                            </a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="login.php">Login</a>
                         </li>
                     <?php endif; ?>
-
                 </ul>
+
+                
+
             </div>
         </div>
     </nav>

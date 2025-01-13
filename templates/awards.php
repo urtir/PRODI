@@ -52,8 +52,9 @@ $awards = $awards_result->fetch_all(MYSQLI_ASSOC);
 <div class="gallery-wrap">
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
-                <h3 class="gallery-style">Daftar Penghargaan</h3>
+            <div class="col-md-12 text-center">
+            <h2 class="event-title">Galeri Penghargaan</h2>
+            <p>Program Studi Informatika telah meraih berbagai penghargaan bergengsi yang mencerminkan dedikasi dan prestasi dalam bidang pendidikan dan teknologi informasi.</p>
             </div>
         </div>
         <div class="row">
