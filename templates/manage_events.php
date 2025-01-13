@@ -13,6 +13,43 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Handle Delete Operation
+if (isset($_POST['delete_id'])) {
+    $delete_id = (int)$_POST['delete_id'];
+    
+    // Get image URLs before deletion for cleanup
+    $stmt = $conn->prepare("SELECT image_url, image_url2, image_url3 FROM events WHERE id = ?");
+    $stmt->bind_param("i", $delete_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $event = $result->fetch_assoc();
+    
+    // Delete from database
+    $stmt = $conn->prepare("DELETE FROM events WHERE id = ?");
+    $stmt->bind_param("i", $delete_id);
+    
+    if ($stmt->execute()) {
+        // Delete associated images
+        if ($event) {
+            $image_fields = ['image_url', 'image_url2', 'image_url3'];
+            foreach ($image_fields as $field) {
+                if (!empty($event[$field])) {
+                    $image_path = "../static/images/events/" . $event[$field];
+                    if (file_exists($image_path)) {
+                        unlink($image_path);
+                    }
+                }
+            }
+        }
+        $_SESSION['success_message'] = "Event deleted successfully!";
+    } else {
+        $_SESSION['error_message'] = "Error deleting event: " . $conn->error;
+    }
+    
+    header("Location: manage_events.php");
+    exit();
+}
+
 // Pagination setup
 $items_per_page = 10;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -25,16 +62,8 @@ $total_pages = ceil($total_events / $items_per_page);
 // Fetch events
 $events = $conn->query("SELECT * FROM events ORDER BY date DESC LIMIT $offset, $items_per_page")->fetch_all(MYSQLI_ASSOC);
 ?>
-<style>
 
-.content-wrapper {
-    position: relative;
-    z-index: 1;
-    min-height: calc(100vh - 80px);
-    background: #fff;
-}
 
-</style>
 <div class="content-wrapper" style="padding-top: 100px;">
     <div class="container">
         <!-- Breadcrumb -->
@@ -61,8 +90,29 @@ $events = $conn->query("SELECT * FROM events ORDER BY date DESC LIMIT $offset, $
             <input type="text" id="eventSearch" class="form-control" placeholder="Search events...">
         </div>
 
-    
+            <!-- Add message alerts at top of content -->
+        <?php if (isset($_SESSION['success_message'])): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <?php 
+                echo $_SESSION['success_message'];
+                unset($_SESSION['success_message']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
 
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <div class="alert alert-danger alert-dismissible fade show">
+                <?php 
+                echo $_SESSION['error_message'];
+                unset($_SESSION['error_message']);
+                ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        <?php endif; ?>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
     <!-- Events Table -->
     <div class="table-responsive">
         <table class="table table-hover">
@@ -119,7 +169,7 @@ $events = $conn->query("SELECT * FROM events ORDER BY date DESC LIMIT $offset, $
                                 <button type="button" 
                                         class="btn btn-danger btn-sm"
                                         onclick="confirmDelete(<?php echo $event['id']; ?>)">
-                                    <i class="fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Delete
                                 </button>
                             </div>
                         </td>
@@ -217,7 +267,7 @@ function openImageModal(imgPath, title) {
 function confirmDelete(id) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        text: "This will permanently delete this event and all associated images!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
@@ -225,7 +275,18 @@ function confirmDelete(id) {
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `delete_event.php?id=${id}`;
+            let form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'manage_events.php';
+            
+            let input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'delete_id';
+            input.value = id;
+            
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
         }
     });
 }

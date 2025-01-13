@@ -24,6 +24,9 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
     <script src="../static/js/bootstrap.bundle.min.js"></script>
     <script src="../static/js/main.js"></script>
     <script src="js/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
         <script src="js/tether.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <!-- Plugins -->
@@ -51,25 +54,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         });
     });
     </script>   
-    <style>
-        .navbar {
-            position: relative;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            min-height: 80px;
-        }
-        
-        .main-content {
-            padding-top: 2rem;
-        }
-        
-        body {
-            padding-top: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-    </style>
+
     <style>
     * {
         font-family: 'Poppins', sans-serif;
@@ -368,12 +353,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         /* Responsive Adjustments */
 @media (max-width: 991.98px) {
     .navbar {
-        height: auto;  /* Adjust height based on content */
+        height: 70px;  /* Smaller height on mobile */
     }
     
     .navbar-brand img {
-        height: auto;  /* Adjust logo height based on content */
-        max-height: 50px;  /* Limit maximum height */
+        height: 40px;  /* Smaller logo on mobile */
     }
     
     .navbar-collapse {
@@ -428,14 +412,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
         transition: all 0.2s ease-in-out;
     }
 
-    /* Ensure navbar stays on top */
-    .navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1030;
-    }
-
 
 
         </style>
@@ -459,28 +435,16 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 <body>
     
     <!-- Main Navigation -->
-<<<<<<< HEAD
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">
-                <img src="../static/images/logo.png" alt="Logo">
-=======
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container h-100 d-flex align-items-center">
             <a class="navbar-brand d-flex align-items-center" href="index.php">
                 <img src="../static/images/logo.png" alt="Logo" height="70">
->>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-<<<<<<< HEAD
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ms-auto">
-=======
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto d-flex align-items-center">
->>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'index') ? 'active' : ''; ?>" href="index.php">Home</a>
                     </li>
@@ -500,38 +464,11 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <a class="nav-link <?php echo ($current_page == 'awards') ? 'active' : ''; ?>" href="awards.php">Penghargaan</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'buletin') ? 'active' : ''; ?>" href="buletin.php">FAQ</a>
+                        <a class="nav-link <?php echo ($current_page == 'buletin') ? 'active' : ''; ?>" href="buletin.php">Buletin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'contact') ? 'active' : ''; ?>" href="contact.php">Hubungi</a>
                     </li>
-<<<<<<< HEAD
-                    <!-- Replace the login button section with this -->
-                    <?php if(isset($_SESSION['user_id'])): ?>
-                        <li class="nav-item dropdown ms-3">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="fa fa-user me-2"></i><?php echo htmlspecialchars($_SESSION['firstname']); ?>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <?php if($_SESSION['role'] == 'admin'): ?>
-                                    <li><a class="dropdown-item" href="admin_dashboard.php">Admin Dashboard</a></li>
-                                <?php endif; ?>
-                                <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-                            </ul>
-                        </li>
-                    <?php else: ?>
-                        <li class="nav-item ms-3">
-                            <a class="btn btn-outline-light" href="login.php">
-                                <i class="fa fa-user me-2"></i>Login
-                            </a>
-                         </li>
-                    <?php endif; ?>
-                    <li class="nav-item ms-3 d-lg-none">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </li>
-=======
 
                     <?php if(isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li class="nav-item">
@@ -556,7 +493,6 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                             <a class="nav-link" href="login.php">Login</a>
                         </li>
                     <?php endif; ?>
->>>>>>> 52032d8c5991937384e563432ceff5e25c06c7ed
                 </ul>
 
                 
