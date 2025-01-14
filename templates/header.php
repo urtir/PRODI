@@ -457,7 +457,7 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
                         <a class="nav-link <?php echo ($current_page == 'research') ? 'active' : ''; ?>" href="research.php">Riset</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'awards') ? 'active' : ''; ?>" href="awards.php">Penghargaan</a>
+                        <a class="nav-link <?php echo ($current_page == 'awards') ? 'active' : ''; ?>" href="awards.php">Awards</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link <?php echo ($current_page == 'buletin') ? 'active' : ''; ?>" href="buletin.php">FAQ</a>

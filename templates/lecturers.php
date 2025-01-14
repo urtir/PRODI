@@ -81,8 +81,7 @@ $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
                     </a>
                     <p class="text-center mt-3">
                         <span><?php echo htmlspecialchars($lecturer['name']); ?></span>
-                        <br>
-                        <?php echo htmlspecialchars($lecturer['title']); ?>
+                        
                     </p>
                 </div>
             </div>

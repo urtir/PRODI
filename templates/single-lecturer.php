@@ -82,7 +82,7 @@ if (!$lecturer) {
                 <h4 class="text-muted mb-4"><?php echo htmlspecialchars($lecturer['title']); ?></h4>
                 
                 <div class="mb-4">
-                    <h5>Contact Information</h5>
+                    <h5>Informasi Kontak</h5>
                     <?php if (!empty($lecturer['email'])): ?>
                         <p><strong>Email:</strong> <?php echo htmlspecialchars($lecturer['email']); ?></p>
                     <?php endif; ?>
@@ -99,7 +99,7 @@ if (!$lecturer) {
         <!-- Education -->
         <div class="row mt-5">
             <div class="col-12">
-                <h3 class="border-bottom pb-2">Education</h3>
+                <h3 class="border-bottom pb-2">Pendidikan Akhir</h3>
                 <p><?php echo htmlspecialchars($lecturer['education']); ?></p>
                 <?php if (!empty($lecturer['education_details'])): ?>
                     <p><?php echo nl2br(htmlspecialchars($lecturer['education_details'])); ?></p>
