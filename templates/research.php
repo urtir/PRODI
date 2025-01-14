@@ -9,12 +9,29 @@ if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 $sql = "SELECT * FROM researches ORDER BY created_at DESC";
 $result = $conn->query($sql);
 $researches = $result->fetch_all(MYSQLI_ASSOC);
+
+// Add after database connection
+$items_per_page = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$total_items = $conn->query("SELECT COUNT(*) FROM researches")->fetch_row()[0];
+$total_pages = ceil($total_items / $items_per_page);
+$offset = ($page - 1) * $items_per_page;
+
+// Modify existing query
+$sql = "SELECT * FROM researches ORDER BY created_at DESC LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param('ii', $items_per_page, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+$researches = $result->fetch_all(MYSQLI_ASSOC);
+
+
 ?>
 
 <!-- CSS Styles -->
 <style>
 :root {
-    --dark-blue: #0A2647;
+    --dark-blue:rgb(2, 63, 134);
     --medium-blue: #144272;
     --light-blue: #205295;  
     --highlight: #2C74B3;
@@ -137,6 +154,40 @@ $researches = $result->fetch_all(MYSQLI_ASSOC);
         </div>
         <?php endforeach; ?>
     </div>
+
+
+<nav aria-label="Research pagination" class="mt-5">
+    <ul class="pagination justify-content-center">
+        <!-- Previous -->
+        <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+            <a class="page-link" href="?page=<?php echo $page-1; ?>" 
+               style="background: var(--dark-blue); color: white; border-color: var(--light-blue);">
+                Previous
+            </a>
+        </li>
+        
+        <!-- Pages -->
+        <?php for($i = 1; $i <= $total_pages; $i++): ?>
+        <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
+            <a class="page-link" href="?page=<?php echo $i; ?>"
+               style="background: <?php echo $i == $page ? 'var(--light-blue)' : 'var(--dark-blue)'; ?>; 
+                      color: white; border-color: var(--light-blue);">
+                <?php echo $i; ?>
+            </a>
+        </li>
+        <?php endfor; ?>
+        
+        <!-- Next -->
+        <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+            <a class="page-link" href="?page=<?php echo $page+1; ?>"
+               style="background: var(--dark-blue); color: white; border-color: var(--light-blue);">
+                Next
+            </a>
+        </li>
+    </ul>
+</nav>
+
+
 </div>
 
 <?php include 'footer.php'; ?>
