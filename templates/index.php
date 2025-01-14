@@ -24,6 +24,8 @@ $courses_query = "SELECT * FROM courses";
 $courses_result = $conn->query($courses_query);
 $courses = $courses_result->fetch_all();
 
+
+
 $conn->close();
 
 
@@ -258,34 +260,52 @@ $conn->close();
 
 
 <!-- Lecturers Section -->
-<div class="our-teachers">
+<section class="py-5 bg-light">
     <div class="container">
-        <div class="row">
+        <div class="row mb-4">
             <div class="col-md-12">
-                <h2 class="text-center">Dosen Pengajar</h2>
+                <h2 class="text-center mb-4">Our Lecturers</h2>
             </div>
         </div>
-        <div class="row">
+        <div class="row g-4">
         <?php 
-            $top_lecturers = array_slice($lecturers, 0, 3); // Get only first 3 lecturers
-            foreach ($top_lecturers as $lecturer): ?>
-            <div class="col-md-4">
-                <div class="our-teachers-block">
-                    <img src="../static/images/lecturers/<?php echo !empty($lecturer[4]) ? $lecturer[4] : 'default-lecturer.jpg'; ?>" 
-                         class="img-fluid teachers-img" alt="<?php echo $lecturer[1]; ?>"
-                         onerror="this.src='../static/images/teachers/default-teacher.jpg'">
-                    <div class="teachers-description">
-                        <p><span><?php echo $lecturer[1]; ?></span></p>
-                        <p><?php echo $lecturer[2]; ?></p>
-                        <p><?php echo $lecturer[3]; ?></p>
-                    </div>
+        $top_lecturers = array_slice($lecturers, 0, 3);
+        foreach ($top_lecturers as $lecturer): ?>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 hover-shadow">
+                <div class="position-relative">
+                    <?php
+                    $imagePath = !empty($lecturer[4]) 
+                        ? "../static/images/lecturers/" . $lecturer[4]
+                        : "../static/images/lecturers/default.jpg";
+                        
+                    // Check if file exists, else use default
+                    if (!empty($lecturer[4]) && !file_exists($imagePath)) {
+                        $imagePath = "../static/images/lecturers/default.jpg";
+                    }
+                    ?>
+                    <img src="<?php echo $imagePath; ?>" 
+                        class="card-img-top" 
+                        alt="<?php echo htmlspecialchars($lecturer[1] ?? 'Lecturer'); ?>"
+                        style="height: 300px; object-fit: cover;">
+                </div>
+                <div class="card-body text-center">
+                    <h5 class="card-title mb-1"><?php echo htmlspecialchars($lecturer[1] ?? 'Name Not Available'); ?></h5>
+                    <p class="text-muted mb-2"><?php echo htmlspecialchars($lecturer[2] ?? 'Position Not Available'); ?></p>
+                    <small class="text-primary"><?php echo htmlspecialchars($lecturer[3] ?? 'Department Not Available'); ?></small>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-center pb-3">
+                    <a href="single_lecturer.php?id=<?php echo $lecturer[0]; ?>" 
+                    class="btn btn-outline-primary btn-sm">
+                        View Profile
+                    </a>
                 </div>
             </div>
-            <?php endforeach; ?>
         </div>
+        <?php endforeach; ?>
     </div>
-</div>
-<!--//END Lecturers Section -->
+    </div>
+</section>
 
 <script src="../static/js/slick.min.js"></script>
 <script src="../static/js/owl.carousel.min.js"></script>
