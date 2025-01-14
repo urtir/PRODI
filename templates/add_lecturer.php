@@ -3,12 +3,12 @@ include 'header.php';
 
 // Database connection
 $conn = new mysqli("localhost", "root", "", "informatics_db");
-if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
-
-// Process form submission
-if ($_SERVER['METHOD'] === 'POST') {
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Prepare base data
+        // Get form data
         $nama = $_POST['nama'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $perguruan_tinggi = $_POST['perguruan_tinggi'];
@@ -18,7 +18,7 @@ if ($_SERVER['METHOD'] === 'POST') {
         $status_ikatan_kerja = $_POST['status_ikatan_kerja'];
         $status_aktivitas = $_POST['status_aktivitas'];
 
-        // Handle file upload
+        // Handle photo upload
         $foto = null;
         if (isset($_FILES['foto']) && $_FILES['foto']['size'] > 0) {
             $file = $_FILES['foto'];
@@ -30,13 +30,13 @@ if ($_SERVER['METHOD'] === 'POST') {
             }
         }
 
-        // Handle JSON data
-        $riwayat_pendidikan = isset($_POST['education']) ? json_encode(array_values($_POST['education'])) : null;
-        $riwayat_mengajar = isset($_POST['teaching']) ? json_encode(array_values($_POST['teaching'])) : null;
-        $penelitian = isset($_POST['research']) ? json_encode(array_values($_POST['research'])) : null;
-        $pengabdian_masyarakat = isset($_POST['service']) ? json_encode(array_values($_POST['service'])) : null;
-        $publikasi = isset($_POST['publication']) ? json_encode(array_values($_POST['publication'])) : null;
-        $hki_paten = isset($_POST['patent']) ? json_encode(array_values($_POST['patent'])) : null;
+        // Process JSON data
+        $riwayat_pendidikan = isset($_POST['education']) ? json_encode($_POST['education']) : null;
+        $riwayat_mengajar = isset($_POST['teaching']) ? json_encode($_POST['teaching']) : null;
+        $penelitian = isset($_POST['research']) ? json_encode($_POST['research']) : null;
+        $pengabdian_masyarakat = isset($_POST['service']) ? json_encode($_POST['service']) : null;
+        $publikasi = isset($_POST['publication']) ? json_encode($_POST['publication']) : null;
+        $hki_paten = isset($_POST['patent']) ? json_encode($_POST['patent']) : null;
 
         // Insert query
         $sql = "INSERT INTO lecturers (

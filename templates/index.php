@@ -235,7 +235,7 @@ $conn->close();
                                 <a href="course_detail.php?id=<?php echo $course[0]; ?>" class="course-link">
                                     <span>Detail Mata Kuliah</span>
                                 </a>
-                                <a href="course_registration.php?id=<?php echo $course[0]; ?>" class="course-link">
+                                
                                     <span>Daftar</span>
                                 </a>
                             </div>
@@ -275,12 +275,12 @@ $conn->close();
             <div class="card h-100 shadow-sm border-0 hover-shadow">
                 <div class="position-relative">
                     <?php
-                    $imagePath = !empty($lecturer[4]) 
-                        ? "../static/images/lecturers/" . $lecturer[4]
+                    $imagePath = !empty($lecturer[2]) 
+                        ? "../static/images/lecturers/" . $lecturer[2]
                         : "../static/images/lecturers/default.jpg";
                         
                     // Check if file exists, else use default
-                    if (!empty($lecturer[4]) && !file_exists($imagePath)) {
+                    if (!empty($lecturer[2]) && !file_exists($imagePath)) {
                         $imagePath = "../static/images/lecturers/default.jpg";
                     }
                     ?>
@@ -291,8 +291,8 @@ $conn->close();
                 </div>
                 <div class="card-body text-center">
                     <h5 class="card-title mb-1"><?php echo htmlspecialchars($lecturer[1] ?? 'Name Not Available'); ?></h5>
-                    <p class="text-muted mb-2"><?php echo htmlspecialchars($lecturer[2] ?? 'Position Not Available'); ?></p>
-                    <small class="text-primary"><?php echo htmlspecialchars($lecturer[3] ?? 'Department Not Available'); ?></small>
+                    <p class="text-muted mb-2"><?php echo htmlspecialchars($lecturer[4] ?? 'Position Not Available'); ?></p>
+                    <small class="text-primary"><?php echo htmlspecialchars($lecturer[5] ?? 'Department Not Available'); ?></small>
                 </div>
                 <div class="card-footer bg-transparent border-0 text-center pb-3">
                     <a href="single_lecturer.php?id=<?php echo $lecturer[0]; ?>" 

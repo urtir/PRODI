@@ -13,6 +13,11 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$uploadsDir = __DIR__ . "/../static/images/courses";
+$materialsDir = __DIR__ . "/../static/materials";
+
+
+
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $success_message = '';
 $error_message = '';
@@ -36,6 +41,96 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'] ?? '';
     $semester = $_POST['semester'] ?? '';
     $existing_image = $course['image_url'];
+
+    if (isset($_FILES['materials']) && $_FILES['materials']['size'] > 0) {
+    $materials = $_FILES['materials'];
+    $maxSize = 50 * 1024 * 1024; // 50MB
+    
+    // Validate file size
+    if ($materials['size'] > $maxSize) {
+        throw new Exception("Material file size must be less than 50MB");
+    }
+    
+    // Validate file type
+    $materialsExt = strtolower(pathinfo($materials['name'], PATHINFO_EXTENSION));
+    if ($materialsExt !== 'zip') {
+        throw new Exception("Only ZIP files are allowed for course materials");
+    }
+    
+    // Generate unique filename
+    $materialsFilename = time() . '_' . basename($materials['name']);
+    $materialsTarget = $materialsDir . '/' . $materialsFilename;
+    
+    // Delete old file if exists
+    if ($course['materials_url'] && file_exists($materialsDir . '/' . $course['materials_url'])) {
+        unlink($materialsDir . '/' . $course['materials_url']);
+    }
+    
+    // Upload new file with error checking
+    if (!move_uploaded_file($materials['tmp_name'], $materialsTarget)) {
+        throw new Exception("Failed to upload materials file. Error: " . error_get_last()['message']);
+    }
+    
+    // Add to update data
+    $update_data[] = "materials_url = ?";
+    $types .= "s";
+    $values[] = $materialsFilename;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        // Initialize update variables
+        $update_data = [];
+        $types = '';
+        $values = [];
+
+        // Create materials directory if not exists
+        $materialsDir = __DIR__ . "/../static/materials";
+        if (!file_exists($materialsDir)) {
+            mkdir($materialsDir, 0777, true);
+        }
+
+        // Handle materials upload
+        if (isset($_FILES['materials']) && $_FILES['materials']['size'] > 0) {
+            $materials = $_FILES['materials'];
+            $maxSize = 50 * 1024 * 1024; // 50MB
+            
+            // Validate file size
+            if ($materials['size'] > $maxSize) {
+                throw new Exception("Material file size must be less than 50MB");
+            }
+            
+            // Validate file type
+            $materialsExt = strtolower(pathinfo($materials['name'], PATHINFO_EXTENSION));
+            if ($materialsExt !== 'zip') {
+                throw new Exception("Only ZIP files are allowed");
+            }
+            
+            // Generate unique filename
+            $materialsFilename = time() . '_' . basename($materials['name']);
+            $materialsTarget = $materialsDir . '/' . $materialsFilename;
+            
+            // Delete old file if exists
+            if ($course['materials_url'] && file_exists($materialsDir . '/' . $course['materials_url'])) {
+                unlink($materialsDir . '/' . $course['materials_url']);
+            }
+            
+            // Upload new file
+            if (!move_uploaded_file($materials['tmp_name'], $materialsTarget)) {
+                throw new Exception("Upload failed: " . error_get_last()['message']);
+            }
+            
+            // Add to update data
+            $update_data[] = "materials_url = ?";
+            $types .= "s";
+            $values[] = $materialsFilename;
+        }
+
+        // ...existing image upload code...
+    } catch (Exception $e) {
+        $error_message = $e->getMessage();
+    }
+}
     
     // Handle image upload if new image provided
     if (isset($_FILES['image_url']) && $_FILES['image_url']['size'] > 0) {
@@ -50,7 +145,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $existing_image = $file_name;
         }
+
+        
+
+
+
+
+
     }
+
+    
     
     // Update database
     $sql = "UPDATE courses SET code = ?, name = ?, credits = ?, description = ?, 
@@ -154,6 +258,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
                         <input type="file" class="form-control" name="image_url" accept="image/*">
                         <div class="mt-2" id="imagePreview"></div>
+                    </div>
+
+                    <!-- Add this to your form -->
+                    <div class="mb-3">
+                        <label class="form-label">Course Materials (ZIP)</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <?php if (!empty($course['materials_url'])): ?>
+                                <div class="current-material">
+                                    <i class="fas fa-file-archive text-primary"></i>
+                                    <span class="ms-2"><?php echo basename($course['materials_url']); ?></span>
+                                    <a href="../static/<?php echo htmlspecialchars($course['materials_url']); ?>" 
+                                    class="btn btn-sm btn-outline-primary ms-2" 
+                                    target="_blank">
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                            <input type="file" class="form-control" name="materials" accept=".zip">
+                        </div>
+                        <div class="form-text">Upload ZIP file containing course materials (max 50MB)</div>
                     </div>
 
                     <div class="mt-4">
