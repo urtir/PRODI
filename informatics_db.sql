@@ -38,9 +38,8 @@ insert  into `awards`(`id`,`title`,`recipient`,`year`,`description`) values
 (4,'Research Grant','Dr. Emily Brown',2023,'Software Engineering Project'),
 (5,'Industry Collaboration','Dr. David Wilson',2024,'Corporate Partnership Success'),
 (6,'Academic Achievement','Dr. Lisa Anderson',2023,'Machine Learning Advances'),
-(7,'Community Service','Dr. Robert Taylor',2024,'Educational Outreach'),
 (8,'International Recognition','Dr. Maria Garcia',2023,'Global Research Impact'),
-(9,'Department Excellence','Dr. James Lee',2024,'Department Leadership'),
+(9,'Department Excellence','Dr. James Lee Gainal',2024,'Department Leadership'),
 (10,'Student Choice','Dr. Anna White',2023,'Student Mentorship');
 
 /*Table structure for table `comments` */
@@ -109,7 +108,7 @@ CREATE TABLE `courses` (
   `image_url` varchar(255) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `courses` */
 
@@ -123,7 +122,8 @@ insert  into `courses`(`id`,`code`,`name`,`credits`,`description`,`image_url`,`s
 (7,'CS401','Software Engineering',4,'Software development lifecycle','course_7.jpg',6),
 (8,'CS402','Mobile Computing',3,'Mobile app development','course_8.jpg',6),
 (9,'CS403','Cloud Computing',3,'Cloud services and deployment','course_9.jpg',7),
-(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7);
+(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7),
+(11,'CINTA101','Cara Mencintai Dalam DIam',6,'Aikwokwoakde','1736794788_event-img_2.jpg',6);
 
 /*Table structure for table `events` */
 
@@ -140,7 +140,7 @@ CREATE TABLE `events` (
   `image_url3` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `events` */
 
@@ -153,15 +153,15 @@ insert  into `events`(`id`,`title`,`description`,`long_description`,`date`,`imag
 (6,'Game Dev Meetup','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan',NULL,'2024-05-15','gamedev.jpg',NULL,NULL,'2024-12-05 20:54:07'),
 (7,'IoT Workshop','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan',NULL,'2024-06-01','iot.jpg',NULL,NULL,'2024-12-05 20:54:07'),
 (8,'Security Conference','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan',NULL,'2024-06-15','security.jpg',NULL,NULL,'2024-12-05 20:54:07'),
-(9,'Mobile Dev Talk','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan',NULL,'2024-07-01','mobile.jpg',NULL,NULL,'2024-12-05 20:54:07'),
 (10,'Tech Career Fair','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan',NULL,'2024-07-15','career.jpg',NULL,NULL,'2024-12-05 20:54:07'),
-(11,'Sidang Skripsi Johan1','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\r\n\r\nHighlights:\r\n- Professional speakers from tech industry\r\n- Hands-on workshops\r\n- Networking opportunities\r\n- Certificate of participation\r\n\r\nSchedule:\r\n09:00 - Registration\r\n10:00 - Opening Ceremony\r\n11:00 - Keynote Speech\r\n12:00 - Lunch Break\r\n13:00 - Workshop Sessions\r\n16:00 - Closing','2024-12-07','johan.jpg',NULL,NULL,'2024-12-06 07:33:34'),
+(11,'Sidang Skripsi Johan123 P JOHAN ','Akhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johanAkhirnya Johan Lulus dari Unhan teman-teman setelah bertahun tahun mencoba lulus di matkul filsafat pertahanan. selamat johan','Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\r\n\r\nHighlights:\r\n- Professional speakers from tech industry\r\n- Hands-on workshops\r\n- Networking opportunities\r\n- Certificate of participation\r\n\r\nSchedule:\r\n09:00 - Registration\r\n10:00 - Opening Ceremony\r\n11:00 - Keynote Speech\r\n12:00 - Lunch Break\r\n13:00 - Workshop Sessions\r\n16:00 - Closing','2024-12-07','johan.jpg',NULL,'johan.jpg','2024-12-06 07:33:34'),
 (12,'Seminar Artificial Intelligence','Seminar mengenai perkembangan terkini dalam bidang AI dan implementasinya.','Seminar ini akan membahas secara mendalam tentang perkembangan terbaru dalam bidang Artificial Intelligence, termasuk:\n\n    - Machine Learning dan Deep Learning terkini\n    - Implementasi AI dalam industri\n    - Ethical AI dan dampaknya terhadap masyarakat\n    - Hands-on workshop dengan tools AI modern\n    - Networking dengan para praktisi AI\n    \n    Pembicara tamu dari berbagai perusahaan teknologi terkemuka akan hadir untuk berbagi pengalaman dan insight mendalam tentang industri AI.','2024-03-15','ai-seminar.jpg','ai-workshop.jpg','ai-networking.jpg','2024-12-09 16:42:06'),
 (13,'Workshop Data Science','Workshop praktis mengenai analisis data dan visualisasi menggunakan Python.','Workshop Data Science ini dirancang untuk memberikan pengalaman hands-on dalam:\n\n    - Pengolahan data menggunakan Pandas\n    - Visualisasi data dengan Matplotlib dan Seaborn\n    - Analisis statistik dasar hingga lanjutan\n    - Machine Learning dengan scikit-learn\n    - Project-based learning dengan dataset real\n    \n    Peserta akan mendapatkan sertifikat resmi dan akses ke materi pembelajaran online selama 3 bulan.','2024-03-20','data-science.jpg','python-workshop.jpg','data-viz.jpg','2024-12-09 16:42:06'),
 (14,'Hackathon Informatika 2024','Kompetisi programming 48 jam untuk mahasiswa informatika.','Hackathon Informatika 2024 adalah kompetisi programming intensif selama 48 jam yang akan menantang peserta untuk:\n\n    - Mengembangkan solusi inovatif untuk masalah real\n    - Bekerja dalam tim multidisiplin\n    - Menggunakan teknologi terkini\n    - Mentoring dari praktisi industri\n    - Kesempatan magang di perusahaan partner\n    \n    Total hadiah senilai Rp 50.000.000 dan kesempatan inkubasi startup.','2024-04-01','hackathon.jpg','coding-competition.jpg','team-collaboration.jpg','2024-12-09 16:42:06'),
 (15,'Guest Lecture: Cyber Security','Kuliah tamu tentang keamanan siber oleh pakar industri.','Kuliah tamu ini akan membahas topik-topik kritis dalam keamanan siber:\n\n    - Trend terbaru dalam cyber threats\n    - Best practices dalam security\n    - Penetration testing dan ethical hacking\n    - Career path dalam cyber security\n    - Live demonstration keamanan sistem\n    \n    Dipresentasikan oleh pakar keamanan siber dengan pengalaman lebih dari 15 tahun di industri.','2024-04-15','cyber-security.jpg','ethical-hacking.jpg','security-demo.jpg','2024-12-09 16:42:06'),
 (16,'Lomba Web Development','Kompetisi pengembangan website untuk mahasiswa.','Kompetisi Web Development ini akan menguji kemampuan peserta dalam:\n\n    - Front-end development (HTML5, CSS3, JavaScript)\n    - Back-end programming\n    - Database design\n    - UI/UX design\n    - Web security implementation\n    \n    Proyek akan dinilai berdasarkan kreativitas, fungsionalitas, dan kualitas kode.','2024-04-30','web-dev.jpg','coding-contest.jpg','ui-design.jpg','2024-12-09 16:42:06'),
-(17,'Industrial Visit: Tech Company','Kunjungan industri ke perusahaan teknologi terkemuka.','Kunjungan industri ini memberikan kesempatan kepada mahasiswa untuk:\n\n    - Melihat langsung operasional perusahaan teknologi\n    - Interaksi dengan para profesional IT\n    - Understanding of industrial best practices\n    - Potential internship opportunities\n    - Networking dengan alumni yang bekerja di industri\n    \n    Termasuk sesi Q&A dan sharing session dengan tim development.','2024-05-15','industry-visit.jpg','tech-company.jpg','networking.jpg','2024-12-09 16:42:06');
+(17,'Industrial Visit: Tech Company','Kunjungan industri ke perusahaan teknologi terkemuka.','Kunjungan industri ini memberikan kesempatan kepada mahasiswa untuk:\n\n    - Melihat langsung operasional perusahaan teknologi\n    - Interaksi dengan para profesional IT\n    - Understanding of industrial best practices\n    - Potential internship opportunities\n    - Networking dengan alumni yang bekerja di industri\n    \n    Termasuk sesi Q&A dan sharing session dengan tim development.','2024-05-15','industry-visit.jpg','tech-company.jpg','networking.jpg','2024-12-09 16:42:06'),
+(18,'Sidang IDO','ido sempro','akhirnya ido sempro','2025-01-13','1736789660_image_url_event-img_1.jpg',NULL,NULL,'2025-01-13 21:34:20');
 
 /*Table structure for table `faqs` */
 
@@ -218,11 +218,10 @@ insert  into `lecturers`(`id`,`name`,`title`,`specialization`,`image_url`,`email
 (7,'Dr. Robert Taylor','Assistant Professor','Mobile Computing','taylor.jpg','r.taylor@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (8,'Dr. Maria Garcia','Associate Professor','Data Science','garcia.jpg','m.garcia@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
 (9,'Dr. James Lee','Professor','Cloud Computing','lee.jpg','j.lee@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
-(10,'Dr. Anna White','Assistant Professor','Web Technologies','white.jpg','a.white@univ.edu',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),
+(10,'Dr. Anna White','Assistant Professor','Web Technologies','1736788568_teacher_2.jpg','a.white@univ.edu','SMA','Sekolah SMA di Yasop','jago koding','customer service','11111 tahun','Yasop','','jago c11','https://google.com','fasfasfas'),
 (11,'Dr. John Smith','Professor of Computer Science','Artificial Intelligence and Machine Learning','john-smith.jpg','john.smith@university.edu','Ph.D. in Computer Science','Ph.D. in Computer Science, MIT (2010)<br>M.S. in Computer Science, Stanford University (2006)<br>B.S. in Computer Engineering, UC Berkeley (2004)','Distinguished researcher in artificial intelligence and machine learning with over 15 years of experience in academic and industry research. Published over 50 papers in top-tier conferences and journals.','Research and Teaching','15+ Years Experience','Silicon Valley & Academia',' Lead AI Research Scientist at Google (2010-2015)<br> Senior Machine Learning Engineer at Microsoft (2015-2018)<br> Professor of Computer Science (2018-present)<br> Published researcher with 50+ peer-reviewed papers','Python, TensorFlow, PyTorch, Deep Learning, Natural Language Processing, Computer Vision, Research Methods, Project Management','https://linkedin.com/in/johnsmith',NULL),
 (12,'Dr. Sarah Johnson','Associate Professor','Data Science and Big Data Analytics','sarah-johnson.jpg','sarah.j@university.edu','Ph.D. in Data Science','Ph.D. in Data Science, Harvard University (2012)<br>M.S. in Statistics, Yale University (2008)<br>B.S. in Mathematics, Princeton University (2006)','Expert in big data analytics and statistical modeling with extensive experience in both academic research and industry applications.','Data Science and Analytics','12+ Years Experience','Boston & New York',' Data Scientist at Amazon (2012-2016)<br> Lead Data Analyst at IBM (2016-2019)<br> Associate Professor (2019-present)<br> Author of \"Big Data Analytics in Practice\"','R, Python, Hadoop, Spark, Statistical Analysis, Machine Learning, Data Visualization, SQL, Big Data Technologies','https://linkedin.com/in/sarahjohnson',NULL),
-(13,'Prof. Michael Chen','Assistant Professor','Cybersecurity and Network Systems','michael-chen.jpg','m.chen@university.edu','Ph.D. in Computer Security','Ph.D. in Computer Security, Carnegie Mellon University (2015)<br>M.S. in Computer Networks, USC (2011)<br>B.S. in Computer Science, Georgia Tech (2009)','Specialized in network security and cryptography with focus on developing secure systems for enterprise applications.','Security Research','10+ Years Experience','Global Security Research',' Security Engineer at Cisco (2015-2018)<br> Senior Security Researcher at FireEye (2018-2020)<br> Assistant Professor (2020-present)<br> Multiple security patents holder','Network Security, Cryptography, Penetration Testing, Security Auditing, C++, Python, Java, Security Tools Development','https://linkedin.com/in/michaelchen',NULL),
-(14,'Dr. John Doe','Professor of Computer Science',NULL,'johndoe.jpg',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Dr. Doe has over 20 years of experience...');
+(13,'Prof. Michael Chen','Assistant Professor','Cybersecurity and Network Systems','michael-chen.jpg','m.chen@university.edu','Ph.D. in Computer Security','Ph.D. in Computer Security, Carnegie Mellon University (2015)<br>M.S. in Computer Networks, USC (2011)<br>B.S. in Computer Science, Georgia Tech (2009)','Specialized in network security and cryptography with focus on developing secure systems for enterprise applications.','Security Research','10+ Years Experience','Global Security Research',' Security Engineer at Cisco (2015-2018)<br> Senior Security Researcher at FireEye (2018-2020)<br> Assistant Professor (2020-present)<br> Multiple security patents holder','Network Security, Cryptography, Penetration Testing, Security Auditing, C++, Python, Java, Security Tools Development','https://linkedin.com/in/michaelchen',NULL);
 
 /*Table structure for table `posts` */
 
@@ -237,7 +236,7 @@ CREATE TABLE `posts` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `posts` */
 
@@ -252,7 +251,8 @@ insert  into `posts`(`id`,`user_id`,`title`,`content`,`created_at`) values
 (8,1,'Department Event: Tech Talk','Next week we will have industry experts talking about AI and Machine Learning. Don\'t miss it!','2025-01-04 18:38:57'),
 (9,2,'Study Resources','Found some great online resources for Data Structures. Check them out: [links removed]','2025-01-05 18:38:57'),
 (10,3,'Final Year Project Ideas','Brainstorming for final year project topics. Anyone interested in collaborating on an IoT project?','2025-01-06 18:38:57'),
-(11,2,'WOI GIMANA SIH BANG CARA MASUK INFORMATIKA???','gua pen masuk infor tapi gua gada basic mancing','2025-01-07 18:41:02');
+(11,2,'WOI GIMANA SIH BANG CARA MASUK INFORMATIKA???','gua pen masuk infor tapi gua gada basic mancing','2025-01-07 18:41:02'),
+(12,2,'sadasd','asdasdas','2025-01-13 23:23:06');
 
 /*Table structure for table `private_messages` */
 
@@ -389,7 +389,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `users` */
 
@@ -397,7 +397,8 @@ insert  into `users`(`id`,`username`,`email`,`password`,`firstname`,`lastname`,`
 (1,'admin','admin@example.com','$2y$10$5lY.UamUo35SjczdkOJsUOeU5N9ypjJ6zaG2O2FWrY2p/Tz5F1ILC','Admin','User','2025-01-07 17:37:43','admin'),
 (2,'idojaya@gmail.com','idojaya@gmail.com','$2y$10$5lY.UamUo35SjczdkOJsUOeU5N9ypjJ6zaG2O2FWrY2p/Tz5F1ILC','Ido','Jaya','2025-01-07 17:44:02','admin'),
 (3,'jeremia@gmail.com','jeremia@gmail.com','$2y$10$HDGLUK1G6sITEVBZSx7/tuTzK4JmIg0PyPNp6niV1WZ20SZyHUI1m','Jeremia','Sinaga','2025-01-07 18:05:54','user'),
-(4,'made@gmail.com','made@gmail.com','$2y$10$t61IEXJejK7lFgCjKEpVmepbM8okUylR.N3OpX3eHxeOn5GopVJWG','made','made','2025-01-07 18:31:59','user');
+(4,'made@gmail.com','made@gmail.com','$2y$10$t61IEXJejK7lFgCjKEpVmepbM8okUylR.N3OpX3eHxeOn5GopVJWG','made','made','2025-01-07 18:31:59','user'),
+(5,'arya','arya@gmail.com','$2y$10$Nh0IYxMaQeHvmw/2NSd4je12eQlMYXCCzu6vhEEbBnvRIvJzjrGt.','arya','arya','2025-01-13 23:45:56','admin');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
