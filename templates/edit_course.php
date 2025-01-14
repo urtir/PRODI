@@ -30,39 +30,56 @@ if (!$course) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $code = $_POST['code'] ?? '';
-    $name = $_POST['name'] ?? '';
-    $credits = $_POST['credits'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $semester = $_POST['semester'] ?? '';
-    $existing_image = $course['image_url'];
-    
-    // Handle image upload if new image provided
-    if (isset($_FILES['image_url']) && $_FILES['image_url']['size'] > 0) {
-        $file = $_FILES['image_url'];
-        $file_name = time() . '_' . basename($file['name']);
-        $target_path = "../static/images/courses/" . $file_name;
-        
-        if (move_uploaded_file($file['tmp_name'], $target_path)) {
-            // Delete old image if exists
-            if ($existing_image && file_exists("../static/images/courses/" . $existing_image)) {
-                unlink("../static/images/courses/" . $existing_image);
-            }
-            $existing_image = $file_name;
+    try {
+        // Get form data
+        $code = $_POST['code'] ?? '';
+        $name = $_POST['name'] ?? '';
+        $credits = $_POST['credits'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $semester = $_POST['semester'] ?? '';
+        $materials_url = $_POST['materials_url'] ?? '';
+
+        // Validate required fields
+        if (empty($code) || empty($name) || empty($credits) || empty($semester)) {
+            throw new Exception("All required fields must be filled");
         }
-    }
-    
-    // Update database
-    $sql = "UPDATE courses SET code = ?, name = ?, credits = ?, description = ?, 
-            semester = ?, image_url = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssisssi", $code, $name, $credits, $description, $semester, 
-                      $existing_image, $id);
-    
-    if ($stmt->execute()) {
-        $success_message = "Course updated successfully!";
-    } else {
-        $error_message = "Error updating course: " . $conn->error;
+
+        // Prepare update query with materials_url
+        $sql = "UPDATE courses SET 
+                code = ?, 
+                name = ?, 
+                credits = ?, 
+                description = ?, 
+                semester = ?, 
+                materials_url = ? 
+                WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssisssi", 
+            $code, 
+            $name, 
+            $credits, 
+            $description, 
+            $semester, 
+            $materials_url, 
+            $id
+        );
+
+        if ($stmt->execute()) {
+            // Refresh course data after update
+            $stmt = $conn->prepare("SELECT * FROM courses WHERE id = ?");
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $course = $result->fetch_assoc();
+            
+            $success_message = "Course updated successfully!";
+        } else {
+            throw new Exception("Failed to update course");
+        }
+
+    } catch (Exception $e) {
+        $error_message = $e->getMessage();
     }
 }
 ?>
