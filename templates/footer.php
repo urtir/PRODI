@@ -13,7 +13,7 @@
                     <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
                     <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
                     <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+
                 </div>
             </div>
             
@@ -27,16 +27,7 @@
                 </ul>
             </div>
 
-            <div class="col-md-4">
-                <h5 class="mb-3">Newsletter</h5>
-                <p class="mb-3">Subscribe untuk mendapatkan informasi terbaru</p>
-                <form class="subscribe-form">
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Enter your email">
-                        <button class="btn btn-warning" type="submit">Subscribe</button>
-                    </div>
-                </form>
-            </div>
+            
         </div>
     </div>
 </footer>

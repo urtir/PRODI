@@ -31,9 +31,6 @@ $conn->close();
 
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Home - Unisco - Education Website Template for University, College, School</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
     <!-- Google Fonts -->
@@ -99,7 +96,7 @@ $conn->close();
 </style>
 </head>
 
-<body>
+
 <!-- Hero/Carousel Section -->
 <div class="slider_img">
     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
@@ -111,7 +108,7 @@ $conn->close();
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
                     <div class="slider-btn">
-                        <a href="#" class="btn btn-default">Pelajari Lebih Lanjut</a>
+                        
                     </div>
                 </div>
             </div>
@@ -121,7 +118,7 @@ $conn->close();
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
                     <div class="slider-btn">
-                        <a href="#" class="btn btn-default">Pelajari Lebih Lanjut</a>
+                        
                     </div>
                 </div>
             </div>
@@ -131,7 +128,7 @@ $conn->close();
                     <h1>Program Studi Informatika</h1>
                     <h4>Membentuk Pakar IT Masa Depan</h4>
                     <div class="slider-btn">
-                        <a href="#" class="btn btn-default">Pelajari Lebih Lanjut</a>
+                        
                     </div>
                 </div>
             </div>
@@ -290,23 +287,9 @@ $conn->close();
 </div>
 <!--//END Lecturers Section -->
 
-            <script src="../static/js/jquery.min.js"></script>
-            <script src="../static/js/tether.min.js"></script>
-            <script src="../static/js/bootstrap.min.js"></script>
-            <!-- Plugins -->
-            <script src="../static/js/slick.min.js"></script>
-            <script src="../static/js/waypoints.min.js"></script>
-            <script src="../static/js/counterup.min.js"></script>
-            <script src="../static/js/instafeed.min.js"></script>
-            <script src="../static/js/owl.carousel.min.js"></script>
-            <script src="../static/js/validate.js"></script>
-            <script src="../static/js/tweetie.min.js"></script>
-            <!-- Subscribe -->
-            <script src="../static/js/subscribe.js"></script>
-            <!-- Script JS -->
-            <script src="../static/js/script.js"></script>
-            
-        </body>
+<script src="../static/js/slick.min.js"></script>
+<script src="../static/js/owl.carousel.min.js"></script>
+<script src="../static/js/script.js"></script>
 
  <?php       include 'footer.php';
 ?>
