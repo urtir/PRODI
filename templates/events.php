@@ -61,6 +61,40 @@ $conn->close();
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js'></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
+    <style>
+/* Calendar Theme Customization */
+:root {
+    --fc-button-bg-color: #3366CC;
+    --fc-button-border-color: #3366CC;
+    --fc-button-hover-bg-color: #254B99;
+    --fc-button-hover-border-color: #254B99;
+    --fc-today-bg-color: rgba(51, 102, 204, 0.1);
+}
+
+/* Navigation Arrows Customization */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+    background-color: white !important;
+    border-color: #3366CC !important;
+}
+
+.fc .fc-prev-button .fc-icon,
+.fc .fc-next-button .fc-icon {
+    color: #3366CC;
+}
+
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+    background-color: #f8f9fa !important;
+}
+
+.fc .fc-prev-button:focus,
+.fc .fc-next-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(51, 102, 204, 0.25);
+}
+
+/* Existing styles... */
+</style>
 
 </head>
 
