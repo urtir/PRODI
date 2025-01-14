@@ -18,6 +18,7 @@ $researches = $result->fetch_all(MYSQLI_ASSOC);
     --medium-blue: #144272;
     --light-blue: #205295;  
     --highlight: #2C74B3;
+    --navbar-height: 80px;
 }
 
 .hero-section {
@@ -30,8 +31,17 @@ $researches = $result->fetch_all(MYSQLI_ASSOC);
     align-items: center;
 }
 
+.content-wrapper {
+    padding-top: var(--navbar-height);
+}
+
+/* Ensure navbar stays on top */
+.navbar {
+    z-index: 1030;
+}
+
 .research-card {
-    background:rgb(225, 231, 242);
+    background:rgb(245, 245, 245);
     transition: transform 0.3s ease;
     border: none;
 }
@@ -57,7 +67,7 @@ $researches = $result->fetch_all(MYSQLI_ASSOC);
 </style>
 
 <!-- Research Grid -->
-<div class="container py-5">
+<div class="container py-5" style="margin-top: 100px;">
     <h2 class="text-center mb-5 fw-bold pt-100" style="color: var(--dark-blue)">Our Research Projects</h2>
     
     <div class="row g-4">
