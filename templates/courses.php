@@ -24,6 +24,30 @@ foreach ($courses as $course) {
 ksort($coursesBySemester);
 ?>
 
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home - Unisco - Education Website Template for University, College, School</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css">
+    <!-- Simple Line Font -->
+    <link rel="stylesheet" href="../static/css/simple-line-icons.css">
+    <!-- Slider / Carousel -->
+    <link rel="stylesheet" href="../static/css/slick.css">
+    <link rel="stylesheet" href="../static/css/slick-theme.css">
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+    <!-- Main CSS -->
+    <link href="../static/css/style.css" rel="stylesheet">
+
+</head>
+
+
 <div class="container" style="padding-top: 2rem;">
     <h2 class="text-center mb-4">Course List</h2>
     
