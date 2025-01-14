@@ -140,10 +140,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <label class="form-label d-flex align-items-center">
                                     Address Path
                                     <i class="fas fa-info-circle ms-2" data-bs-toggle="tooltip" 
-                                    title="Example: course_address/CS101/location.html"></i>
+                                    title="Example: course_materials/CS101/materials.zip"></i>
                                 </label>
                                 <input type="text" class="form-control" name="address_url" 
-                                    placeholder="course_address/[COURSE_CODE]/location.html">
+                                    placeholder="course_materials/[COURSE_CODE]/materials.zip">
                             </div>
 
                             <!-- Guide Section -->
@@ -154,15 +154,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <hr>
                                 <ol class="small mb-0">
                                     <li class="mb-2">Create this folder structure:
-                                        <code class="d-block mt-1">C:/xampp/htdocs/PRODI/static/address/course_address/[COURSE_CODE]/</code>
+                                        <code class="d-block mt-1">C:/xampp/htdocs/PRODI/static/address/course_materials/[COURSE_CODE]/</code>
                                     </li>
                                     <li class="mb-2">Create your HTML file with the address/location details</li>
                                     <li class="mb-2">Save the file in the course code folder</li>
-                                    <li class="mb-2">Enter path format: <code>course_address/[COURSE_CODE]/location.html</code></li>
+                                    <li class="mb-2">Enter path format: <code>course_materials/[COURSE_CODE]/materials.zip</code></li>
                                     <li>Example for CS101:
                                         <ul class="mt-1">
-                                            <li>Physical path: <code>C:/xampp/htdocs/PRODI/static/address/course_address/CS101/location.html</code></li>
-                                            <li>URL to enter: <code>course_address/CS101/location.html</code></li>
+                                            <li>Physical path: <code>C:/xampp/htdocs/PRODI/static/address/course_materials/CS101/materials.zip</code></li>
+                                            <li>URL to enter: <code>course_materials/CS101/materials.zip</code></li>
                                         </ul>
                                     </li>
                                 </ol>

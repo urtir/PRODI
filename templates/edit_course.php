@@ -31,10 +31,16 @@ if (!$course) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // ...existing form data collection...
+        // Get form data
+        $code = $_POST['code'] ?? '';
+        $name = $_POST['name'] ?? '';
+        $credits = $_POST['credits'] ?? '';
+        $description = $_POST['description'] ?? '';
+        $semester = $_POST['semester'] ?? '';
+        $materials_url = $_POST['materials_url'] ?? '';
         $address_url = $_POST['address_url'] ?? '';
 
-        // Update SQL query to include address_url
+        // Update query with address_url
         $sql = "UPDATE courses SET 
                 code = ?, 
                 name = ?, 
@@ -42,18 +48,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 description = ?, 
                 semester = ?, 
                 materials_url = ?,
-                address_url = ? 
+                address_url = ?
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssissssi", 
-            $code, 
+            $code,
             $name, 
-            $credits, 
-            $description, 
-            $semester, 
+            $credits,
+            $description,
+            $semester,
             $materials_url,
-            $address_url, 
+            $address_url,
             $id
         );
 
