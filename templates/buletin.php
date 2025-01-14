@@ -4,6 +4,22 @@ include 'header.php';
 $conn = new mysqli("localhost", "root", "", "informatics_db");
 
 
+// Add after database connection
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isset($_POST['add_post'])) {
+    $title = $conn->real_escape_string($_POST['title']);
+    $content = $conn->real_escape_string($_POST['content']);
+    $user_id = $_SESSION['user_id'];
+    
+    $stmt = $conn->prepare("INSERT INTO posts (user_id, title, content) VALUES (?, ?, ?)");
+    $stmt->bind_param("iss", $user_id, $title, $content);
+    
+    if ($stmt->execute()) {
+        $success_message = "Your question has been posted successfully!";
+    } else {
+        $error_message = "Error posting question. Please try again.";
+    }
+}
+
 // Search functionality
 $search = '';
 $where = '1';
@@ -120,6 +136,93 @@ $posts = $conn->query("
             </div>
         </div>
     <?php endif; ?>
+
+    <!-- Add before the FAQ listing -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4>Frequently Asked Questions</h4>
+        <?php if(isset($_SESSION['user_id'])): ?>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuestionModal">
+                <i class="fas fa-plus-circle"></i> Ask a Question
+            </button>
+        <?php endif; ?>
+    </div>
+
+    <?php if(isset($success_message)): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php echo $success_message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if(isset($error_message)): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php echo $error_message; ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <!-- Add Question Modal -->
+    <div class="modal fade" id="addQuestionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ask a Question</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="POST" class="needs-validation" novalidate>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Question Title</label>
+                        <input type="text" 
+                               class="form-control" 
+                               id="title" 
+                               name="title" 
+                               required 
+                               minlength="5" 
+                               maxlength="255">
+                        <div class="invalid-feedback">
+                            Please provide a title (5-255 characters).
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Question Details</label>
+                        <textarea class="form-control" 
+                                  id="content" 
+                                  name="content" 
+                                  rows="5" 
+                                  required 
+                                  minlength="10"></textarea>
+                        <div class="invalid-feedback">
+                            Please provide question details (minimum 10 characters).
+                        </div>
+                    </div>
+                    <input type="hidden" name="add_post" value="1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Post Question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+// Form validation
+(function() {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
+})();
+</script>
 
         <!-- Posts List -->
         <div class="row">
