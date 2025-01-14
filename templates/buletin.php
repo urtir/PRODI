@@ -3,25 +3,6 @@ include 'header.php';
 
 $conn = new mysqli("localhost", "root", "", "informatics_db");
 
-// Pagination setup
-$items_per_page = 5;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$offset = ($page - 1) * $items_per_page;
-
-// Get total FAQs count
-$total_query = "SELECT COUNT(*) as count FROM faqs";
-$total_result = $conn->query($total_query);
-$total_faqs = $total_result->fetch_assoc()['count'];
-$total_pages = ceil($total_faqs / $items_per_page);
-
-// Get FAQs with pagination
-$faqs = $conn->query("
-    SELECT f.*, u.firstname, u.lastname 
-    FROM faqs f
-    LEFT JOIN users u ON f.user_id = u.id
-    ORDER BY f.created_at DESC
-    LIMIT $items_per_page OFFSET $offset
-")->fetch_all(MYSQLI_ASSOC);
 
 // Search functionality
 $search = '';
@@ -32,7 +13,7 @@ if (isset($_SESSION['user_id']) && isset($_GET['search'])) {
 }
 
 // Pagination
-$posts_per_page = 5;
+$posts_per_page = 3;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $posts_per_page;
 
