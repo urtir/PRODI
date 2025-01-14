@@ -129,6 +129,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" class="btn btn-primary">Add Course</button>
                         <a href="manage_courses.php" class="btn btn-secondary">Cancel</a>
                     </div>
+
+                    <!-- Add this after materials management section -->
+                    <div class="mb-4">
+                    <label class="form-label">Course Address Management</label>
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Address Path Input -->
+                            <div class="mb-3">
+                                <label class="form-label d-flex align-items-center">
+                                    Address Path
+                                    <i class="fas fa-info-circle ms-2" data-bs-toggle="tooltip" 
+                                    title="Example: course_address/CS101/location.html"></i>
+                                </label>
+                                <input type="text" class="form-control" name="address_url" 
+                                    placeholder="course_address/[COURSE_CODE]/location.html">
+                            </div>
+
+                            <!-- Guide Section -->
+                            <div class="alert alert-warning mb-0">
+                                <h6 class="alert-heading">
+                                    <i class="fas fa-lightbulb me-2"></i>How to Add Course Address
+                                </h6>
+                                <hr>
+                                <ol class="small mb-0">
+                                    <li class="mb-2">Create this folder structure:
+                                        <code class="d-block mt-1">C:/xampp/htdocs/PRODI/static/address/course_address/[COURSE_CODE]/</code>
+                                    </li>
+                                    <li class="mb-2">Create your HTML file with the address/location details</li>
+                                    <li class="mb-2">Save the file in the course code folder</li>
+                                    <li class="mb-2">Enter path format: <code>course_address/[COURSE_CODE]/location.html</code></li>
+                                    <li>Example for CS101:
+                                        <ul class="mt-1">
+                                            <li>Physical path: <code>C:/xampp/htdocs/PRODI/static/address/course_address/CS101/location.html</code></li>
+                                            <li>URL to enter: <code>course_address/CS101/location.html</code></li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>                        
+
+
                 </form>
             </div>
         </div>

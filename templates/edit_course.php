@@ -31,37 +31,29 @@ if (!$course) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Get form data
-        $code = $_POST['code'] ?? '';
-        $name = $_POST['name'] ?? '';
-        $credits = $_POST['credits'] ?? '';
-        $description = $_POST['description'] ?? '';
-        $semester = $_POST['semester'] ?? '';
-        $materials_url = $_POST['materials_url'] ?? '';
+        // ...existing form data collection...
+        $address_url = $_POST['address_url'] ?? '';
 
-        // Validate required fields
-        if (empty($code) || empty($name) || empty($credits) || empty($semester)) {
-            throw new Exception("All required fields must be filled");
-        }
-
-        // Prepare update query with materials_url
+        // Update SQL query to include address_url
         $sql = "UPDATE courses SET 
                 code = ?, 
                 name = ?, 
                 credits = ?, 
                 description = ?, 
                 semester = ?, 
-                materials_url = ? 
+                materials_url = ?,
+                address_url = ? 
                 WHERE id = ?";
 
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssisssi", 
+        $stmt->bind_param("ssissssi", 
             $code, 
             $name, 
             $credits, 
             $description, 
             $semester, 
-            $materials_url, 
+            $materials_url,
+            $address_url, 
             $id
         );
 
@@ -230,6 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
                 </div>
+                
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">Update Course</button>
