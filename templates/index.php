@@ -210,7 +210,7 @@ $conn->close();
     </div>
 </section>
 <!--//END EVENTS -->
-<!--//END EVENTS -->
+
 
 <!--============================= OUR COURSES =============================-->
 <section class="our_courses">
@@ -306,6 +306,8 @@ $conn->close();
     </div>
     </div>
 </section>
+
+
 
 <script src="../static/js/slick.min.js"></script>
 <script src="../static/js/owl.carousel.min.js"></script>
