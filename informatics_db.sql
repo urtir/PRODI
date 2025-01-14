@@ -29,24 +29,31 @@ CREATE TABLE `courses` (
   `image_url` varchar(255) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
   `materials_url` varchar(255) DEFAULT NULL,
+  `address_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `courses` */
 
-insert  into `courses`(`id`,`code`,`name`,`credits`,`description`,`image_url`,`semester`,`materials_url`) values 
-(1,'CS101','SDASDASD',4,'DASDASDASD','1736874560_1736794788_event-img_2.jpg',1,'course_materials/CS101/materials_ril.zip'),
-(2,'CS102','Data Structures',4,'Fundamental data structures and algorithms','course_2.jpg',2,'course_materials/CS102/materials.zip'),
-(3,'CS201','Database Systems',3,'Database design and SQL','course_3.jpg',3,'course_materials/CS201/materials.zip'),
-(4,'CS202','Web Development',4,'Full-stack web development','course_4.jpg',4,'course_materials/CS202/materials.zip'),
-(5,'CS301','Artificial Intelligence',3,'AI concepts and applications','course_5.jpg',5,'course_materials/CS301/materials.zip'),
-(6,'CS302','Computer Networks',3,'Network protocols and architecture','course_6.jpg',5,'course_materials/CS302/materials.zip'),
-(7,'CS401','Software Engineering',4,'Software development lifecycle','course_7.jpg',6,'course_materials/CS401/materials.zip'),
-(8,'CS402','Mobile Computing',3,'Mobile app development','course_8.jpg',6,'course_materials/CS402/materials.zip'),
-(9,'CS403','Cloud Computing',3,'Cloud services and deployment','course_9.jpg',7,'course_materials/CS403/materials.zip'),
-(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7,'course_materials/CS404/materials.zip'),
-(11,'CINTA101','Cara Mencintai Dalam DIam',6,'Aikwokwoakde','1736794788_event-img_2.jpg',6,'course_materials/CINTA101/materials.zip'),
-(12,'sadsadasd','sadasdasd',2,'fafadfdfafad','1736875214_1736874560_1736794788_event-img_2.jpg',2,NULL);
+insert  into `courses`(`id`,`code`,`name`,`credits`,`description`,`image_url`,`semester`,`materials_url`,`address_url`) values 
+(1,'CS101','SDASDASD',4,'DASDASDASD','1736874560_1736794788_event-img_2.jpg',1,'course_materials/CS101/materials_ril.zip',NULL),
+(2,'CS102','Data Structures',4,'Fundamental data structures and algorithms','course_2.jpg',2,'course_materials/CS102/materials.zip',NULL),
+(3,'CS201','Database Systems',3,'Database design and SQL','course_3.jpg',3,'course_materials/CS201/materials.zip',NULL),
+(4,'CS202','Web Development',4,'Full-stack web development','course_4.jpg',4,'course_materials/CS202/materials.zip',NULL),
+(5,'CS301','Artificial Intelligence',3,'AI concepts and applications','course_5.jpg',5,'course_materials/CS301/materials.zip',NULL),
+(6,'CS302','Computer Networks',3,'Network protocols and architecture','course_6.jpg',5,'course_materials/CS302/materials.zip',NULL),
+(7,'CS401','Software Engineering',4,'Software development lifecycle','course_7.jpg',6,'course_materials/CS401/materials.zip',NULL),
+(8,'CS402','Mobile Computing',3,'Mobile app development','course_8.jpg',6,'course_materials/CS402/materials.zip',NULL),
+(9,'CS403','Cloud Computing',3,'Cloud services and deployment','course_9.jpg',7,'course_materials/CS403/materials.zip',NULL),
+(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7,'course_materials/CS404/materials.zip',NULL),
+(11,'CINTA101','Cara Mencintai Dalam DIam',6,'Aikwokwoakde','1736794788_event-img_2.jpg',6,'course_materials/CINTA101/materials.zip',NULL),
+(12,'sadsadasd','sadasdasd',2,'fafadfdfafad','1736875214_1736874560_1736794788_event-img_2.jpg',2,'course_materials/CS101/materials - Copy.zip',''),
+(13,'johan','zohan',4,'zohan','1736875873_1736794788_event-img_2.jpg',8,'course_materials/johan/assignments.zip',''),
+(14,'1234','213',3,'3213213213','1736876332_default-course.jpg',1,'course_materials/123/materials_ido.zip',''),
+(15,'777','777',3,'777','1736876587_1736874560_1736794788_event-img_2.jpg',1,NULL,NULL),
+(16,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL),
+(17,'666','666',3,'666',NULL,1,'course_materials/666/materials666.zip',''),
+(18,NULL,NULL,NULL,NULL,'',NULL,NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
