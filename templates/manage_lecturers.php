@@ -18,7 +18,7 @@ if (isset($_POST['delete_id'])) {
     $delete_id = (int)$_POST['delete_id'];
     
     // Get image URL before deletion
-    $stmt = $conn->prepare("SELECT image_url FROM lecturers WHERE id = ?");
+    $stmt = $conn->prepare("SELECT foto FROM lecturers WHERE id = ?");
     $stmt->bind_param("i", $delete_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -30,8 +30,8 @@ if (isset($_POST['delete_id'])) {
     
     if ($stmt->execute()) {
         // Delete associated image
-        if ($lecturer && !empty($lecturer['image_url'])) {
-            $image_path = "../static/images/lecturers/" . $lecturer['image_url'];
+        if ($lecturer && !empty($lecturer['foto'])) {
+            $image_path = "../static/images/lecturers/" . $lecturer['foto'];
             if (file_exists($image_path)) {
                 unlink($image_path);
             }
@@ -55,12 +55,11 @@ $total_lecturers = $conn->query("SELECT COUNT(*) as count FROM lecturers")->fetc
 $total_pages = ceil($total_lecturers / $items_per_page);
 
 // Fetch lecturers
-$lecturers = $conn->query("SELECT * FROM lecturers ORDER BY name ASC LIMIT $offset, $items_per_page")->fetch_all(MYSQLI_ASSOC);
+$lecturers = $conn->query("SELECT * FROM lecturers ORDER BY nama ASC LIMIT $offset, $items_per_page")->fetch_all(MYSQLI_ASSOC);
 ?>
 
 
-<div class="content-wrapper" style="padding-top: 100px;">
-    <div class="container">
+<div class="content-wrapper" style="padding: 100px; ">
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -108,63 +107,69 @@ $lecturers = $conn->query("SELECT * FROM lecturers ORDER BY name ASC LIMIT $offs
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Lecturers Table -->
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-light">
-                    <tr>
-                        <th>Name</th>
-                        <th>Title</th>
-                        <th>Specialization</th>
-                        <th>Email</th>
-                        <th>Image</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($lecturers as $lecturer): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($lecturer['name']); ?></td>
-                            <td><?php echo htmlspecialchars($lecturer['title']); ?></td>
-                            <td><?php echo htmlspecialchars($lecturer['specialization']); ?></td>
-                            <td><?php echo htmlspecialchars($lecturer['email']); ?></td>
-                            <td>
-                                <?php if ($lecturer['image_url']): ?>
-                                    <?php 
-                                    $img_path = "../static/images/lecturers/" . $lecturer['image_url'];
-                                    if (file_exists($img_path)):
-                                    ?>
-                                        <img src="<?php echo $img_path; ?>" 
-                                             class="img-thumbnail" 
-                                             width="50" 
-                                             height="50"
-                                             style="cursor: pointer;"
-                                             onclick="openImageModal('<?php echo $img_path; ?>', '<?php echo htmlspecialchars($lecturer['name']); ?>')"
-                                             alt="Lecturer image">
-                                    <?php endif; ?>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <div class="btn-group" role="group" aria-label="Lecturer actions">
-                                    <a href="edit_lecturer.php?id=<?php echo $lecturer['id']; ?>" 
-                                    class="btn btn-warning btn-sm"
-                                    data-bs-toggle="tooltip"
-                                    title="Edit Lecturer">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <button type="button" 
-                                            class="btn btn-danger btn-sm"
-                                            data-bs-toggle="tooltip"
-                                            title="Delete Lecturer"
-                                            onclick="confirmDelete(<?php echo $lecturer['id']; ?>)">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Program Studi</th>
+                                <th>Jabatan</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($lecturers as $lecturer): ?>
+                            <tr>
+                                <td>
+                                    <img src="../static/images/lecturers/<?php echo htmlspecialchars($lecturer['foto']); ?>" 
+                                         class="rounded-circle" 
+                                         alt="<?php echo htmlspecialchars($lecturer['nama']); ?>"
+                                         width="40" height="40"
+                                         onerror="this.src='../static/images/default-avatar.jpg'">
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="fw-bold"><?php echo htmlspecialchars($lecturer['nama']); ?></span>
+                                        <small class="text-muted"><?php echo htmlspecialchars($lecturer['perguruan_tinggi']); ?></small>
+                                    </div>
+                                </td>
+                                <td><?php echo htmlspecialchars($lecturer['program_studi']); ?></td>
+                                <td><?php echo htmlspecialchars($lecturer['jabatan_fungsional']); ?></td>
+                                <td>
+                                    <span class="badge <?php echo $lecturer['status_aktivitas'] == 'Aktif' ? 'bg-success' : 'bg-danger'; ?>">
+                                        <?php echo htmlspecialchars($lecturer['status_aktivitas']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="view_lecturer.php?id=<?php echo $lecturer['id']; ?>" 
+                                           class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="edit_lecturer.php?id=<?php echo $lecturer['id']; ?>" 
+                                           class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" 
+                                                class="btn btn-sm btn-danger delete-lecturer" 
+                                                data-id="<?php echo $lecturer['id']; ?>"
+                                                data-name="<?php echo htmlspecialchars($lecturer['nama']); ?>">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
+
 
         <!-- Pagination -->
         <nav aria-label="Lecturer pagination" class="mt-4">

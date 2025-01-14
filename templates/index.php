@@ -147,6 +147,7 @@ $conn->close();
         </button>
     </div>
 </div>
+
 <!--============================= EVENTS =============================-->
 <section class="event">
     <div class="container">
