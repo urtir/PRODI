@@ -150,6 +150,22 @@ ksort($coursesBySemester);
     </div>
 </div>
 
+<style>
+.content-wrapper {
+    min-height: calc(100vh - 180px); /* 100vh minus header and footer height */
+    padding-bottom: 2rem;
+}
+
+.sticky-footer {
+    position: relative;
+    margin-top: auto;
+    width: 100%;
+    background: #152340;
+    color: white;
+    padding: 1rem 0;
+}
+</style>
+
 <?php
 $conn->close();
 include 'footer.php';
