@@ -107,23 +107,24 @@ CREATE TABLE `courses` (
   `description` text DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
   `semester` int(11) DEFAULT NULL,
+  `materials_url` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*Data for the table `courses` */
 
-insert  into `courses`(`id`,`code`,`name`,`credits`,`description`,`image_url`,`semester`) values 
-(1,'CS101','Introduction to Programming',3,'Basic programming concepts using Python','course_1.jpg',1),
-(2,'CS102','Data Structures',4,'Fundamental data structures and algorithms','course_2.jpg',2),
-(3,'CS201','Database Systems',3,'Database design and SQL','course_3.jpg',3),
-(4,'CS202','Web Development',4,'Full-stack web development','course_4.jpg',4),
-(5,'CS301','Artificial Intelligence',3,'AI concepts and applications','course_5.jpg',5),
-(6,'CS302','Computer Networks',3,'Network protocols and architecture','course_6.jpg',5),
-(7,'CS401','Software Engineering',4,'Software development lifecycle','course_7.jpg',6),
-(8,'CS402','Mobile Computing',3,'Mobile app development','course_8.jpg',6),
-(9,'CS403','Cloud Computing',3,'Cloud services and deployment','course_9.jpg',7),
-(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7),
-(11,'CINTA101','Cara Mencintai Dalam DIam',6,'Aikwokwoakde','1736794788_event-img_2.jpg',6);
+insert  into `courses`(`id`,`code`,`name`,`credits`,`description`,`image_url`,`semester`,`materials_url`) values 
+(1,'CS101','Introduction to Programming',3,'Basic programming concepts using Python','course_1.jpg',1,'course_materials/CS101/materials.zip'),
+(2,'CS102','Data Structures',4,'Fundamental data structures and algorithms','course_2.jpg',2,'course_materials/CS102/materials.zip'),
+(3,'CS201','Database Systems',3,'Database design and SQL','course_3.jpg',3,'course_materials/CS201/materials.zip'),
+(4,'CS202','Web Development',4,'Full-stack web development','course_4.jpg',4,'course_materials/CS202/materials.zip'),
+(5,'CS301','Artificial Intelligence',3,'AI concepts and applications','course_5.jpg',5,'course_materials/CS301/materials.zip'),
+(6,'CS302','Computer Networks',3,'Network protocols and architecture','course_6.jpg',5,'course_materials/CS302/materials.zip'),
+(7,'CS401','Software Engineering',4,'Software development lifecycle','course_7.jpg',6,'course_materials/CS401/materials.zip'),
+(8,'CS402','Mobile Computing',3,'Mobile app development','course_8.jpg',6,'course_materials/CS402/materials.zip'),
+(9,'CS403','Cloud Computing',3,'Cloud services and deployment','course_9.jpg',7,'course_materials/CS403/materials.zip'),
+(10,'CS404','Cybersecurity',4,'Security principles and practices','course_10.jpg',7,'course_materials/CS404/materials.zip'),
+(11,'CINTA101','Cara Mencintai Dalam DIam',6,'Aikwokwoakde','1736794788_event-img_2.jpg',6,'course_materials/CINTA101/materials.zip');
 
 /*Table structure for table `events` */
 

@@ -1,27 +1,32 @@
 <?php 
 include 'header.php'; 
 
+// Pagination setup
+$items_per_page = 3;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $items_per_page;
+
 // Database connection
 $conn = new mysqli("localhost", "root", "", "informatics_db");
-
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Pagination
-$events_per_page = 5;
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-$start = ($page - 1) * $events_per_page;
+// Get total events count
+$total_query = "SELECT COUNT(*) as count FROM events";
+$total_result = $conn->query($total_query);
+$total_events = $total_result->fetch_assoc()['count'];
+$total_pages = ceil($total_events / $items_per_page);
 
-// Count total events for pagination
-$total_events = $conn->query("SELECT COUNT(*) as count FROM events")->fetch_assoc()['count'];
-$total_pages = ceil($total_events / $events_per_page);
+// Get events with pagination
+$query = "SELECT * FROM events ORDER BY date DESC LIMIT ? OFFSET ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("ii", $items_per_page, $offset);
+$stmt->execute();
+$result = $stmt->get_result();
+$events = $result->fetch_all(MYSQLI_ASSOC);
 
-// Fetch events with pagination
-$events_query = "SELECT * FROM events ORDER BY date DESC LIMIT $start, $events_per_page";
-$events_result = $conn->query($events_query);
-$events = $events_result->fetch_all(MYSQLI_ASSOC);
+
 
 // Close connection 
 $conn->close();
@@ -56,6 +61,40 @@ $conn->close();
     <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.js'></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.js'></script>
+    <style>
+/* Calendar Theme Customization */
+:root {
+    --fc-button-bg-color: #3366CC;
+    --fc-button-border-color: #3366CC;
+    --fc-button-hover-bg-color: #254B99;
+    --fc-button-hover-border-color: #254B99;
+    --fc-today-bg-color: rgba(51, 102, 204, 0.1);
+}
+
+/* Navigation Arrows Customization */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+    background-color: white !important;
+    border-color: #3366CC !important;
+}
+
+.fc .fc-prev-button .fc-icon,
+.fc .fc-next-button .fc-icon {
+    color: #3366CC;
+}
+
+.fc .fc-prev-button:hover,
+.fc .fc-next-button:hover {
+    background-color: #f8f9fa !important;
+}
+
+.fc .fc-prev-button:focus,
+.fc .fc-next-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(51, 102, 204, 0.25);
+}
+
+/* Existing styles... */
+</style>
 
 </head>
 
@@ -135,6 +174,29 @@ $conn->close();
         </div>
         <?php endforeach; ?>
     </div>
+    <!-- Add pagination controls -->
+    <div class="container mt-4">
+        <nav aria-label="Events pagination">
+            <ul class="pagination justify-content-center">
+                <!-- Previous button -->
+                <li class="page-item <?php echo ($page <= 1) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page - 1; ?>" tabindex="-1">Previous</a>
+                </li>
+                
+                <!-- Page numbers -->
+                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                    <li class="page-item <?php echo ($page == $i) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                
+                <!-- Next button -->
+                <li class="page-item <?php echo ($page >= $total_pages) ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo $page + 1; ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
     <div class="tab-pane" id="calendar-view" role="tabpanel">
         <!-- Calendar will be rendered here -->
         <div id='calendar'></div>
@@ -149,33 +211,6 @@ $conn->close();
         </div>
     </div>
 </section>
-
-<!-- Pagination -->
-<div class="row">
-    <div class="col-md-12">
-        <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-                <?php if ($page > 1): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo ($page-1); ?>">Previous</a>
-                    </li>
-                <?php endif; ?>
-                
-                <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <li class="page-item <?php echo $i == $page ? 'active' : ''; ?>">
-                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                    </li>
-                <?php endfor; ?>
-                
-                <?php if ($page < $total_pages): ?>
-                    <li class="page-item">
-                        <a class="page-link" href="?page=<?php echo ($page+1); ?>">Next</a>
-                    </li>
-                <?php endif; ?>
-            </ul>
-        </nav>
-    </div>
-</div>
 
 <?php include 'footer.php'; ?>
 

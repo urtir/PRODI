@@ -3,6 +3,7 @@ include 'header.php';
 
 $conn = new mysqli("localhost", "root", "", "informatics_db");
 
+
 // Search functionality
 $search = '';
 $where = '1';
@@ -12,7 +13,7 @@ if (isset($_SESSION['user_id']) && isset($_GET['search'])) {
 }
 
 // Pagination
-$posts_per_page = 5;
+$posts_per_page = 3;
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 $start = ($page - 1) * $posts_per_page;
 
@@ -205,6 +206,8 @@ $posts = $conn->query("
         </div>
     </div>
 </div>
+
+
 
 <?php 
 $conn->close();
