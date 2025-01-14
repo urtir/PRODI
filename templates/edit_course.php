@@ -13,11 +13,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$uploadsDir = __DIR__ . "/../static/images/courses";
-$materialsDir = __DIR__ . "/../static/materials";
-
-
-
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $success_message = '';
 $error_message = '';
@@ -41,96 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'] ?? '';
     $semester = $_POST['semester'] ?? '';
     $existing_image = $course['image_url'];
-
-    if (isset($_FILES['materials']) && $_FILES['materials']['size'] > 0) {
-    $materials = $_FILES['materials'];
-    $maxSize = 50 * 1024 * 1024; // 50MB
-    
-    // Validate file size
-    if ($materials['size'] > $maxSize) {
-        throw new Exception("Material file size must be less than 50MB");
-    }
-    
-    // Validate file type
-    $materialsExt = strtolower(pathinfo($materials['name'], PATHINFO_EXTENSION));
-    if ($materialsExt !== 'zip') {
-        throw new Exception("Only ZIP files are allowed for course materials");
-    }
-    
-    // Generate unique filename
-    $materialsFilename = time() . '_' . basename($materials['name']);
-    $materialsTarget = $materialsDir . '/' . $materialsFilename;
-    
-    // Delete old file if exists
-    if ($course['materials_url'] && file_exists($materialsDir . '/' . $course['materials_url'])) {
-        unlink($materialsDir . '/' . $course['materials_url']);
-    }
-    
-    // Upload new file with error checking
-    if (!move_uploaded_file($materials['tmp_name'], $materialsTarget)) {
-        throw new Exception("Failed to upload materials file. Error: " . error_get_last()['message']);
-    }
-    
-    // Add to update data
-    $update_data[] = "materials_url = ?";
-    $types .= "s";
-    $values[] = $materialsFilename;
-}
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Initialize update variables
-        $update_data = [];
-        $types = '';
-        $values = [];
-
-        // Create materials directory if not exists
-        $materialsDir = __DIR__ . "/../static/materials";
-        if (!file_exists($materialsDir)) {
-            mkdir($materialsDir, 0777, true);
-        }
-
-        // Handle materials upload
-        if (isset($_FILES['materials']) && $_FILES['materials']['size'] > 0) {
-            $materials = $_FILES['materials'];
-            $maxSize = 50 * 1024 * 1024; // 50MB
-            
-            // Validate file size
-            if ($materials['size'] > $maxSize) {
-                throw new Exception("Material file size must be less than 50MB");
-            }
-            
-            // Validate file type
-            $materialsExt = strtolower(pathinfo($materials['name'], PATHINFO_EXTENSION));
-            if ($materialsExt !== 'zip') {
-                throw new Exception("Only ZIP files are allowed");
-            }
-            
-            // Generate unique filename
-            $materialsFilename = time() . '_' . basename($materials['name']);
-            $materialsTarget = $materialsDir . '/' . $materialsFilename;
-            
-            // Delete old file if exists
-            if ($course['materials_url'] && file_exists($materialsDir . '/' . $course['materials_url'])) {
-                unlink($materialsDir . '/' . $course['materials_url']);
-            }
-            
-            // Upload new file
-            if (!move_uploaded_file($materials['tmp_name'], $materialsTarget)) {
-                throw new Exception("Upload failed: " . error_get_last()['message']);
-            }
-            
-            // Add to update data
-            $update_data[] = "materials_url = ?";
-            $types .= "s";
-            $values[] = $materialsFilename;
-        }
-
-        // ...existing image upload code...
-    } catch (Exception $e) {
-        $error_message = $e->getMessage();
-    }
-}
     
     // Handle image upload if new image provided
     if (isset($_FILES['image_url']) && $_FILES['image_url']['size'] > 0) {
@@ -145,16 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
             $existing_image = $file_name;
         }
-
-        
-
-
-
-
-
     }
-
-    
     
     // Update database
     $sql = "UPDATE courses SET code = ?, name = ?, credits = ?, description = ?, 
@@ -259,26 +155,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="file" class="form-control" name="image_url" accept="image/*">
                         <div class="mt-2" id="imagePreview"></div>
                     </div>
-
-                    <!-- Add this to your form -->
-                    <div class="mb-3">
-                        <label class="form-label">Course Materials (ZIP)</label>
-                        <div class="d-flex align-items-center gap-3">
-                            <?php if (!empty($course['materials_url'])): ?>
-                                <div class="current-material">
-                                    <i class="fas fa-file-archive text-primary"></i>
-                                    <span class="ms-2"><?php echo basename($course['materials_url']); ?></span>
-                                    <a href="../static/<?php echo htmlspecialchars($course['materials_url']); ?>" 
-                                    class="btn btn-sm btn-outline-primary ms-2" 
-                                    target="_blank">
-                                        <i class="fas fa-download"></i> Download
+                    
+                    <div class="mb-4">
+                    <label class="form-label">Course Materials Management</label>
+                    <div class="card">
+                        <div class="card-body">
+                            <!-- Current Material Path -->
+                            <?php if ($course['materials_url']): ?>
+                            <div class="alert alert-info mb-3">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-file-archive fa-2x me-2"></i>
+                                    <div>
+                                        <h6 class="mb-0">Current Materials Path</h6>
+                                        <code class="small"><?php echo htmlspecialchars($course['materials_url']); ?></code>
+                                    </div>
+                                    <?php if (file_exists("../static/materials/" . $course['materials_url'])): ?>
+                                    <a href="../static/materials/<?php echo htmlspecialchars($course['materials_url']); ?>" 
+                                    class="btn btn-sm btn-outline-primary ms-auto" download>
+                                        <i class="fas fa-download me-1"></i>Download
                                     </a>
+                                    <?php endif; ?>
                                 </div>
+                            </div>
                             <?php endif; ?>
-                            <input type="file" class="form-control" name="materials" accept=".zip">
+
+                            <!-- Materials Path Input -->
+                            <div class="mb-3">
+                                <label class="form-label d-flex align-items-center">
+                                    Materials Path
+                                    <i class="fas fa-info-circle ms-2" data-bs-toggle="tooltip" 
+                                    title="Example: course_materials/CS101/materials.zip"></i>
+                                </label>
+                                <input type="text" class="form-control" name="materials_url" 
+                                    value="<?php echo htmlspecialchars($course['materials_url'] ?? ''); ?>"
+                                    placeholder="course_materials/[COURSE_CODE]/materials.zip">
+                            </div>
+
+                            <!-- Guide Section -->
+                            <div class="alert alert-warning mb-0">
+                                <h6 class="alert-heading"><i class="fas fa-lightbulb me-2"></i>How to Add Course Materials</h6>
+                                <hr>
+                                <ol class="small mb-0">
+                                    <li class="mb-2">Create this folder structure locally:
+                                        <code class="d-block mt-1">C:/xampp/htdocs/PRODI/static/materials/course_materials/[COURSE_CODE]/</code>
+                                    </li>
+                                    <li class="mb-2">Compress your course materials into a ZIP file named <code>materials.zip</code></li>
+                                    <li class="mb-2">Place the ZIP file in the course code folder you created</li>
+                                    <li class="mb-2">Enter the path in format: <code>course_materials/[COURSE_CODE]/materials.zip</code></li>
+                                    <li>Example for CS101:
+                                        <ul class="mt-1">
+                                            <li>Physical path: <code>C:/xampp/htdocs/PRODI/static/materials/course_materials/CS101/materials.zip</code></li>
+                                            <li>URL to enter: <code>course_materials/CS101/materials.zip</code></li>
+                                        </ul>
+                                    </li>
+                                </ol>
+                            </div>
                         </div>
-                        <div class="form-text">Upload ZIP file containing course materials (max 50MB)</div>
                     </div>
+                </div>
 
                     <div class="mt-4">
                         <button type="submit" class="btn btn-primary">Update Course</button>
