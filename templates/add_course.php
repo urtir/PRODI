@@ -17,11 +17,39 @@ $success_message = '';
 $error_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $code = $_POST['code'] ?? '';
-    $name = $_POST['name'] ?? '';
-    $credits = $_POST['credits'] ?? '';
-    $description = $_POST['description'] ?? '';
-    $semester = $_POST['semester'] ?? '';
+    try {
+        // Get form data
+        $code = $_POST['code'];
+        $name = $_POST['name'];
+        $credits = $_POST['credits'];
+        $description = $_POST['description'];
+        $semester = $_POST['semester'];
+        $materials_url = $_POST['materials_url'] ?? '';
+        $address_url = $_POST['address_url'] ?? '';
+
+        // Prepare insert query with all fields
+        $sql = "INSERT INTO courses (
+            code, name, credits, description, semester, 
+            materials_url, address_url, image_url
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssisssss", 
+            $code, $name, $credits, $description, $semester,
+            $materials_url, $address_url, $image_url
+        );
+
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Course added successfully!";
+            header("Location: manage_courses.php");
+            exit();
+        } else {
+            throw new Exception("Failed to add course");
+        }
+    } catch (Exception $e) {
+        $error_message = $e->getMessage();
+    }
+}
     
     // Handle image upload
     $image_url = '';
@@ -46,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $error_message = "Error adding course: " . $conn->error;
     }
-}
+
 ?>
 
 <div class="content-wrapper" style="padding-top: 100px;">
