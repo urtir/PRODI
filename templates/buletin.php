@@ -112,7 +112,7 @@ $posts = $conn->query("
 <div class="contact">
         <div class="row">
             <div class="col-md-12 text-center">
-            <h2 class="event-title">Forum Buletin Diskusi</h2>
+            <h2 class="event-title">Forum Diskusi</h2>
             <p>Selamat datang di forum diskusi Program Studi Informatika. Di sini Anda dapat berbagi informasi, bertanya, dan berdiskusi dengan civitas akademika.</p>
             </div>
         </div>
