@@ -182,9 +182,15 @@ $patents = json_decode($lecturer['hki_paten'], true);
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="community-tab" data-bs-toggle="tab" href="#community">
+                <a class="nav-link" data-bs-toggle="tab" href="#services" role="tab">
                     <i class="fas fa-hands-helping me-2"></i>Pengabdian
                 </a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="patents-tab" data-bs-toggle="tab" 
+                        data-bs-target="#patents" type="button" role="tab">
+                    <i class="fas fa-certificate me-2"></i>Patents
+                </button>
             </li>
         </ul>
     </div>
@@ -463,48 +469,86 @@ $patents = json_decode($lecturer['hki_paten'], true);
         </div>
 
 
-        <!-- Community Service Tab -->
-<div class="tab-pane fade" id="community">
-    <?php 
-    if ($community_service):
-        // Sort by year descending
-        usort($community_service, function($a, $b) {
-            return strcmp($b['tahun'], $a['tahun']);
-        });
+<!-- Services Tab -->
+<div class="tab-pane fade" id="services" role="tabpanel">
+        <?php 
+        $services = [];
+        if (!empty($lecturer['pengabdian_masyarakat'])) {
+            $services = json_decode($lecturer['pengabdian_masyarakat'], true) ?? [];
+        }
         
-        $current_year = null;
-        foreach ($community_service as $service): 
-            if ($current_year !== $service['tahun']):
-                if ($current_year !== null) echo '</div>';
-                $current_year = $service['tahun'];
+        if (!empty($services)):
+            echo '<div class="accordion-body">';
+            foreach ($services as $service): 
+        ?>
+                <div class="card mb-3 border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9">
+                                <h5 class="card-title mb-2">
+                                    <i class="fas fa-hands-helping text-success me-2"></i>
+                                    <?php echo htmlspecialchars($service['judul']); ?>
+                                </h5>
+                                <?php if (!empty($service['deskripsi'])): ?>
+                                    <p class="card-text text-muted mb-0">
+                                        <i class="fas fa-info-circle me-2"></i>
+                                        <?php echo htmlspecialchars($service['deskripsi']); ?>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                            <div class="col-lg-3 text-lg-end mt-2 mt-lg-0">
+                                <span class="badge bg-light text-primary">
+                                    <i class="fas fa-calendar-alt me-1"></i>
+                                    <?php echo htmlspecialchars($service['tahun']); ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        <?php 
+            endforeach;
+            echo '</div>';
+        else:
+        ?>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                No community service records available.
+            </div>
+        <?php endif; ?>
+    </div>
+
+<!-- Patents Tab (Separate Structure) -->
+<div class="tab-pane fade" id="patents">
+    <?php 
+    $patents = [];
+    if (!empty($lecturer['hki_paten'])) {
+        $patents = json_decode($lecturer['hki_paten'], true) ?? [];
+    }
+    
+    if (!empty($patents)):
+        echo '<div class="accordion-body">';
+        foreach ($patents as $patent): 
     ?>
-        <div class="d-flex align-items-center mb-3">
-            <h4 class="fw-bold mb-0">
-                <span class="badge bg-success rounded-pill">
-                    <?php echo htmlspecialchars($service['tahun']); ?>
-                </span>
-            </h4>
-            <hr class="flex-grow-1 mx-3">
-        </div>
-        <div class="year-group mb-4">
-    <?php endif; ?>
             <div class="card mb-3 border-0 shadow-sm">
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-lg-9">
                             <h5 class="card-title mb-2">
-                                <i class="fas fa-hands-helping text-success me-2"></i>
-                                <?php echo htmlspecialchars($service['judul']); ?>
+                                <i class="fas fa-certificate text-success me-2"></i>
+                                <?php echo htmlspecialchars($patent['judul']); ?>
                             </h5>
-                            <?php if (!empty($service['deskripsi'])): ?>
+                            <?php if (!empty($patent['deskripsi'])): ?>
                                 <p class="card-text text-muted mb-0">
                                     <i class="fas fa-info-circle me-2"></i>
-                                    <?php echo htmlspecialchars($service['deskripsi']); ?>
+                                    <?php echo htmlspecialchars($patent['deskripsi']); ?>
                                 </p>
                             <?php endif; ?>
                         </div>
                         <div class="col-lg-3 text-lg-end mt-2 mt-lg-0">
-                            
+                            <span class="badge bg-light text-primary">
+                                <i class="fas fa-calendar-alt me-1"></i>
+                                <?php echo htmlspecialchars($patent['tahun']); ?>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -516,10 +560,7 @@ $patents = json_decode($lecturer['hki_paten'], true);
     ?>
         <div class="alert alert-info">
             <i class="fas fa-info-circle me-2"></i>
-            No community service records available.
+            No patent records available.
         </div>
     <?php endif; ?>
 </div>
-        </div>
-    </div>
-    
