@@ -176,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card">
                         <div class="card-body">
                             <!-- Current Material Path -->
-                            <?php if ($course['materials_url']): ?>
+                            <?php if (isset($course['materials_url']) && $course['materials_url']): ?>
                             <div class="alert alert-info mb-3">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-file-archive fa-2x me-2"></i>

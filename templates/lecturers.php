@@ -52,7 +52,32 @@ $lecturers = $lecturers_result->fetch_all(MYSQLI_ASSOC);
             transition: transform 0.3s ease, opacity 0.3s ease;
             opacity: 1;
         }
+        .admission_insruction {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            transition: box-shadow 0.3s ease;
+        }
 
+        .admission_insruction:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .admission_insruction img {
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .admission_insruction p {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
         .admission_insruction img:hover {
             transform: scale(1.1); /* Memperbesar gambar 10% */
             opacity: 0.9; /* Sedikit transparan saat hover */
