@@ -17,7 +17,7 @@ $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $success_message = '';
 $error_message = '';
 
-// Fetch award data
+// Fetch existing award
 $stmt = $conn->prepare("SELECT * FROM awards WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -29,22 +29,33 @@ if (!$award) {
     exit();
 }
 
-// Handle form submission
+// Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $recipient = $_POST['recipient'] ?? '';
-    $year = $_POST['year'] ?? '';
-    $description = $_POST['description'] ?? '';
+    try {
+        $title = $_POST['title'] ?? '';
+        $year = $_POST['year'] ?? '';
+        $description = $_POST['description'] ?? '';
 
-    // Update database
-    $sql = "UPDATE awards SET title = ?, recipient = ?, year = ?, description = ? WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssisi", $title, $recipient, $year, $description, $id);
-    
-    if ($stmt->execute()) {
-        $success_message = "Award updated successfully!";
-    } else {
-        $error_message = "Error updating award: " . $conn->error;
+        // Validate inputs
+        if (empty($title) || empty($year) || empty($description)) {
+            throw new Exception("All fields are required");
+        }
+
+        // Update query
+        $update_sql = "UPDATE awards SET title = ?, year = ?, description = ? WHERE id = ?";
+        $stmt = $conn->prepare($update_sql);
+        $stmt->bind_param("sisi", $title, $year, $description, $id);
+
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Award updated successfully!";
+            header("Location: manage_awards.php");
+            exit();
+        } else {
+            throw new Exception("Failed to update award");
+        }
+
+    } catch (Exception $e) {
+        $error_message = $e->getMessage();
     }
 }
 ?>
